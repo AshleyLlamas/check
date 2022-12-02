@@ -22,8 +22,8 @@ class CreateAssistancesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->string('asistencia');
-            $table->longText('motivo')->nullable();
+            $table->string('asistencia'); //Asistió, No asistió
+            $table->longText('observación')->nullable();
 
             $table->timestamps();
         });

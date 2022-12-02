@@ -33,6 +33,11 @@ class User extends Authenticatable
         'número_de_empleado',
         'company_id',
         'puesto',
+        'document_id',
+        'número_de_inscripción_al_imss',
+        'rfc',
+        'número_del_infonavit',
+        'document_id'
     ];
 
     /**
@@ -77,5 +82,10 @@ class User extends Authenticatable
     //Uno a Muchos
     public function checks(){
         return $this->hasMany('App\Models\Check');
+    }
+
+    //Uno a Uno Inversa
+    public function document(){
+        return $this->belongsTo('App\Models\UserDocuments');
     }
 }

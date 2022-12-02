@@ -16,6 +16,7 @@ class TimeCheck extends Model
     protected $fillable = [
         'hora',
         'estatus',
+        'observación'
     ];
 
     //Uno a Uno

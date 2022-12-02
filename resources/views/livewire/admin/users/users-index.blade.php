@@ -5,8 +5,8 @@
         </div>
     @endif
     <div class="card">
-        <div class="card-header bg-info">
-            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todos los usuarios<span class="badge badge-light"> {{$all_users}}</span></h5>
+        <div class="card-header bg-primary">
+            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todos los empleados <span class="badge badge-light"> {{$all_users}}</span></h5>
         </div>
         <div class="card-header">
             <div class="row">

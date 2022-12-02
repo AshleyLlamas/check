@@ -62,20 +62,25 @@ class CheckCreate extends Component
     
                 if($fecha_a_comparar->hora_de_salida->getTimestamp() >= Carbon::now()->getTimestamp()){
 
-                    $tiempo = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('%h horas %i minutos con %s segundos');
-
-                    $out_estatus = 'Salio antes de tiempo ('.$tiempo.') (!) revisa si es tiempo extra';
+                    $out_estatus = 'Salió antes de tiempo';
+                    $out_observación = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
                 }else{
-
-                    $tiempo = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('%h horas %i minutos con %s segundos');
-
-                    $out_estatus = 'Salio despues ('.$tiempo.')';
+                    $out_estatus = 'Salió despues';
+                    $out_observación = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
                 }
     
                 $out = TimeCheck::create([
                     'hora' => Carbon::now(),
                     'estatus' => $out_estatus,
+                    'observación' => $out_observación
                 ]);
+
+                if($this->existe_un_check->in == 'Llego tarde'){
+                    $asistencia = 'Con retardo';
+                }else{
+                    $asistencia = 'Asistió';
+                }
+                
     
                 $this->existe_un_check->out_id = $out->id;
                 $this->existe_un_check->save();
@@ -83,8 +88,8 @@ class CheckCreate extends Component
                 Assistance::create([
                     'check_id' => $this->existe_un_check->id,
                     'user_id' => $this->user->id,
-                    'asistencia' => 'Asistió',
-                    'motivo' => 'Asistencia completa'
+                    'asistencia' => $asistencia,
+                    'observación' => 'Asistencia completa'
                 ]);
     
             }else{
@@ -94,7 +99,8 @@ class CheckCreate extends Component
 
                 $out = TimeCheck::create([
                     'hora' => Carbon::now(),
-                    'estatus' => 'Sin horario, trabajo: ' .$tiempo.', (!) Revisar si es tiempo extra',
+                    'estatus' => 'Sin horario',
+                    'observación' => 'Revisar si es tiempo extra'
                 ]);
 
                 $this->existe_un_check->out_id = $out->id;
@@ -104,7 +110,7 @@ class CheckCreate extends Component
                     'check_id' => $this->existe_un_check->id,
                     'user_id' => $this->user->id,
                     'asistencia' => 'Asistió',
-                    'motivo' => 'Asistencia completa'
+                    'observación' => 'Trabajo tiempo extra: '.$tiempo. 'desde el primer check'
                 ]);
             }
 
@@ -114,16 +120,16 @@ class CheckCreate extends Component
 
                 if($fecha_a_comparar->hora_de_entrada->modify('+15 minute')->getTimestamp() >= Carbon::now()->getTimestamp()){
                     $in_estatus = 'Llego a tiempo';
+                    $in_observación = 'Sin observación';
                 }else{
-
-                    $tiempo = $fecha_a_comparar->hora_de_entrada->diff(Carbon::now())->format('%h horas %i minutos con %s segundos');
-
-                    $in_estatus = 'Llego tarde ('.$tiempo.')';
+                    $in_estatus = 'Llego tarde';
+                    $in_observación = $fecha_a_comparar->hora_de_entrada->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
                 }
     
                 $in = TimeCheck::create([
                     'hora' => Carbon::now(),
                     'estatus' => $in_estatus,
+                    'observación' => $in_observación
                 ]);
     
                 Check::create([
@@ -140,7 +146,8 @@ class CheckCreate extends Component
     
                 $in = TimeCheck::create([
                     'hora' => Carbon::now(),
-                    'estatus' => 'Sin horario (Revisar si es tiempo extra)',
+                    'estatus' => 'Sin horario',
+                    'observación' => 'Revisar si es tiempo extra'
                 ]);
     
                 Check::create([

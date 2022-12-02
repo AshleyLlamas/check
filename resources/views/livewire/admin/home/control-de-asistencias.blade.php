@@ -1,5 +1,5 @@
 <div>
-    <div class="card card-outline card-info">
+    <div class="card card-outline card-primary">
         <div class="card-header">
             <div class="row">
                 <div class="col">
@@ -22,7 +22,7 @@
                 <div class="col-8 rounded bg-light">
                     <div class="pt-3 px-3 border-bottom border-white">
                         <div class="text-right">
-                            <h5 class="text-mb-1">Planta - {{$company->nombre_de_la_compañia}}</h5>
+                            <h5 class="text-mb-1">Planta - {{$compañia}}</h5>
                             <h5 class="text-mb-1 text-primary">{{$fecha}}</h5>
                         </div>
                         <h3 class="text-left text-secondary mb-1">CONTROL DE ASISTENCIA</h3>

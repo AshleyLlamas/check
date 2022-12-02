@@ -21,18 +21,24 @@ class ControlDeAsistencias extends Component
     {
         $companies = Company::orderBy('nombre_de_la_compañia')->get();
 
+        $compañia = Company::where('id', $this->company)->first()->nombre_de_la_compañia;
+
         $empleados = User::where('company_id', $this->company)->count();
         $asistencias = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->count();
-        $con_retardo = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->join('time_checks', 'checks.id', '=', 'time_checks.id')->where('estatus', 'Llego tarde')->count();
-        $con_retardo = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->join('time_checks', 'checks.id', '=', 'time_checks.id')->where('estatus', 'Llego tarde')->count();
+        //$con_retardo = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->join('time_checks', 'checks.id', '=', 'time_checks.id')->where('estatus', 'Llego tarde')->count();
+        $con_retardo = Check::where('company_id', $this->company)->whereHas('in', function($query) {
+            $query->where('estatus', '=', 'Llego tarde');
+        })
+        ->count();
         //$faltaron = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->join('assistances', 'checks.id', '=', 'assistances.id')->where('asistencia', 'Inasistencia')->count();
         $faltaron = User::where('company_id', $this->company)->whereHas('assistances', function($query) {
-            $query->where('asistencia', '=', 'Inasistencia');
+            $query->where('asistencia', '=', 'No asistió');
         })
         ->count();
 
         return view('livewire.admin.home.control-de-asistencias', [
             'companies' => $companies,
+            'compañia' => $compañia,
             'empleados' => $empleados,
             'asistencias' => $asistencias,
             'con_retardo' => $con_retardo,

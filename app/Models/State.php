@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class State extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id', 'created_at', 'updated'];
+    
+    protected $fillable = [
+        'nombre_del_estado'
+    ];
 }

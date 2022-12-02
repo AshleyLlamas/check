@@ -5,7 +5,7 @@
         </div>
     @endif
     <div class="card">
-        <div class="card-header bg-info">
+        <div class="card-header bg-primary">
             <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todos los checadores <span class="badge badge-light"> {{$all_checks}}</span></h5>
         </div>
         <div class="card-header">

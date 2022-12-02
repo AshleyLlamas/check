@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Municipality extends Model
+class Project extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id', 'created_at', 'updated'];
-    
     protected $fillable = [
-        'nombre_del_municipio',
-        'state_id',
+        'obra',
+        'company_id',
+        'responsable_del_proyecto_id',
+        'responsable_de_recursos_humanos_id'
     ];
 }

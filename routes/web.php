@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home')->name('home');
-});
+// Route::get('/', function () {
+//     return view('home')->name('home');
+// });
 
 Route::view('/profile', 'auth.profile')->middleware('auth')->name('profile');
 
@@ -24,4 +24,4 @@ Route::view('/check', 'check')->middleware('auth')->name('ckeck');
 
 Auth::routes(["register" => false]);
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

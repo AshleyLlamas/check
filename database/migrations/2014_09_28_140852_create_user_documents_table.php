@@ -16,10 +16,6 @@ class CreateUserDocumentsTable extends Migration
         Schema::create('user_documents', function (Blueprint $table) {
             $table->id();
 
-            $table->string('número_de_inscripción_al_imss')->nullable();
-            $table->string('rfc')->nullable();
-            $table->string('número_de_infonavit')->nullable();
-
             $table->string('documento_de_identificación_oficial')->nullable();
             $table->string('documento_del_comprobante_de_domicilio')->nullable();
             $table->string('documento_de_no_antecedentes_penales')->nullable();

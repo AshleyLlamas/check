@@ -1,14 +1,14 @@
-<div class="pt-4">
+<div class="py-4">
     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
         <ol class="breadcrumb">
             @can('admin.users.index')
-                <li class="breadcrumb-item"><a href="{{route('admin.users.index')}}">Todos los usuarios</a></li>
+                <li class="breadcrumb-item"><a href="{{route('admin.users.index')}}">Todos los empleados</a></li>
             @endcan
-            <li class="breadcrumb-item active">Editar usuario</li>
+            <li class="breadcrumb-item active">Editar empleado</li>
         </ol>
     </nav>
     <div class="card">
-        <div class="card-header bg-info">
+        <div class="card-header bg-primary">
             <h5 class="text-center my-2">{{$name}}</h5>
         </div>
         <div class="card-body">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col m-2">
                             <div class="border-bottom">
-                                <h5 class="py-1 text-center">Datos del usuario</h5>
+                                <h5 class="py-1 text-center">Datos del empleado</h5>
                             </div>
                             <div class="row">
                                 <div class="form-group col-12">
@@ -69,20 +69,13 @@
                                     <input type="text" id="name" class="form-control" wire:model="user.name" placeholder="Ingrese el nombre del usuario">
                                     @error('user.name') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12">
-                                    <label class="col-form-label">
-                                        {{ __('Número de empleado') }}
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="number" id="número_de_empleado" class="form-control" wire:model="user.número_de_empleado" placeholder="Ingrese el número de empleado">
-                                    @error('user.número_de_empleado') <span class="text-danger error">{{ $message }}</span>@enderror
-                                </div>
+                                
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Correo') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="correo" class="form-control" wire:model="email" placeholder="Ingrese el correo del usuario">
+                                    <input type="text" id="correo" class="form-control" wire:model="email" placeholder="Ingrese el correo del empleado">
                                     @error('email') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
@@ -90,8 +83,32 @@
                                         {{ __('CURP') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="curp" class="form-control" wire:model="curp" placeholder="Ingrese el CURP del usuario">
+                                    <input type="text" id="curp" class="form-control" wire:model="curp" placeholder="Ingrese el CURP del empleado" oninput="this.value = this.value.toUpperCase()">
                                     @error('curp') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label class="col-form-label">
+                                        {{ __('Número de inscripción al IMSS') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" id="número_de_inscripción_al_imss" class="form-control" wire:model="user.número_de_inscripción_al_imss" placeholder="Ingrese el número de inscripción al IMSS del empleado">
+                                    @error('user.número_de_inscripción_al_imss') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label class="col-form-label">
+                                        {{ __('RFC') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" id="rfc" class="form-control" wire:model="user.rfc" placeholder="Ingrese el RFC del empleado" oninput="this.value = this.value.toUpperCase()">
+                                    @error('user.rfc') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Número del infonavit') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" id="número_del_infonavit" class="form-control" wire:model="user.número_del_infonavit" placeholder="Ingrese el número del infonavit del empleado">
+                                    @error('user.número_del_infonavit') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                         </div>
@@ -109,6 +126,21 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Número de empleado') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" id="número_de_empleado" class="form-control" wire:model="user.número_de_empleado" placeholder="Ingrese el número de empleado">
+                                    @error('user.número_de_empleado') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Puesto') }}
+                                    </label>
+                                    <input type="text" id="puesto" class="form-control" wire:model="user.puesto" placeholder="Ingrese el puesto del usuario">
+                                    @error('user.puesto') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
                                     <div wire:ignore>
                                         <label class="col-form-label">
                                             {{ __('Empresa / Compañia') }}
@@ -123,12 +155,73 @@
                                     </div>
                                     @error('company') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12">
+                            </div>
+                        </div>
+                    </div>
+                    {{--Documentos--}}
+                    <div class="row rounded border mb-4">
+                        <div class="bg-gray rounded-left">
+                            <div class="m-3">
+                                <div class="my-auto"><i class="fa-solid fa-folder"></i></div>
+                            </div>
+                        </div>
+                        <div class="col m-2">
+                            <div class="border-bottom">
+                                <h5 class="py-1 text-center">Documentos</h5>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
-                                        {{ __('Puesto') }}
+                                        {{ __('Identificación oficial / INE') }}
+                                        <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="puesto" class="form-control" wire:model="user.puesto" placeholder="Ingrese el puesto del usuario">
-                                    @error('user.puesto') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    <input type="file" class="form-control-file" id="documento_de_identificación_oficial" wire:model.defer="documento_de_identificación_oficial">
+                                    @error('documento_de_identificación_oficial') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                    <label class="col-form-label">
+                                        {{ __('Comprobante de domicilio') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_del_comprobante_de_domicilio" wire:model.defer="documento_del_comprobante_de_domicilio">
+                                    @error('documento_del_comprobante_de_domicilio') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                    <label class="col-form-label">
+                                        {{ __('No atecendentes penales') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_de_no_antecedentes_penales" wire:model.defer="documento_de_no_antecedentes_penales">
+                                    @error('documento_de_no_antecedentes_penales') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                    <label class="col-form-label">
+                                        {{ __('Licencia de conducir') }}
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_de_la_licencia_de_conducir" wire:model.defer="documento_de_la_licencia_de_conducir">
+                                    @error('documento_de_la_licencia_de_conducir') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                    <label class="col-form-label">
+                                        {{ __('Cedula profesional') }}
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_de_la_cedula_profesional" wire:model.defer="documento_de_la_cedula_profesional">
+                                    @error('documento_de_la_cedula_profesional') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                    <label class="col-form-label">
+                                        {{ __('Carta de pasante') }}
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_de_la_carta_de_pasante" wire:model.defer="documento_de_la_carta_de_pasante">
+                                    @error('documento_de_la_carta_de_pasante') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                    <label class="col-form-label">
+                                        {{ __('Curriculum Vitae (CV)') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_del_curriculum_vitae" wire:model.defer="documento_del_curriculum_vitae">
+                                    @error('documento_del_curriculum_vitae') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                         </div>
@@ -161,6 +254,39 @@
                             </div>
                         </div>
                     </div>
+                    {{--Contaseña--}}
+                    {{-- <div class="row rounded border">
+                        <div class="bg-gray rounded-left">
+                            <div class="m-3">
+                                <div class="my-auto"><i class="fa-solid fa-key"></i></div>
+                            </div>
+                        </div>
+                        <div class="col m-2">
+                            <div class="border-bottom">
+                                <h5 class="py-1 text-center">Contraseña</h5>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="form-group col-12 col-md-6 col-sm-6">
+                                        <label class="col-form-label">
+                                            {{ __('Contraseña') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="password" class="form-control" wire:model="password" required autocomplete="new-password" placeholder="Ingrese la contraseña del empleado">
+                                        @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 col-sm-6">
+                                        <label class="col-form-label">
+                                            {{ __('Confirmar contraseña') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="password" class="form-control" wire:model="password_confirmation" required autocomplete="new-password" placeholder="Nuevamente ingrese la contraseña del empleado">
+                                        @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
                 </div>
             </form>
         </div>

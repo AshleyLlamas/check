@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Panel de control',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -64,8 +64,8 @@ return [
     */
 
     'logo' => '<b>Panel</b>Administrativo',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle border-0 shadow-none',
+    'logo_img' => 'vendor/adminlte/dist/img/logo.svg',
+    'logo_img_class' => 'brand-image border-0 shadow-none',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logo.svg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -192,9 +192,9 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-light-info elevation-4',
+    'classes_sidebar' => 'sidebar-light-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-light bg-white',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -318,7 +318,7 @@ return [
         ],
         ['header' => 'CONTENIDO'],
         [
-            'text'        => 'Usuarios',
+            'text'        => 'Empleados',
             'route'         => 'admin.users.index',
             'icon' => 'fas fa-fw fa-user',
         ],

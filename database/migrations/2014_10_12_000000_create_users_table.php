@@ -27,13 +27,18 @@ class CreateUsersTable extends Migration
 
             $table->string('tipo_de_empleado')->nullable();
 
-            $table->unsignedBigInteger('company_id')->nullable()->nullable();
+            $table->string('número_de_inscripción_al_imss')->nullable();
+             
+            $table->string('rfc')->nullable();
+            $table->string('número_del_infonavit')->nullable();
+
+            $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('address_id')->nullable()->nullable();
-            $table->foreign('address_id')->references('id')->on('addreses')->onDelete('set null')->onUpdate('cascade');
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('document_id')->nullable()->nullable();
+            $table->unsignedBigInteger('document_id')->nullable();
             $table->foreign('document_id')->references('id')->on('user_documents')->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();

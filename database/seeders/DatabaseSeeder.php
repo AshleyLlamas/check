@@ -17,26 +17,26 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('public/fotos');
         Storage::makeDirectory('public/fotos');
 
-        Storage::deleteDirectory('public/identificaciones_oficiales');
-        Storage::makeDirectory('public/identificaciones_oficiales');
+        Storage::deleteDirectory('identificaciones_oficiales');
+        Storage::makeDirectory('identificaciones_oficiales');
 
-        Storage::deleteDirectory('public/comprobantes_de_domicilio');
-        Storage::makeDirectory('public/comprobantes_de_domicilio');
+        Storage::deleteDirectory('comprobantes_de_domicilio');
+        Storage::makeDirectory('comprobantes_de_domicilio');
 
-        Storage::deleteDirectory('public/documentos_de_no_antecedentes_penales');
-        Storage::makeDirectory('public/documentos_de_no_antecedentes_penales');
+        Storage::deleteDirectory('documentos_de_no_antecedentes_penales');
+        Storage::makeDirectory('documentos_de_no_antecedentes_penales');
 
-        Storage::deleteDirectory('public/licencias_de_conducir');
-        Storage::makeDirectory('public/licencias_de_conducir');
+        Storage::deleteDirectory('licencias_de_conducir');
+        Storage::makeDirectory('licencias_de_conducir');
 
-        Storage::deleteDirectory('public/cedulas_profesionales');
+        Storage::deleteDirectory('cedulas_profesionales');
         Storage::makeDirectory('public/cedulas_profesionales');
 
-        Storage::deleteDirectory('public/cartas_de_pasantes');
-        Storage::makeDirectory('public/cartas_de_pasantes');
+        Storage::deleteDirectory('cartas_de_pasantes');
+        Storage::makeDirectory('cartas_de_pasantes');
 
-        Storage::deleteDirectory('public/curriculums_vitaes');
-        Storage::makeDirectory('public/curriculums_vitaes');
+        Storage::deleteDirectory('curriculums_vitaes');
+        Storage::makeDirectory('curriculums_vitaes');
 
         $this->call([
             RoleSeeder::class,

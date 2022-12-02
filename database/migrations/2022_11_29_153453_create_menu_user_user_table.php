@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTimeChecksTable extends Migration
+class CreateMenuUserUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateTimeChecksTable extends Migration
      */
     public function up()
     {
-        Schema::create('time_checks', function (Blueprint $table) {
+        Schema::create('menu_user_user', function (Blueprint $table) {
             $table->id();
-
-            $table->time('hora');
-            $table->string('estatus');
-            $table->string('observación');
-
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateTimeChecksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time_checks');
+        Schema::dropIfExists('menu_user_user');
     }
 }

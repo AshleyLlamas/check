@@ -15,7 +15,7 @@ class Assistance extends Model
         'check_id',
         'user_id',
         'asistencia',
-        'motivo'
+        'observación'
     ];
 
     //Uno a Muchos Inversa

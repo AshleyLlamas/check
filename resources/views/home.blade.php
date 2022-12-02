@@ -8,7 +8,7 @@
                     {{ session('message') }}
                 </div>
             @endif
-            @livewire('home')
+            {{-- @livewire('home') --}}
         </div>
     </div>
 @endsection

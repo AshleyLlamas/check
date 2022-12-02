@@ -69,8 +69,6 @@ class MakeAbsence extends Command
      */
     public function handle()
     {
-        //$users = User::join('schedules', 'users.id', '=', 'schedules.user_id')->where('día', $this->clave)->where('actual', true)->get();
-
         $users = User::whereHas('schedules', function($query) {
             $query->where('día', '=', $this->clave)->where('actual', true);
         })->get();
@@ -81,8 +79,8 @@ class MakeAbsence extends Command
             if(!$existe_un_check){
                 Assistance::create([
                     'user_id' => $user->id,
-                    'asistencia' => 'Inasistencia',
-                    'motivo' => 'Sin especificar'
+                    'asistencia' => 'No asistió',
+                    'observación' => 'Sin especificar'
                 ]);
             }
         }

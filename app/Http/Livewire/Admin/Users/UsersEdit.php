@@ -20,8 +20,12 @@ class UsersEdit extends Component
     //User
     public $foto, $qr, $name, $email, $curp, $número_de_empleado, $company, $puesto, $password, $password_confirmation, $role;
 
+    public $documento_de_identificación_oficial, $documento_del_comprobante_de_domicilio, $documento_de_no_antecedentes_penales,
+        $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
+
     public function mount(User $user){
         $this->user = $user;
+        $this->document = $user->document;
 
         $this->user->name = $user->name;
         $this->email = $user->email;
@@ -37,14 +41,28 @@ class UsersEdit extends Component
         
         $array = [];
 
+        //User
         $array['foto'] = 'nullable|image|mimes:jpeg,jpg,png|max:5048';
         $array['user.name'] = 'required|string|max:255';
         $array['user.número_de_empleado'] = 'required|numeric|max:99999';
         $array['curp'] = ['required', 'string', 'min:18', 'max:18', 'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', 'unique:users,curp,'.$this->user->id];
         $array['email'] = ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id];
+        $array['user.número_de_inscripción_al_imss'] = 'required|string|max:255';
+        $array['user.rfc'] = ['required',/* 'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/',*/'string','max:255'];
+        $array['user.número_del_infonavit'] = 'required|string|max:255';
 
+        //Work
         $array['user.puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];
+
+        //Docs
+        $array['documento_de_identificación_oficial'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
+        $array['documento_del_comprobante_de_domicilio'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
+        $array['documento_de_no_antecedentes_penales'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
+        $array['documento_de_la_licencia_de_conducir'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
+        $array['documento_de_la_cedula_profesional'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
+        $array['documento_de_la_carta_de_pasante'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
+        $array['documento_del_curriculum_vitae'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
 
         $array['role'] = ['required'];
     
@@ -82,6 +100,42 @@ class UsersEdit extends Component
 
         }
 
+        //Docs
+        if($this->documento_de_identificación_oficial){
+            Storage::delete([$this->document->documento_de_identificación_oficial]);
+            $this->document->documento_de_identificación_oficial = $this->documento_de_identificación_oficial->store('identificaciones_oficiales');
+        }
+
+        if($this->documento_del_comprobante_de_domicilio){
+            Storage::delete([$this->document->documento_del_comprobante_de_domicilio]);
+            $this->document->documento_del_comprobante_de_domicilio = $this->documento_del_comprobante_de_domicilio->store('comprobantes_de_domicilio');
+        }
+
+        if($this->documento_de_no_antecedentes_penales){
+            Storage::delete([$this->document->documento_de_no_antecedentes_penales]);
+            $this->document->documento_de_no_antecedentes_penales = $this->documento_de_no_antecedentes_penales->store('documentos_de_no_antecedentes_penales');
+        }
+
+        if($this->documento_de_la_licencia_de_conducir){
+            Storage::delete([$this->document->documento_de_la_licencia_de_conducir]);
+            $this->document->documento_de_la_licencia_de_conducir = $this->documento_de_la_licencia_de_conducir->store('licencias_de_conducir');
+        }
+
+        if($this->documento_de_la_cedula_profesional){
+            Storage::delete([$this->document->documento_de_la_cedula_profesional]);
+            $this->document->documento_de_la_cedula_profesional = $this->documento_de_la_cedula_profesional->store('cedulas_profesionales');
+        }
+
+        if($this->documento_de_la_carta_de_pasante){
+            Storage::delete([$this->document->documento_de_la_carta_de_pasante]);
+            $this->document->documento_de_la_carta_de_pasante = $this->documento_de_la_carta_de_pasante->store('cartas_de_pasantes');
+        }
+
+        if($this->documento_del_curriculum_vitae){
+            Storage::delete([$this->document->documento_del_curriculum_vitae]);
+            $this->document->documento_del_curriculum_vitae = $this->documento_del_curriculum_vitae->store('curriculums_vitaes');
+        }
+
         $this->user->qr = $this->qr;
         $this->user->email = $this->email;
         $this->user->curp = $this->curp;
@@ -91,8 +145,9 @@ class UsersEdit extends Component
         //$user->roles()->detach();
         $this->user->roles()->sync($this->role);
         $this->user->save();
+        $this->document->save();
 
-        session()->flash('message', 'Usuario se editó satisfactoriamente.');
+        session()->flash('message', 'Empleado se editó satisfactoriamente.');
 
         return redirect(route('admin.users.index'));
     }
