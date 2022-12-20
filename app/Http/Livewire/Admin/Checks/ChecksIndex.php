@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Checks;
 
 use App\Models\Check;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,7 +11,7 @@ class ChecksIndex extends Component
 {
     use WithPagination;
 
-    public $search, $order;
+    public $search, $order, $date;
     public $sort = 'id';
     public $direction = 'desc';
     protected $paginationTheme = "bootstrap";
@@ -43,9 +44,15 @@ class ChecksIndex extends Component
         }
     }
 
+    public function __construct()
+    {
+        $hoy = Carbon::now();
+        $this->date = $hoy->format('Y-m-d');
+    }
+
     public function render()
     {
-        $checks = Check::where('fecha', 'LIKE', '%' . $this->search . '%')
+        $checks = Check::where('fecha', 'LIKE', '%' . $this->date . '%')
                         ->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();

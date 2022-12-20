@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Users;
+namespace App\Http\Livewire\Admin\Areas;
 
-use App\Models\User;
+use App\Models\Area;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class UsersIndex extends Component
+class AreasIndex extends Component
 {
     use WithPagination;
 
@@ -33,11 +33,11 @@ class UsersIndex extends Component
                 $this->direction = 'asc';
             break;
             case 3:
-                $this->sort = 'name';
+                $this->sort = 'área';
                 $this->direction = 'asc';
             break;
             case 4:
-                $this->sort = 'name';
+                $this->sort = 'área';
                 $this->direction = 'desc';
             break;
         }
@@ -45,17 +45,16 @@ class UsersIndex extends Component
 
     public function render()
     {
-        $users = User::where('tipo', 'Empleado')
-                        ->where('name', 'LIKE', '%' . $this->search . '%')
+        $areas = Area::where('área', 'LIKE', '%' . $this->search . '%')
                         ->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
         
-        $all_users = $users->count();
+        $all_areas = Area::count();
 
-        return view('livewire.admin.users.users-index', [
-            'users' => $users,
-            'all_users' => $all_users
+        return view('livewire.admin.areas.areas-index', [
+            'areas' => $areas,
+            'all_areas' => $all_areas
         ]);
     }
 }

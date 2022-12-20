@@ -110,12 +110,29 @@
                                 <strong>Tipo de empleado</strong>
 
                                 <p class="text-muted">
-                                    @isset($user->tipo_de_empleado)
-                                        {{$user->tipo_de_empleado}}
+                                    @isset($user->tipo)
+                                        {{$user->tipo}}
                                     @else
                                         N/A
                                     @endisset
                                 </p>
+                            @if($user->areas->count())
+                            <hr>
+                                <strong>
+                                    Área
+                                </strong>
+
+                                @foreach ($user->areas as $area)
+                                    <p class="text-muted">
+                                        @isset($area->área)
+                                            {{$area->área}}
+                                        @else
+                                            N/A
+                                        @endisset
+                                    </p>
+                                <br>
+                                @endforeach
+                            @endif
                         </div>
                         <!-- /.card-body -->
                     </div>

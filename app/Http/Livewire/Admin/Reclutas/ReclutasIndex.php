@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Users;
+namespace App\Http\Livewire\Admin\Reclutas;
 
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class UsersIndex extends Component
+class ReclutasIndex extends Component
 {
     use WithPagination;
 
@@ -45,15 +45,15 @@ class UsersIndex extends Component
 
     public function render()
     {
-        $users = User::where('tipo', 'Empleado')
+        $users = User::where('tipo', 'Recluta')
                         ->where('name', 'LIKE', '%' . $this->search . '%')
                         ->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
         
         $all_users = $users->count();
-
-        return view('livewire.admin.users.users-index', [
+        
+        return view('livewire.admin.reclutas.reclutas-index', [
             'users' => $users,
             'all_users' => $all_users
         ]);

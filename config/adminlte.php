@@ -318,9 +318,19 @@ return [
         ],
         ['header' => 'CONTENIDO'],
         [
+            'text'        => 'Areas',
+            'route'         => 'admin.areas.index',
+            'icon' => 'fas fa-solid fa-briefcase',
+        ],
+        [
             'text'        => 'Empleados',
             'route'         => 'admin.users.index',
             'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'        => 'Reclutas',
+            'route'         => 'admin.reclutas.index',
+            'icon' => 'fas fa-regular fa-user',
         ],
         [
             'text'        => 'Checadores',
@@ -410,12 +420,12 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],

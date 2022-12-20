@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable; 
 
     use HasRoles;
 
@@ -26,18 +26,20 @@ class User extends Authenticatable
     
     protected $fillable = [
         'qr',
+        'número_de_empleado',
         'name',
         'email',
         'curp',
         'password',
-        'número_de_empleado',
-        'company_id',
         'puesto',
-        'document_id',
+        'tipo',
         'número_de_inscripción_al_imss',
         'rfc',
         'número_del_infonavit',
-        'document_id'
+        'company_id',
+        'address',
+        'document_id',
+        'slug'
     ];
 
     /**
@@ -58,6 +60,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
 
      //Uno a Uno Inversa
      public function company(){
@@ -87,5 +93,20 @@ class User extends Authenticatable
     //Uno a Uno Inversa
     public function document(){
         return $this->belongsTo('App\Models\UserDocuments');
+    }
+
+    //Uno a Uno Inversa
+    public function address(){
+        return $this->belongsTo('App\Models\Address');
+    }
+
+    //Uno a Uno
+    public function area(){
+        return $this->hasOne('App\Models\Area');
+    }
+
+    //Muchos a Muchos
+    public function areas(){
+        return $this->belongsToMany('App\Models\Area')->withPivot('encargado_id');
     }
 }

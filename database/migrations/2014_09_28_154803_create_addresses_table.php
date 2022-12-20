@@ -15,6 +15,16 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+
+            $table->string('calle')->nullable();
+            $table->string('número_interior')->nullable();
+            $table->string('número_exterior')->nullable();
+            $table->string('colonia')->nullable();
+            $table->string('código_postal')->nullable();
+            
+            $table->unsignedBigInteger('municipality_id')->nullable();
+            $table->foreign('municipality_id')->references('id')->on('municipalities')->onDelete('set null')->onUpdate('cascade');
+
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenuUserUserTable extends Migration
+class CreateAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class CreateMenuUserUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu_user_user', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->id();
+
+            $table->string('área')->nullable();
+
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
+
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreateMenuUserUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_user_user');
+        Schema::dropIfExists('areas');
     }
 }

@@ -15,10 +15,10 @@ class UsersEdit extends Component
 {
     use WithFileUploads;
 
-    public $user;
+    public $user, $document;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $número_de_empleado, $company, $puesto, $password, $password_confirmation, $role;
+    public $foto, $qr, $name, $email, $curp, $número_de_empleado, $company, $puesto, $tipo, $password, $password_confirmation, $role;
 
     public $documento_de_identificación_oficial, $documento_del_comprobante_de_domicilio, $documento_de_no_antecedentes_penales,
         $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
@@ -27,10 +27,12 @@ class UsersEdit extends Component
         $this->user = $user;
         $this->document = $user->document;
 
-        $this->user->name = $user->name;
+        $this->qr = $user->qr;
+        $this->name = $user->name;
         $this->email = $user->email;
         $this->curp = $user->curp;
         $this->company = $user->company_id;
+        $this->tipo = $user->tipo;
 
         if($user->roles->count()){
             $this->role = $user->roles->pluck('id')[0];
@@ -44,16 +46,17 @@ class UsersEdit extends Component
         //User
         $array['foto'] = 'nullable|image|mimes:jpeg,jpg,png|max:5048';
         $array['user.name'] = 'required|string|max:255';
-        $array['user.número_de_empleado'] = 'required|numeric|max:99999';
         $array['curp'] = ['required', 'string', 'min:18', 'max:18', 'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', 'unique:users,curp,'.$this->user->id];
         $array['email'] = ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id];
         $array['user.número_de_inscripción_al_imss'] = 'required|string|max:255';
         $array['user.rfc'] = ['required',/* 'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/',*/'string','max:255'];
-        $array['user.número_del_infonavit'] = 'required|string|max:255';
+        $array['user.número_del_infonavit'] = 'nullable|string|max:255';
 
         //Work
+        $array['user.número_de_empleado'] = 'required|numeric|max:99999';
         $array['user.puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];
+        $array['tipo'] = ['required'];
 
         //Docs
         $array['documento_de_identificación_oficial'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
@@ -141,6 +144,7 @@ class UsersEdit extends Component
         $this->user->curp = $this->curp;
         $this->user->password = Hash::make(mb_strtoupper($this->curp, 'UTF-8'));
         $this->user->company_id = $this->company;
+        $this->user->tipo = $this->tipo;
 
         //$user->roles()->detach();
         $this->user->roles()->sync($this->role);

@@ -4,7 +4,7 @@
             @can('admin.users.index')
                 <li class="breadcrumb-item"><a href="{{route('admin.users.index')}}">Todos los empleados</a></li>
             @endcan
-            <li class="breadcrumb-item active">Editar empleado</li>
+            <li class="breadcrumb-item active">Nuevo empleado</li>
         </ol>
     </nav>
     <div class="card">
@@ -66,7 +66,7 @@
                                         {{ __('Nombre completo') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="name" class="form-control" wire:model="user.name" placeholder="Ingrese el nombre del usuario">
+                                    <input type="text" id="name" class="form-control" wire:model="user.name" placeholder="Ingrese el nombre del empleado">
                                     @error('user.name') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 
@@ -89,9 +89,8 @@
                                 <div class="form-group col-12 col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Número de inscripción al IMSS') }}
-                                        <span class="text-danger">*</span>
                                     </label>
-                                    <input type="number" id="número_de_inscripción_al_imss" class="form-control" wire:model="user.número_de_inscripción_al_imss" placeholder="Ingrese el número de inscripción al IMSS del empleado">
+                                    <input type="text" id="número_de_inscripción_al_imss" class="form-control" wire:model="user.número_de_inscripción_al_imss" placeholder="Ingrese el número de inscripción al IMSS del empleado">
                                     @error('user.número_de_inscripción_al_imss') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12 col-md-6">
@@ -105,7 +104,6 @@
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Número del infonavit') }}
-                                        <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" id="número_del_infonavit" class="form-control" wire:model="user.número_del_infonavit" placeholder="Ingrese el número del infonavit del empleado">
                                     @error('user.número_del_infonavit') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -125,7 +123,7 @@
                                 <h5 class="py-1 text-center">Datos del trabajo</h5>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Número de empleado') }}
                                         <span class="text-danger">*</span>
@@ -133,12 +131,26 @@
                                     <input type="number" id="número_de_empleado" class="form-control" wire:model="user.número_de_empleado" placeholder="Ingrese el número de empleado">
                                     @error('user.número_de_empleado') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Puesto') }}
                                     </label>
-                                    <input type="text" id="puesto" class="form-control" wire:model="user.puesto" placeholder="Ingrese el puesto del usuario">
+                                    <input type="text" id="puesto" class="form-control" wire:model="user.puesto" placeholder="Ingrese el puesto del empleado">
                                     @error('user.puesto') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div>
+                                        <label class="col-form-label">
+                                            {{ __('Tipo de empleado') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" id="tipo" wire:model="tipo">
+                                            <option value="">Selecciona una opción</option>
+                                            <option>Empleado</option>
+                                            <option>Recluta</option>
+                                        </select>
+                                    </div>
+                                    @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <div wire:ignore>
@@ -173,7 +185,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('Identificación oficial / INE') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_identificación_oficial" wire:model.defer="documento_de_identificación_oficial">
                                     @error('documento_de_identificación_oficial') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -181,7 +193,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('Comprobante de domicilio') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_del_comprobante_de_domicilio" wire:model.defer="documento_del_comprobante_de_domicilio">
                                     @error('documento_del_comprobante_de_domicilio') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -189,7 +201,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('No atecendentes penales') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_no_antecedentes_penales" wire:model.defer="documento_de_no_antecedentes_penales">
                                     @error('documento_de_no_antecedentes_penales') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -218,7 +230,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('Curriculum Vitae (CV)') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_del_curriculum_vitae" wire:model.defer="documento_del_curriculum_vitae">
                                     @error('documento_del_curriculum_vitae') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -227,7 +239,7 @@
                         </div>
                     </div>
                     {{--Rol--}}
-                    <div class="row rounded border mb-4">
+                    <div class="row rounded border">
                         <div class="bg-gray rounded-left">
                             <div class="m-3">
                                 <div class="my-auto"><i class="fa-solid fa-unlock"></i></div>
@@ -254,45 +266,12 @@
                             </div>
                         </div>
                     </div>
-                    {{--Contaseña--}}
-                    {{-- <div class="row rounded border">
-                        <div class="bg-gray rounded-left">
-                            <div class="m-3">
-                                <div class="my-auto"><i class="fa-solid fa-key"></i></div>
-                            </div>
-                        </div>
-                        <div class="col m-2">
-                            <div class="border-bottom">
-                                <h5 class="py-1 text-center">Contraseña</h5>
-                            </div>
-                            <div>
-                                <div class="row">
-                                    <div class="form-group col-12 col-md-6 col-sm-6">
-                                        <label class="col-form-label">
-                                            {{ __('Contraseña') }}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="password" class="form-control" wire:model="password" required autocomplete="new-password" placeholder="Ingrese la contraseña del empleado">
-                                        @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
-                                    </div>
-                                    <div class="form-group col-12 col-md-6 col-sm-6">
-                                        <label class="col-form-label">
-                                            {{ __('Confirmar contraseña') }}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="password" class="form-control" wire:model="password_confirmation" required autocomplete="new-password" placeholder="Nuevamente ingrese la contraseña del empleado">
-                                        @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </form>
         </div>
         <div class="card-footer">
             <div class="text-center">
-                <button type="button" wire:loading.attr="disabled" wire:click.prevent="save()" wire:target="save, foto" class="btn btn-success">Guardar</button>
+                <button type="button" wire:loading.attr="disabled" wire:click.prevent="save()" wire:target="save, fotodocumento_de_identificación_oficial, documento_del_comprobante_de_domicilio, documento_de_no_antecedentes_penales, documento_de_la_licencia_de_conducir, documento_de_la_cedula_profesional, documento_de_la_carta_de_pasante, documento_del_curriculum_vitae" class="btn btn-success">Guardar</button>
             </div>
         </div>
     </div>

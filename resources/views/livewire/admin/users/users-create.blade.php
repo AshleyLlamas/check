@@ -85,9 +85,8 @@
                                 <div class="form-group col-12 col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Número de inscripción al IMSS') }}
-                                        <span class="text-danger">*</span>
                                     </label>
-                                    <input type="number" id="número_de_inscripción_al_imss" class="form-control" wire:model="número_de_inscripción_al_imss" placeholder="Ingrese el número de inscripción al IMSS del empleado">
+                                    <input type="text" id="número_de_inscripción_al_imss" class="form-control" wire:model="número_de_inscripción_al_imss" placeholder="Ingrese el número de inscripción al IMSS del empleado">
                                     @error('número_de_inscripción_al_imss') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12 col-md-6">
@@ -101,7 +100,6 @@
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Número del infonavit') }}
-                                        <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" id="número_del_infonavit" class="form-control" wire:model="número_del_infonavit" placeholder="Ingrese el número del infonavit del empleado">
                                     @error('número_del_infonavit') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -137,6 +135,20 @@
                                     @error('puesto') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
+                                    <div>
+                                        <label class="col-form-label">
+                                            {{ __('Tipo de empleado') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" id="tipo" wire:model="tipo">
+                                            <option value="">Selecciona una opción</option>
+                                            <option>Empleado</option>
+                                            <option>Recluta</option>
+                                        </select>
+                                    </div>
+                                    @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
                                     <div wire:ignore>
                                         <label class="col-form-label">
                                             {{ __('Empresa / Compañia') }}
@@ -150,6 +162,40 @@
                                         </select>
                                     </div>
                                     @error('company') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Área') }}
+                                            @if(!is_null($área) || !is_null($encargado))
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <select class="form-control" id="área" wire:model="área">
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($areas as $area)
+                                                <option value="{{ $area->id}}">{{ $area->área }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('área') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Encargado') }}
+                                            @if(!is_null($área) || !is_null($encargado))
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <select class="form-control" id="users">
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($users as $encargado)
+                                                <option value="{{ $encargado->id}}">{{ $encargado->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('encargado') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
@@ -225,7 +271,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('Identificación oficial / INE') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_identificación_oficial" wire:model.defer="documento_de_identificación_oficial">
                                     @error('documento_de_identificación_oficial') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -233,7 +279,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('Comprobante de domicilio') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_del_comprobante_de_domicilio" wire:model.defer="documento_del_comprobante_de_domicilio">
                                     @error('documento_del_comprobante_de_domicilio') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -241,7 +287,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('No atecendentes penales') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_no_antecedentes_penales" wire:model.defer="documento_de_no_antecedentes_penales">
                                     @error('documento_de_no_antecedentes_penales') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -270,7 +316,7 @@
                                 <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
                                     <label class="col-form-label">
                                         {{ __('Curriculum Vitae (CV)') }}
-                                        <span class="text-danger">*</span>
+                                        {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_del_curriculum_vitae" wire:model.defer="documento_del_curriculum_vitae">
                                     @error('documento_del_curriculum_vitae') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -344,7 +390,7 @@
         </div>
         <div class="card-footer">
             <div class="text-center">
-                <button type="button" wire:loading.attr="disabled" wire:click.prevent="save()" wire:target="save, foto" class="btn btn-success">Guardar</button>
+                <button type="button" wire:loading.attr="disabled" wire:click.prevent="save()" wire:target="save, fotodocumento_de_identificación_oficial, documento_del_comprobante_de_domicilio, documento_de_no_antecedentes_penales, documento_de_la_licencia_de_conducir, documento_de_la_cedula_profesional, documento_de_la_carta_de_pasante, documento_del_curriculum_vitae" class="btn btn-success">Guardar</button>
             </div>
         </div>
     </div>
@@ -366,6 +412,13 @@
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
             @this.set('company', data);
+            });
+
+            $('#users').select2();
+
+            $('#users').on('change', function (e) {
+                var data = $('#users').select2("val");
+            @this.set('encargado', data);
             });
             /////
 

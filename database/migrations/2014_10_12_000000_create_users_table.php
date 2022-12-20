@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('puesto')->nullable();
 
-            $table->string('tipo_de_empleado')->nullable();
+            $table->enum('tipo', ['Empleado', 'Recluta'])->nullable();
 
             $table->string('número_de_inscripción_al_imss')->nullable();
              
@@ -36,10 +36,12 @@ class CreateUsersTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null')->onUpdate('cascade');
 
             $table->unsignedBigInteger('address_id')->nullable();
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('document_id')->nullable();
             $table->foreign('document_id')->references('id')->on('user_documents')->onDelete('set null')->onUpdate('cascade');
+            
+            $table->string('slug')->nullable();
 
             $table->timestamps();
         });
