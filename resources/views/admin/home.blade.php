@@ -4,7 +4,9 @@
 
 @section('content')
     <div class="py-4">
-        @livewire('admin.home.control-de-asistencias')
+        @can('admin.home.info')
+            @livewire('admin.home.control-de-asistencias')  
+        @endcan
     </div>
 @stop
 

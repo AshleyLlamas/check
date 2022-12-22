@@ -51,7 +51,7 @@ class UsersIndex extends Component
                         ->latest('id')
                         ->paginate();
         
-        $all_users = $users->count();
+        $all_users = User::where('tipo', 'Empleado')->count();
 
         return view('livewire.admin.users.users-index', [
             'users' => $users,

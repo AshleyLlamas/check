@@ -321,21 +321,25 @@ return [
             'text'        => 'Areas',
             'route'         => 'admin.areas.index',
             'icon' => 'fas fa-solid fa-briefcase',
+            'can' => 'admin.areas.index'
         ],
         [
             'text'        => 'Empleados',
             'route'         => 'admin.users.index',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'admin.users.index'
         ],
         [
             'text'        => 'Reclutas',
             'route'         => 'admin.reclutas.index',
             'icon' => 'fas fa-regular fa-user',
+            'can' => 'admin.reclutas.index'
         ],
         [
             'text'        => 'Checadores',
             'route'         => 'admin.checks.index',
             'icon' => 'fas fa-solid fa-clock',
+            'can' => 'admin.checks.index'
         ],
     ],
 

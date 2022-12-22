@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class AreaController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:admin.areas.index')->only('index');
+        $this->middleware('can:admin.areas.edit')->only('edit');
+        $this->middleware('can:admin.areas.show')->only('show');
+        $this->middleware('can:admin.areas.create')->only('create');
+        $this->middleware('can:admin.areas.destroy')->only('destroy');
+    }
+
     public function index()
     {
         return view('admin.areas.index');

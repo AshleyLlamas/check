@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Users;
+namespace App\Http\Livewire\Admin\Reclutas;
 
 use App\Models\Company;
 use App\Models\Image;
@@ -9,34 +9,29 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Spatie\Permission\Models\Role;
 
-class UsersEdit extends Component
+class ReclutasEdit extends Component
 {
     use WithFileUploads;
 
     public $user, $document;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $número_de_empleado, $company, $puesto, $tipo, $password, $password_confirmation, $role;
+    public $foto, $qr, $name, $email, $curp, $company, $puesto, $tipo;
 
     public $documento_de_identificación_oficial, $documento_del_comprobante_de_domicilio, $documento_de_no_antecedentes_penales,
         $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
-
+    
     public function mount(User $user){
         $this->user = $user;
         $this->document = $user->document;
-
+    
         $this->qr = $user->qr;
         $this->name = $user->name;
         $this->email = $user->email;
         $this->curp = $user->curp;
         $this->company = $user->company_id;
         $this->tipo = $user->tipo;
-
-        if($user->roles->count()){
-            $this->role = $user->roles->pluck('id')[0];
-        }
     }
 
     public function rules(){
@@ -53,7 +48,6 @@ class UsersEdit extends Component
         $array['user.número_del_infonavit'] = 'nullable|string|max:255';
 
         //Work
-        $array['user.número_de_empleado'] = 'required|numeric|max:99999999';
         $array['user.puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];
         $array['tipo'] = ['required'];
@@ -66,8 +60,6 @@ class UsersEdit extends Component
         $array['documento_de_la_cedula_profesional'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
         $array['documento_de_la_carta_de_pasante'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
         $array['documento_del_curriculum_vitae'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
-
-        $array['role'] = ['required'];
     
         return $array;
     }
@@ -146,24 +138,20 @@ class UsersEdit extends Component
         $this->user->company_id = $this->company;
         $this->user->tipo = $this->tipo;
 
-        //$user->roles()->detach();
-        $this->user->roles()->sync($this->role);
         $this->user->save();
         $this->document->save();
 
-        session()->flash('message', 'Empleado se editó satisfactoriamente.');
+        session()->flash('message', 'Reclutado se editó satisfactoriamente.');
 
-        return redirect(route('admin.users.index'));
+        return redirect(route('admin.reclutas.index'));
     }
 
     public function render()
     {
-            $companies = Company::orderBy('nombre_de_la_compañia')->get();
-            $roles = Role::orderBy('name')->get();
-
-        return view('livewire.admin.users.users-edit', [
-            'companies' => $companies,
-            'roles' => $roles
+        $companies = Company::orderBy('nombre_de_la_compañia')->get();
+        
+        return view('livewire.admin.reclutas.reclutas-edit', [
+            'companies' => $companies
         ]);
     }
 }

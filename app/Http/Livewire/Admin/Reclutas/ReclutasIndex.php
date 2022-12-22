@@ -51,7 +51,7 @@ class ReclutasIndex extends Component
                         ->latest('id')
                         ->paginate();
         
-        $all_users = $users->count();
+        $all_users = User::where('tipo', 'Recluta')->count();
         
         return view('livewire.admin.reclutas.reclutas-index', [
             'users' => $users,

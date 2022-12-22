@@ -425,39 +425,48 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title pt-1">Horario</h3>
-                            <button type="button" class="btn btn-sm btn-default float-right"><i class="fa-solid fa-pen-to-square"></i></button>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div>
                                 <div class="table-responsive">
                                     @if($user->schedules->count())
-                                        <table class="table text-center border">
+                                        <table class="table table-bordered text-center">
                                             <thead class="text-primary">
                                                 <tr>
-                                                    <th><i class="fa-solid fa-clock"></i></th>
-                                                    @foreach ($user->schedules as $schedule)
-                                                        <th class="border-left">{{$schedule->día}}</th>
-                                                    @endforeach
+                                                    <th scope="col">Día</th>
+                                                    <th scope="col">Entrada</th>
+                                                    <th scope="col">Salida</th>
+                                                    @can('admin.schedules.edit')
+                                                        <th></th>
+                                                    @endcan
+                                                    @can('admin.schedules.destroy')
+                                                        <th></th>
+                                                    @endcan
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th scope="row" class="text-primary">Entrada</th>
                                                 @foreach ($user->schedules as $n => $schedule)
-                                                    <td class="border-left">
-                                                        {{$schedule->hora_de_entrada->format('h:i a')}}
-                                                    </td>
-                                                @endforeach
-                                            </tr>
-                                                <tr>
-                                                    <th scope="row" class="text-primary">Salida</th>
-                                                    @foreach ($user->schedules as $n => $schedule)
-                                                        <td class="border-left">
+                                                    <tr>
+                                                        <td scope="row">
+                                                            {{$schedule->día}}
+                                                        </td>
+                                                        <td>
+                                                            {{$schedule->hora_de_entrada->format('h:i a')}}
+                                                        </td>
+                                                        <td>
                                                             {{$schedule->hora_de_salida->format('h:i a')}}
                                                         </td>
-                                                    @endforeach
-                                                </tr>
+                                                        <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.schedules.edit', $user)}}"><i class="fas fa-edit"></i></a></td>
+                                                        <td width="10px">
+                                                            <form action="{{ route('admin.schedules.destroy', $schedule) }}" method="POST" class="alert-delete">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="btn btn-danger btn-sm" onclick="delete()"><i class="fas fa-trash-alt"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     @else
@@ -500,7 +509,7 @@
                                                     <th scope="col"><h5 class="mb-1 pt-1">Asistencia</h5></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody> 
                                                 @foreach ($user->checks as $check)
                                                     <tr>
                                                         <th>
@@ -532,7 +541,7 @@
                                             </tbody>
                                         </table>
                                     @else
-                                        <p class="text-danger text-center mb-1"><b>Sin horario.</b></p>
+                                        <p class="text-danger text-center py-4 mb-1"><b>Sin checks.</b></p>
                                     @endif
                                 </div>
                             </div>
@@ -546,28 +555,6 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-</div>
 
-@push('js')
-    {{--<script src="{{ asset('js/calendar.js') }}"></script>--}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'es',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-        },
-            initialDate: {!! json_encode($hoy) !!},
-            navLinks: true, // can click day/week names to navigate views
-            editable: false,
-            selectable: false,
-            dayMaxEvents: false, // allow "more" link when too many events
-            events: {!! json_encode($json_dias) !!}
-        });
-        calendar.render();
-        });
-    </script>
-@endpush
+    <!-- DELET SCHEDULE -->
+</div>
