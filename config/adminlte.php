@@ -341,6 +341,13 @@ return [
             'icon' => 'fas fa-solid fa-clock',
             'can' => 'admin.checks.index'
         ],
+        [
+            'text'        => 'Roles',
+            'route'         => 'admin.roles.index',
+            'icon' => 'fas fa-solid fa-key',
+            'can' => 'admin.roles.index',
+            'color' => 'red'
+        ],
     ],
 
     /*

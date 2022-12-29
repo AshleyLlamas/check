@@ -10,6 +10,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 
+use Rats\Zkteco\Lib\ZKTeco;
+
 class CheckCreate extends Component
 {
     public $user;
@@ -18,6 +20,13 @@ class CheckCreate extends Component
 
     public function mount(User $user){
         $this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+        $zk = new ZKTeco('34.195.118.113', 9892);
+
+        $zk->connect();   
+
+        //$zk->testVoice();
+
+        $zk->getUser(); 
     }
 
     public function save(){
@@ -30,7 +39,7 @@ class CheckCreate extends Component
                 $clave = "Martes";
             break;
             case "mi":
-                $clave = "Miercoles";
+                $clave = "Miércoles";
             break;
             case "ju":
                 $clave = "Jueves";
@@ -39,7 +48,7 @@ class CheckCreate extends Component
                 $clave = "Viernes";
             break;
             case "sa":
-                $clave = "Sabado";
+                $clave = "Sábado";
             break;
             case "do":
                 $clave = "Domingo";

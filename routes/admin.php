@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AssistanceController;
 use App\Http\Controllers\Admin\ReclutaController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,6 @@ Route::resource('schedules', ScheduleController::class)->only(['destroy', 'edit'
 
 //Assistances
 Route::get('/assistances/{assistance}', [AssistanceController::class, 'show'])->name('admin.assistances.show');
+
+//Roles
+Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.roles');

@@ -206,10 +206,10 @@
                                         <select class="w-100" id="days" name="days[]" multiple="multiple">
                                             <option>Lunes</option>
                                             <option>Martes</option>
-                                            <option>Miercoles</option>
+                                            <option>Miércoles</option>
                                             <option>Jueves</option>
                                             <option>Viernes</option>
-                                            <option>Sabado</option>
+                                            <option>Sábado</option>
                                             <option>Domingo</option>
                                         </select>
                                     </div>

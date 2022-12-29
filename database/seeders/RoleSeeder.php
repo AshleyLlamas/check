@@ -86,6 +86,9 @@ class RoleSeeder extends Seeder
         'description' => 'Ver checador.'])->syncRoles([$role1]);
 
         //ROLES
+        $permission = Permission::create(['name' => 'admin.roles.index',
+        'description' => 'Ver todas los roles.'])->syncRoles([$role1]);
+
         $permission = Permission::create(['name' => 'admin.roles.show',
         'description' => 'Ver todos los roles de la lista roles.'])->syncRoles([$role1]);
 

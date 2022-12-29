@@ -1,11 +1,11 @@
 <div>
-    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleEdit{{$schedule->id}}Modal"><i class="fas fa-edit"></i></button>
+    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#scheduleCreateModal"><i class="fa-solid fa-plus"></i></button>
 
-    <div class="modal fade" id="scheduleEdit{{$schedule->id}}Modal" tabindex="-1" role="dialog" aria-labelledby="scheduleEdit{{$schedule->id}}ModalLarabel" aria-hidden="true">
+    <div class="modal fade" id="scheduleCreateModal" tabindex="-1" role="dialog" aria-labelledby="scheduleCreateModalLarabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="scheduleEdit{{$schedule->id}}ModalLarabel">Editar día del horario</h5>
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" id="scheduleCreateModalLarabel">Agregar día del horario</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" wire:loading.attr="disabled" wire:click.prevent="save()" wire:target="save" class="btn btn-success">Guardar</button>
                 </div>
             </div>
         </div>

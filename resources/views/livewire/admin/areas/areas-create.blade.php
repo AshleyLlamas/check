@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
-                                        {{ __('Nombre completo') }}
+                                        {{ __('Nombre del rol') }}
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" id="área" class="form-control" wire:model="área" placeholder="Ingrese el nombre del área">

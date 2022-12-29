@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Users;
 
+use App\Models\Area;
 use App\Models\Company;
 use App\Models\Image;
 use App\Models\User;
@@ -159,10 +160,12 @@ class UsersEdit extends Component
     public function render()
     {
             $companies = Company::orderBy('nombre_de_la_compañia')->get();
+            //$areas = Area::orderBy('área')->get();
             $roles = Role::orderBy('name')->get();
 
         return view('livewire.admin.users.users-edit', [
             'companies' => $companies,
+            //'areas' => $areas,
             'roles' => $roles
         ]);
     }

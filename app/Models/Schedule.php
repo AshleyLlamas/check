@@ -14,6 +14,7 @@ class Schedule extends Model
     protected $dates = ['hora_de_entrada', 'hora_de_salida'];
     
     protected $fillable = [
+        'posición',
         'día',
         'hora_de_entrada',
         'hora_de_salida',

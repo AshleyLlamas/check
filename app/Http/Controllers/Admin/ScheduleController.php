@@ -20,7 +20,11 @@ class ScheduleController extends Controller
 
     public function destroy(Schedule $schedule)
     {
-        //
+        //$schedule->delete();
+
+        $schedule->actual = false;
+        $schedule->save();
+
         return redirect()->route('admin.users.show', $schedule->user)->with('eliminar', 'ok');
     }
 }

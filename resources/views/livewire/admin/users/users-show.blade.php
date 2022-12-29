@@ -429,42 +429,50 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div>
+                                @if (session()->has('message'))
+                                    <div class="alert alert-success text-center"><i class="fa-solid fa-circle-check"></i> {{ session('message') }}</div>
+                                @endif
+                                @if (session()->has('error'))
+                                    <div class="alert alert-danger text-center"><i class="fa-solid fa-circle-xmark"></i> {{ session('error') }}</div>
+                                @endif
                                 <div class="table-responsive">
-                                    @if($user->schedules->count())
-                                        <table class="table table-bordered text-center">
-                                            <thead class="text-primary">
+                                    @if($schedules->count())
+                                        <table class="table table-bordered">
+                                            <thead class="text-primary text-center">
                                                 <tr>
                                                     <th scope="col">Día</th>
                                                     <th scope="col">Entrada</th>
                                                     <th scope="col">Salida</th>
-                                                    @can('admin.schedules.edit')
+                                                    @can('admin.users.edit')
                                                         <th></th>
-                                                    @endcan
-                                                    @can('admin.schedules.destroy')
                                                         <th></th>
                                                     @endcan
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($user->schedules as $n => $schedule)
+                                                @foreach ($schedules as $n => $schedule)
                                                     <tr>
-                                                        <td scope="row">
+                                                        <td scope="row" class="text-center">
                                                             {{$schedule->día}}
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             {{$schedule->hora_de_entrada->format('h:i a')}}
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             {{$schedule->hora_de_salida->format('h:i a')}}
                                                         </td>
-                                                        <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.schedules.edit', $user)}}"><i class="fas fa-edit"></i></a></td>
-                                                        <td width="10px">
-                                                            <form action="{{ route('admin.schedules.destroy', $schedule) }}" method="POST" class="alert-delete">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="btn btn-danger btn-sm" onclick="delete()"><i class="fas fa-trash-alt"></i></button>
-                                                            </form>
-                                                        </td>
+                                                        @can('admin.users.edit')
+                                                            <td width="10px">
+                                                                <button class="btn btn-sm btn-default" wire:click="editSchedule({{ $schedule->id }})"><i class="fas fa-edit"></i></button>
+                                                            </td>
+                                                            <td width="10px">
+                                                                <form action="{{ route('admin.schedules.destroy', $schedule) }}" method="POST" class="alert-delete">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="delete()"><i class="fas fa-trash-alt"></i></button>
+                                                                </form>
+                                                            </td>
+                                                        @endcan
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -472,6 +480,108 @@
                                     @else
                                         <p class="text-danger text-center mb-1"><b>Sin horario.</b></p>
                                     @endif
+                                </div>
+                                <div>
+                                    @can('admin.users.edit')
+                                        <button class="btn btn-sm btn-success" style="float: right;" data-toggle="modal" data-target="#createScheduleModal"><i class="fa-solid fa-plus"></i> Agregar día</button>
+                                    @endcan
+
+                                    <!-- Modal create -->
+                                    <div wire:ignore.self class="modal fade" id="createScheduleModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary">
+                                                    <h5 class="modal-title">Agregar día al horario</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <form wire:submit.prevent="createSchedule">
+                                                        <div class="form-group">
+                                                            <div>
+                                                                <label class="col-form-label">
+                                                                    {{ __('Día') }}
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <select class="form-control" id="día" wire:model="día">
+                                                                    <option value="">Selecciona una opción</option>
+                                                                    <option>Lunes</option>
+                                                                    <option>Martes</option>
+                                                                    <option>Miércoles</option>
+                                                                    <option>Jueves</option>
+                                                                    <option>Viernes</option>
+                                                                    <option>Sábado</option>
+                                                                    <option>Domingo</option>
+                                                                </select>
+                                                            </div>
+                                                            @error('día') <span class="text-danger error">{{ $message }}</span>@enderror
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">
+                                                                {{ __('Hora de entrada') }}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="time" id="hora_de_entrada" class="form-control" wire:model="hora_de_entrada">
+                                                            @error('hora_de_entrada') <span class="text-danger error">{{ $message }}</span>@enderror
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">
+                                                                {{ __('Hora de salida') }}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="time" id="hora_de_salida" class="form-control" wire:model="hora_de_salida">
+                                                            @error('hora_de_salida') <span class="text-danger error">{{ $message }}</span>@enderror
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @isset($schedule)
+                                        <!-- Modal edit -->
+                                        <div wire:ignore.self class="modal fade" id="editScheduleModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-primary">
+                                                        <h5 class="modal-title">Editar día del horario</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h1 class="text-center"><span class="badge badge-secondary">{{$schedule->día}}</span></h1>
+                                                        <form wire:submit.prevent="editScheduleData({{$schedule}})">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label">
+                                                                    {{ __('Hora de entrada') }}
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <input type="time" id="hora_de_entrada" class="form-control" wire:model="hora_de_entrada">
+                                                                @error('hora_de_entrada') <span class="text-danger error">{{ $message }}</span>@enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-form-label">
+                                                                    {{ __('Hora de salida') }}
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <input type="time" id="hora_de_salida" class="form-control" wire:model="hora_de_salida">
+                                                                @error('hora_de_salida') <span class="text-danger error">{{ $message }}</span>@enderror
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endisset
                                 </div>
                             </div>
                         </div>
@@ -558,3 +668,47 @@
 
     <!-- DELET SCHEDULE -->
 </div>
+
+@push('js')
+    <script>
+        window.addEventListener('close-modal', event =>{
+            $('#createScheduleModal').modal('hide');
+            $('#editScheduleModal').modal('hide');
+            $('#deleteStudentModal').modal('hide');
+        });
+
+        window.addEventListener('show-edit-schedule-modal', event =>{
+            $('#editScheduleModal').modal('show');
+        });
+
+    </script>
+
+    @if (session('eliminar') == 'ok')
+        <script>
+            Swal.fire(
+            '¡Eliminado!',
+            'El día del horario se elimino con éxito.',
+            'success'
+            )
+        </script>
+        @endif
+
+        <script>
+        $('.alert-delete').submit(function (e) {
+        e.preventDefault();
+        Swal.fire({
+        title: '¿Estas seguro?',
+        text: "El día del horario se eliminara definitivamente",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, ¡Eliminar!',
+        cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
+        });
+    </script>
+@endpush

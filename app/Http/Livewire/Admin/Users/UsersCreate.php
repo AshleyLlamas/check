@@ -201,6 +201,7 @@ class UsersCreate extends Component
                     'hora_de_salida' => $this->hora_de_salida[$n],
                     'turno' => null,
                     'user_id' => $user->id,
+                    'posición' => $n+1,
                     'actual' => true
                 ]);
             }
