@@ -123,12 +123,32 @@
                                 <h5 class="py-1 text-center">Datos del trabajo</h5>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12">
+                                <div class="form-group col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Puesto') }}
                                     </label>
                                     <input type="text" id="puesto" class="form-control" wire:model="user.puesto" placeholder="Ingrese el puesto del empleado">
                                     @error('user.puesto') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label class="col-form-label">
+                                        {{ __('Tipo de puesto') }}
+                                    </label>
+                                    <select class="form-control" id="tipo_de_puesto" wire:model="tipo_de_puesto">
+                                        <option value="">Selecciona una opción</option>
+                                        <option>Directiva</option>
+                                        <option>Gerencial</option>
+                                        <option>Coordinación</option>
+                                        <option>Jefatura</option>
+                                        <option>Sub jefatura</option>
+                                        <option>Administrativa</option>
+                                        <option>Operativa</option>
+                                        <option>Residencia de obra</option>
+                                        <option>Superintendencia</option>
+                                        <option>Temporal</option>
+                                        <option>Productivo</option>
+                                    </select>
+                                    @error('tipo_de_puesto') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <div>
@@ -138,8 +158,10 @@
                                         </label>
                                         <select class="form-control" id="tipo" wire:model="tipo">
                                             <option value="">Selecciona una opción</option>
-                                            <option>Empleado</option>
-                                            <option>Recluta</option>
+                                            <option>Empleado (Pasara a la lista de empleados)</option>
+                                            <option>Reclutado</option>
+                                            <option>Prospecto</option>
+                                            <option>Por contratar</option>
                                         </select>
                                     </div>
                                     @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror

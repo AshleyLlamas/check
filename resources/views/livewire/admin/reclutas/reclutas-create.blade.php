@@ -119,12 +119,50 @@
                                 <h5 class="py-1 text-center">Datos del trabajo</h5>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12">
+                                <div class="form-group col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Puesto') }}
                                     </label>
-                                    <input type="text" id="puesto" class="form-control" wire:model="puesto" placeholder="Ingrese el puesto del empleado">
+                                    <select class="form-control" id="puesto" wire:model="puesto">
+                                        <option value="">Selecciona una opción</option>
+                                        <option></option>
+                                    </select>
                                     @error('puesto') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label class="col-form-label">
+                                        {{ __('Tipo de puesto') }}
+                                    </label>
+                                    <select class="form-control" id="tipo_de_puesto" wire:model="tipo_de_puesto">
+                                        <option value="">Selecciona una opción</option>
+                                        <option>Directiva</option>
+                                        <option>Gerencial</option>
+                                        <option>Coordinación</option>
+                                        <option>Jefatura</option>
+                                        <option>Sub jefatura</option>
+                                        <option>Administrativa</option>
+                                        <option>Operativa</option>
+                                        <option>Residencia de obra</option>
+                                        <option>Superintendencia</option>
+                                        <option>Temporal</option>
+                                        <option>Productivo</option>
+                                    </select>
+                                    @error('tipo_de_puesto') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div>
+                                        <label class="col-form-label">
+                                            {{ __('Estatus') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" id="tipo" wire:model="tipo">
+                                            <option value="">Selecciona una opción</option>
+                                            <option>Reclutado</option>
+                                            <option>Prospecto</option>
+                                            <option>Por contratar</option>
+                                        </select>
+                                    </div>
+                                    @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <div wire:ignore>
@@ -144,10 +182,7 @@
                                 <div class="form-group col-12">
                                     <div wire:ignore>
                                         <label class="col-form-label">
-                                            {{ __('Área') }}
-                                            @if(!is_null($área) || !is_null($encargado))
-                                                <span class="text-danger">*</span>
-                                            @endif
+                                            {{ __('Área / Proyecto') }}
                                         </label>
                                         <select class="form-control" id="área" wire:model="área">
                                             <option value="">Selecciona una opción</option>
@@ -157,23 +192,6 @@
                                         </select>
                                     </div>
                                     @error('área') <span class="text-danger error">{{ $message }}</span>@enderror
-                                </div>
-                                <div class="form-group col-12">
-                                    <div wire:ignore>
-                                        <label class="col-form-label">
-                                            {{ __('Encargado') }}
-                                            @if(!is_null($área) || !is_null($encargado))
-                                                <span class="text-danger">*</span>
-                                            @endif
-                                        </label>
-                                        <select class="form-control" id="users">
-                                            <option value="">Selecciona una opción</option>
-                                            @foreach($users as $encargado)
-                                                <option value="{{ $encargado->id}}">{{ $encargado->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('encargado') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
@@ -329,13 +347,6 @@
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
             @this.set('company', data);
-            });
-
-            $('#users').select2();
-
-            $('#users').on('change', function (e) {
-                var data = $('#users').select2("val");
-            @this.set('encargado', data);
             });
             /////
 

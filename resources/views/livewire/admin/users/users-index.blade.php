@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group my-2" wire:model="order">
-                        <select class="form-control" id="orderFormControlSelect">
+                        <select class="form-control">
                         <option value="1">Ordernar por más reciente</option>
                         <option value="2">Ordernar por más antiguo</option>
                         </select>

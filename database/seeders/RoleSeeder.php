@@ -85,6 +85,32 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.checks.show',
         'description' => 'Ver checador.'])->syncRoles([$role1]);
 
+        //vacationS
+        $permission = Permission::create(['name' => 'admin.vacations.index',
+        'description' => 'Ver solicitudes de vacaciones.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.vacations.show',
+        'description' => 'Ver solicutud de vacaciones.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.vacations.create',
+        'description' => 'Ver crear solicitud de vacaciones.'])->syncRoles([$role1]);
+
+        //Center cost
+        $permission = Permission::create(['name' => 'admin.cost_centers.index',
+        'description' => 'Ver todos los centros de costos.'])->syncRoles([$role1]);
+        
+        $permission = Permission::create(['name' => 'admin.cost_centers.show',
+        'description' => 'Ver centro de costo.'])->syncRoles([$role1]);
+        
+        $permission = Permission::create(['name' => 'admin.cost_centers.edit',
+        'description' => 'Editar centro de costo.'])->syncRoles([$role1]);
+        
+        $permission = Permission::create(['name' => 'admin.cost_centers.create',
+        'description' => 'Crear centro de costo.'])->syncRoles([$role1]);
+        
+        $permission = Permission::create(['name' => 'admin.cost_centers.destroy',
+        'description' => 'Eliminar centro de costo.'])->syncRoles([$role1]);
+
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',
         'description' => 'Ver todas los roles.'])->syncRoles([$role1]);

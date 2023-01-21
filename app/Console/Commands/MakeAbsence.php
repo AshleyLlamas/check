@@ -6,6 +6,7 @@ use App\Models\Assistance;
 use App\Models\Check;
 use App\Models\Schedule;
 use App\Models\User;
+use App\Models\Vacation;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -45,7 +46,7 @@ class MakeAbsence extends Command
                 $this->clave = "Martes";
             break;
             case "mi":
-                $this->clave = "Miercoles";
+                $this->clave = "Miércoles";
             break;
             case "ju":
                 $this->clave = "Jueves";
@@ -54,7 +55,7 @@ class MakeAbsence extends Command
                 $this->clave = "Viernes";
             break;
             case "sa":
-                $this->clave = "Sabado";
+                $this->clave = "Sábado";
             break;
             case "do":
                 $this->clave = "Domingo";
@@ -69,7 +70,35 @@ class MakeAbsence extends Command
      */
     public function handle()
     {
-        $users = User::whereHas('schedules', function($query) {
+
+        //GENERAR ESTATUS INACTIVO PARA USUARIOS EN VACACIONES
+        if(Vacation::where('estatus', 'Aprobado')->whereDate('fecha_inicial', '>=' , Carbon::now()->formatLocalized('%Y-%m-%d'))->count()){
+
+            $users_activos_a_inactivos = User::where('estatus', 'Activo')->whereHas('vacations', function($query) {
+                $query->where('estatus', 'Aprobado')->whereDate('fecha_inicial', '>=' , Carbon::now()->formatLocalized('%Y-%m-%d'));
+            })->get();
+
+            foreach($users_activos_a_inactivos as $user){
+                $user->estatus = 'Inactivo';
+                $user->save();
+            }
+        }
+
+        //GENERAR ESTATUS ACTIVO PARA USUARIOS QUE ESTABAN EN VACACIONES
+        if(Vacation::where('estatus', 'Aprobado')->whereDate('fecha_final', '<=' , Carbon::now()->formatLocalized('%Y-%m-%d'))->count()){
+
+            $users_inativos_a_activos = User::where('estatus', 'Inactivo')->whereHas('vacations', function($query) {
+                $query->where('estatus', 'Aprobado')->whereDate('fecha_final', '<=' , Carbon::now()->formatLocalized('%Y-%m-%d'));
+            })->get();
+
+            foreach($users_inativos_a_activos as $user){
+                $user->estatus = 'Activo';
+                $user->save();
+            }
+        }
+
+        //GENERAR INASISTENCIAS
+        $users = User::where('estatus', 'Activo')->whereHas('schedules', function($query) {
             $query->where('día', '=', $this->clave)->where('actual', true);
         })->get();
 

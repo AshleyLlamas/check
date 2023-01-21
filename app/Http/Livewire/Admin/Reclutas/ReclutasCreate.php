@@ -19,7 +19,7 @@ class ReclutasCreate extends Component
     use WithFileUploads;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $company, $área, $encargado, $puesto,
+    public $foto, $qr, $name, $email, $curp, $company, $área, $puesto, $tipo_de_puesto, $tipo,
         $número_de_inscripción_al_imss, $rfc, $número_del_infonavit;
 
     //Schedule
@@ -45,12 +45,11 @@ class ReclutasCreate extends Component
 
         //Work
         $array['puesto'] = 'nullable|string|max:255';
+        $array['tipo_de_puesto'] = 'nullable|string|max:255';
+        $array['tipo'] = ['required'];
         $array['company'] = ['required'];
 
-        if($this->área || $this->encargado){
-            $array['área'] = ['required'];
-            $array['encargado'] = ['required'];
-        }
+        $array['área'] = ['nullable'];
 
         //Schedule
         if(count($this->days)){
@@ -81,6 +80,7 @@ class ReclutasCreate extends Component
     }
 
     protected $messages = [
+        'tipo.required' => 'El campo estatus es requerido.',
         'hora_de_entrada.*.required' => 'La hora de entrada es obligatorio.',
         'hora_de_salida.*.required' => 'La hora de salida es obligatorio.',
     ];
@@ -154,10 +154,11 @@ class ReclutasCreate extends Component
             'número_de_empleado' => null,
             'company_id' => $this->company,
             'puesto' => $this->puesto,
-            'tipo' => 'Recluta',
+            'tipo_de_puesto' => $this->tipo_de_puesto,
+            'tipo' => $this->tipo,
             'password' => Hash::make($this->curp),
             //'password' => Hash::make($this->password),
-            'estatus' => 'N/A',
+            'estatus' => 'Activo',
             'número_de_inscripción_al_imss' => $this->número_de_inscripción_al_imss,
             'rfc' => $this->rfc,
             'número_del_infonavit' => $this->número_del_infonavit,
@@ -166,8 +167,8 @@ class ReclutasCreate extends Component
         ]);
 
         //ÁREA Y ENCARGADO
-        if($this->área || $this->encargado){
-            $user->areas()->sync($this->área, ['encargado_id' => $this->encargado]);
+        if($this->área){
+            $user->areas()->sync($this->área);
         }
 
 

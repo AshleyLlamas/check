@@ -13,7 +13,10 @@ class Area extends Model
     
     protected $fillable = [
         'área',
-        'user_id'
+        'user_id',
+        'ubicación',
+        'cost_center_id',
+        'company_id'
     ];
 
     //Uno a Uno Inversa
@@ -24,5 +27,15 @@ class Area extends Model
     //Muchos a Muchos
     public function users(){
         return $this->belongsToMany('App\Models\Users')->withPivot('encargado_id');
+    }
+
+    //Uno a Muchos inversa
+    public function company(){
+        return $this->belongsTo('App\Models\Company');
+    }
+
+    //Uno a Muchos inversa
+    public function cost_center(){
+        return $this->belongsTo('App\Models\CostCenter');
     }
 }

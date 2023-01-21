@@ -38,7 +38,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
-                            <th>Número de empleado</th>
+                            <th>Estatus</th>
                             <th>Puesto</th>
                             @can('admin.reclutas.show')
                                 <th></th>
@@ -67,8 +67,8 @@
                                     @endisset
                                 </td>
                                 <td>
-                                    @isset($user->número_de_empleado)
-                                        {{$user->número_de_empleado}}
+                                    @isset($user->tipo)
+                                        {{$user->tipo}}
                                     @else
                                         N/A
                                     @endisset

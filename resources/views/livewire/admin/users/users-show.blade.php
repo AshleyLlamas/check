@@ -15,21 +15,45 @@
 
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
-                    <div class="card-body box-profile">
-                        <div class="text-center">
-                        <img class="profile-user-img img-fluid img-circle"
-                            src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
-                            alt="Fotografía">
+                        <div class="card-body box-profile">
+        
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
+                                alt="Fotografía">
+                            </div>
+
+                            <h3 class="profile-username text-center">{{$user->name}}</h3>
+
+                            @isset($user->puesto)
+                                <p class="text-muted text-center mb-0 pb-0">{{$user->puesto}}</p>
+                            @endisset
+                            @isset($user->tipo_de_puesto)
+                                <p class="text-muted text-center mb-1"><small>({{$user->tipo_de_puesto}})</small></p>
+                            @endisset
+
+                            <span class="badge badge-pill badge-secondary">{{$user->estatus}}</span>
                         </div>
-
-                        <h3 class="profile-username text-center">{{$user->name}}</h3>
-
-                        <p class="text-muted text-center">{{$user->puesto}}</p>
-                    </div>
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-
+                    @isset($user->qr)
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fa-solid fa-qrcode"></i> Código QR de acceso</h3>
+                            </div>
+                            <div class="card-body ">
+                                
+                                    <div class="text-center pb-2">
+                                        {!! QrCode::size(160)->generate('https://constructoramakro.mx/login/?'.$user->qr); !!}
+                                        <a href="{{'https://constructoramakro.mx/login/?'.$user->qr}}">{{'https://constructoramakro.mx/login/?'.$user->qr}}</a>
+                                    </div>
+                                
+                            </div>
+                        <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    @endisset
                     <!-- Yo -->
                     <div class="card card-primary">
                         <div class="card-header">
@@ -66,6 +90,26 @@
                                         N/A
                                     @endisset
                                 </p>
+                            <hr>
+                                <strong>Fecha de nacimiento</strong>
+
+                                <p class="text-muted">
+                                    @isset($user->fecha_de_nacimiento)
+                                        {{$user->fecha_de_nacimiento}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </p>
+                            <hr>
+                                <strong>Whatsapp</strong>
+
+                                <p class="text-muted">
+                                    @isset($user->whatsapp)
+                                        <a href="https://api.whatsapp.com/send?phone={{$user->whatsapp}}">+{{$user->whatsapp}}</a>
+                                    @else
+                                        N/A
+                                    @endisset
+                                </p>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -87,11 +131,31 @@
                                     @endisset
                                 </p>
                             <hr>
+                                <strong>Fecha de ingreso</strong>
+
+                                <p class="text-muted">
+                                    @isset($user->fecha_de_ingreso)
+                                        {{$user->fecha_de_ingreso}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </p>
+                            <hr>
                                 <strong>Puesto</strong>
 
                                 <p class="text-muted">
                                     @isset($user->puesto)
                                         {{$user->puesto}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </p>
+                            <hr>
+                            <strong>Tipo de puesto</strong>
+
+                                <p class="text-muted">
+                                    @isset($user->tipo_de_puesto)
+                                        {{$user->tipo_de_puesto}}
                                     @else
                                         N/A
                                     @endisset
@@ -107,7 +171,17 @@
                                     @endisset
                                 </p>
                             <hr>
-                                <strong>Tipo de empleado</strong>
+                                <strong>Centro de costo</strong>
+
+                                <p class="text-muted">
+                                    @isset($user->cost_center->folio)
+                                        {{$user->cost_center->folio}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </p>
+                            <hr>
+                                <strong>Estatus</strong>
 
                                 <p class="text-muted">
                                     @isset($user->tipo)
@@ -670,6 +744,29 @@
 </div>
 
 @push('js')
+
+    {{--<script src="{{ asset('js/calendar.js') }}"></script>--}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'es',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+        },
+            initialDate: {!! json_encode($hoy) !!},
+            navLinks: true, // can click day/week names to navigate views
+            editable: false,
+            selectable: false,
+            dayMaxEvents: false, // allow "more" link when too many events
+            events: {!! json_encode($json_dias) !!}
+        });
+        calendar.render();
+        });
+    </script>
+
     <script>
         window.addEventListener('close-modal', event =>{
             $('#createScheduleModal').modal('hide');

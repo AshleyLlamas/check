@@ -20,12 +20,17 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('curp')->unique()->nullable();
+            $table->date('fecha_de_nacimiento')->unique()->nullable();
+            $table->date('fecha_de_ingreso')->unique()->nullable();
+            $table->string('whatsapp')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('estatus')->nullable()->default('Activo');
             $table->string('puesto')->nullable();
+            $table->string('tipo_de_puesto')->nullable();
 
-            $table->enum('tipo', ['Empleado', 'Recluta'])->nullable();
+            $table->enum('tipo', ['Empleado', 'Prospecto', 'Reclutado', 'Por contratar'])->nullable();
 
             $table->string('número_de_inscripción_al_imss')->nullable();
              
@@ -35,11 +40,14 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null')->onUpdate('cascade');
 
+            $table->unsignedBigInteger('cost_center_id')->nullable();
+            $table->foreign('cost_center_id')->references('id')->on('cost_centers')->onDelete('set null')->onUpdate('cascade');
+
             $table->unsignedBigInteger('address_id')->nullable();
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('document_id')->nullable();
-            $table->foreign('document_id')->references('id')->on('user_documents')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('document_id')->references('id')->on('user_documents')->onDelete('cascade')->onUpdate('cascade');
             
             $table->string('slug')->nullable();
 

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Users;
 
 use App\Models\Area;
 use App\Models\Company;
+use App\Models\CostCenter;
 use App\Models\Image;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ class UsersEdit extends Component
     public $user, $document;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $número_de_empleado, $company, $puesto, $tipo, $password, $password_confirmation, $role;
+    public $foto, $qr, $name, $email, $curp, $fecha_de_nacimiento, $código_del_país, $número_de_teléfono, $número_de_empleado, $fecha_de_ingreso, $company, $cost_centers, $cost_center, $puesto, $tipo_de_puesto, $tipo, $password, $password_confirmation, $role;
 
     public $documento_de_identificación_oficial, $documento_del_comprobante_de_domicilio, $documento_de_no_antecedentes_penales,
         $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
@@ -32,12 +33,28 @@ class UsersEdit extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->curp = $user->curp;
+        $this->fecha_de_nacimiento = $user->fecha_de_nacimiento;
+        $this->código_del_país = substr($user->whatsapp, 0, -10);
+        $this->número_de_teléfono = substr($user->whatsapp, -10);
+        $this->fecha_de_ingreso = $user->fecha_de_ingreso;
+        $this->tipo_de_puesto = $this->user->tipo_de_puesto;
+
+        if(isset($user->company_id)){
+            $this->cost_centers = CostCenter::where('company_id', $user->company_id)->orderBy('folio')->get();
+        }
+
+        $this->cost_center = $this->user->cost_center_id;
         $this->company = $user->company_id;
         $this->tipo = $user->tipo;
 
         if($user->roles->count()){
             $this->role = $user->roles->pluck('id')[0];
         }
+    }
+
+    public function updatedcompany($company){
+        $this->cost_centers = CostCenter::where('company_id', $company)->orderBy('folio')->get();
+        $this->cost_center = '';
     }
 
     public function rules(){
@@ -48,15 +65,24 @@ class UsersEdit extends Component
         $array['foto'] = 'nullable|image|mimes:jpeg,jpg,png|max:5048';
         $array['user.name'] = 'required|string|max:255';
         $array['curp'] = ['required', 'string', 'min:18', 'max:18', 'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', 'unique:users,curp,'.$this->user->id];
+        $array['fecha_de_nacimiento'] = 'nullable|date';
+
+        if($this->código_del_país || $this->número_de_teléfono){
+            $array['código_del_país'] = 'required|digits_between:1,3';
+            $array['número_de_teléfono'] = 'required|digits:10';
+        }
+
         $array['email'] = ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id];
-        $array['user.número_de_inscripción_al_imss'] = 'required|string|max:255';
+        $array['user.número_de_inscripción_al_imss'] = 'nullable|string|max:255';
         $array['user.rfc'] = ['required',/* 'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/',*/'string','max:255'];
         $array['user.número_del_infonavit'] = 'nullable|string|max:255';
 
         //Work
         $array['user.número_de_empleado'] = 'required|numeric|max:99999999';
         $array['user.puesto'] = 'nullable|string|max:255';
+        $array['tipo_de_puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];
+        $array['cost_center'] = ['nullable'];
         $array['tipo'] = ['required'];
 
         //Docs
@@ -72,6 +98,10 @@ class UsersEdit extends Component
     
         return $array;
     }
+
+    protected $messages = [
+        'tipo.required' => 'El campo estatus es requerido.',
+    ];
 
     public function updatedemail($email){
         $this->qr = 'email='.$this->email.'&curp='.$this->curp;
@@ -140,11 +170,22 @@ class UsersEdit extends Component
             $this->document->documento_del_curriculum_vitae = $this->documento_del_curriculum_vitae->store('curriculums_vitaes');
         }
 
+        if($this->código_del_país != null || $this->número_de_teléfono != null && $this->código_del_país != '' && $this->número_de_teléfono != ''){
+            $whatsapp = $this->código_del_país.$this->número_de_teléfono;
+        }else{
+            $whatsapp = null;
+        }
+
         $this->user->qr = $this->qr;
         $this->user->email = $this->email;
         $this->user->curp = $this->curp;
+        $this->user->fecha_de_nacimiento = $this->fecha_de_nacimiento;
+        $this->user->whatsapp = $whatsapp;
         $this->user->password = Hash::make(mb_strtoupper($this->curp, 'UTF-8'));
+        $this->user->fecha_de_ingreso = $this->fecha_de_ingreso;
+        $this->user->tipo_de_puesto = $this->tipo_de_puesto;
         $this->user->company_id = $this->company;
+        $this->user->cost_center_id = $this->cost_center;
         $this->user->tipo = $this->tipo;
 
         //$user->roles()->detach();
@@ -160,11 +201,13 @@ class UsersEdit extends Component
     public function render()
     {
             $companies = Company::orderBy('nombre_de_la_compañia')->get();
+            $cost_centers = CostCenter::orderBy('folio')->get();
             //$areas = Area::orderBy('área')->get();
             $roles = Role::orderBy('name')->get();
 
         return view('livewire.admin.users.users-edit', [
             'companies' => $companies,
+            'cost_centers' => $cost_centers,
             //'areas' => $areas,
             'roles' => $roles
         ]);

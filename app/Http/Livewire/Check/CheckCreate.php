@@ -20,13 +20,25 @@ class CheckCreate extends Component
 
     public function mount(User $user){
         $this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
-        $zk = new ZKTeco('34.195.118.113', 9892);
 
-        $zk->connect();   
 
-        //$zk->testVoice();
+        //$zk = new ZKTeco('192.168.1.201');
 
-        $zk->getUser(); 
+        // $zk = new ZKTeco('192.168.1.201');
+
+        // $zk->connect();
+
+        // $conectado = $zk->connect();   
+
+        // if($conectado){
+        //     dd('si coneccto');
+        // }else{
+        //     dd('no conecto'. $conectado);
+        // }
+
+        //$zk->enableDevice();
+        // //$zk->getUser()
+
     }
 
     public function save(){

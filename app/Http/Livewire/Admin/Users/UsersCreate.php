@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Users;
 
 use App\Models\Area;
 use App\Models\Company;
+use App\Models\CostCenter;
 use App\Models\Image;
 use App\Models\Schedule;
 use App\Models\User;
@@ -21,7 +22,7 @@ class UsersCreate extends Component
     use WithFileUploads;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $número_de_empleado, $company, $área, $encargado, $puesto, $tipo, $password, $password_confirmation, $role,
+    public $foto, $qr, $name, $email, $curp, $código_del_país, $número_de_teléfono, $fecha_de_nacimiento, $número_de_empleado, $company, $cost_centers, $cost_center, $área, $encargado, $fecha_de_ingreso, $puesto, $tipo_de_puesto, $password, $password_confirmation, $role,
         $número_de_inscripción_al_imss, $rfc, $número_del_infonavit;
 
     //Schedule
@@ -40,17 +41,27 @@ class UsersCreate extends Component
         $array['foto'] = 'nullable|image|mimes:jpeg,jpg,png|max:5048';
         $array['name'] = 'required|string|max:255';
         $array['email'] = ['required', 'string', 'email', 'max:255', Rule::unique(User::class)];
+        $array['número_de_empleado'] = 'required|numeric|max:99999999';
+
+        if($this->código_del_país || $this->número_de_teléfono){
+            $array['código_del_país'] = 'required|digits_between:1,3';
+            $array['número_de_teléfono'] = 'required|digits:10';
+        }
+
         $array['curp'] = ['required', 'string', 'min:18', 'max:18', /*'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/',*/ 'unique:users,curp'];
+        $array['fecha_de_nacimiento'] = 'nullable|date';
         $array['número_de_inscripción_al_imss'] = 'nullable|string|max:255';
         $array['rfc'] = ['required', /*'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/',*/ 'string','max:255'];
         $array['número_del_infonavit'] = 'nullable|string|max:255';
 
         //Work
         $array['número_de_empleado'] = 'required|numeric|max:99999999';
+        $array['fecha_de_ingreso'] = 'nullable|date';
         $array['puesto'] = 'nullable|string|max:255';
-        $array['tipo'] = ['required'];
+        $array['tipo_de_puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];
-
+        $array['cost_center'] = ['nullable'];
+        
         if($this->área || $this->encargado){
             $array['área'] = ['required'];
             $array['encargado'] = ['required'];
@@ -89,6 +100,11 @@ class UsersCreate extends Component
 
     public function updatedcurp($curp){
         $this->qr = 'email='.$this->email.'&curp='.$this->curp;
+    }
+
+    public function updatedcompany($company){
+        $this->cost_centers = CostCenter::where('company_id', $company)->orderBy('folio')->get();
+        $this->cost_center = '';
     }
 
     protected $messages = [
@@ -156,19 +172,37 @@ class UsersCreate extends Component
         ]);
         
 
+
+        if(isset($this->código_del_país) || isset($this->número_de_teléfono) && $this->código_del_país != '' && $this->número_de_teléfono != ''){
+            $whatsapp = $this->código_del_país.$this->número_de_teléfono;
+        }else{
+            $whatsapp = null;
+        }
+
+        if($this->cost_center == ''){
+            $cost_center = null;
+        }else{
+            $cost_center = $this->cost_center;
+        }
+
         //USER  
         $user = User::create([
             'qr' => $this->qr,
             'name' => $this->name,
             'email' => $this->email,
             'curp' => $this->curp,
+            'whatsapp' => $whatsapp,
+            'fecha_de_nacimiento' => $this->fecha_de_nacimiento,
             'número_de_empleado' => $this->número_de_empleado,
+            'fecha_de_ingreso' => $this->fecha_de_ingreso,
             'company_id' => $this->company,
+            'cost_center_id' => $cost_center,
             'puesto' => $this->puesto,
-            'tipo' => $this->tipo,
+            'tipo_de_puesto' => $this->tipo_de_puesto,
+            'tipo' => 'Empleado',
             'password' => Hash::make($this->curp),
             //'password' => Hash::make($this->password),
-            'estatus' => 'N/A',
+            'estatus' => 'Activo',
             'número_de_inscripción_al_imss' => $this->número_de_inscripción_al_imss,
             'rfc' => $this->rfc,
             'número_del_infonavit' => $this->número_del_infonavit,
@@ -209,34 +243,23 @@ class UsersCreate extends Component
 
         $user->roles()->sync($this->role);
 
-        session()->flash('message', $this->tipo.' creado satisfactoriamente.');
-
-        //Redirección
-        switch($this->tipo){
-            case 'Empleado':
-                return redirect(route('admin.users.index'));
-            break;
-            case 'Recluta':
-                return redirect(route('admin.reclutas.index'));
-            break;
-
-            default:
-
-        }
+        session()->flash('message', 'Empleado creado satisfactoriamente.');
+        return redirect(route('admin.users.index'));
     }
 
     public function render()
     {
         $companies = Company::orderBy('nombre_de_la_compañia')->get();
+        //$cost_centers = CostCenter::orderBy('folio')->get();
         $roles = Role::orderBy('name')->get();
         $areas = Area::orderBy('área')->get();
         $users = User::orderBy('name')->get();
-
         return view('livewire.admin.users.users-create',[
             'companies' => $companies,
+            //'cost_centers' => $cost_centers,
             'roles' => $roles,
             'areas' => $areas,
-            'users' => $users
+            'users' => $users,
         ]);
     }
 }

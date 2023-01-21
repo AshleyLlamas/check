@@ -133,8 +133,8 @@ class UsersShow extends Component
 
             $json_dias[] = array(
               'title' => $assistance->asistencia,
-              'start' => date('Y-m-d\TH:i:s', strtotime($assistance->check->fecha)),
-              'end' => date('Y-m-d\TH:i:s', strtotime($assistance->check->fecha)),
+              'start' => date('Y-m-d\TH:i:s', strtotime($assistance->created_at->format('Y-m-d'))),
+              'end' => date('Y-m-d\TH:i:s', strtotime($assistance->created_at->format('Y-m-d'))),
               'allDay' => true,
               'color' => $color,
               'url' => route('admin.assistances.show', $assistance)

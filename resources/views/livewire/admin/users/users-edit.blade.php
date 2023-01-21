@@ -58,7 +58,7 @@
                         </div>
                         <div class="col m-2">
                             <div class="border-bottom">
-                                <h5 class="py-1 text-center">Datos del empleado</h5>
+                                <h5 class="py-1 text-center">Datos del usuario</h5>
                             </div>
                             <div class="row">
                                 <div class="form-group col-12">
@@ -66,31 +66,57 @@
                                         {{ __('Nombre completo') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="name" class="form-control" wire:model="user.name" placeholder="Ingrese el nombre del empleado">
+                                    <input type="text" id="name" class="form-control" wire:model="user.name" placeholder="Ingrese el nombre">
                                     @error('user.name') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Fecha de nacimiento') }}
+                                    </label>
+                                    <input type="date" id="fecha_de_nacimiento" class="form-control" wire:model="fecha_de_nacimiento" placeholder="Ingrese la fecha de nacimiento">
+                                    @error('fecha_de_nacimiento') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Correo') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="correo" class="form-control" wire:model="email" placeholder="Ingrese el correo del empleado">
+                                    <input type="text" id="correo" class="form-control" wire:model="email" placeholder="Ingrese el correo">
                                     @error('email') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Whatsapp') }}
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text" id="basic-addon1">+</span>
+                                                </div>
+                                                <input type="number" id="código_del_país" class="form-control" wire:model="código_del_país" placeholder="Código del país">
+                                                @error('código_del_país') <span class="text-danger error">{{ $message }}</span>@enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-10">
+                                            <input type="number" id="número_de_teléfono" class="form-control" wire:model="número_de_teléfono" placeholder="Número de teléfono">
+                                            @error('número_de_teléfono') <span class="text-danger error">{{ $message }}</span>@enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('CURP') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="curp" class="form-control" wire:model="curp" placeholder="Ingrese el CURP del empleado" oninput="this.value = this.value.toUpperCase()">
+                                    <input type="text" id="curp" class="form-control" wire:model="curp" placeholder="Ingrese el CURP" oninput="this.value = this.value.toUpperCase()">
                                     @error('curp') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Número de inscripción al IMSS') }}
                                     </label>
-                                    <input type="text" id="número_de_inscripción_al_imss" class="form-control" wire:model="user.número_de_inscripción_al_imss" placeholder="Ingrese el número de inscripción al IMSS del empleado">
+                                    <input type="text" id="número_de_inscripción_al_imss" class="form-control" wire:model="user.número_de_inscripción_al_imss" placeholder="Ingrese el número de inscripción al IMSS">
                                     @error('user.número_de_inscripción_al_imss') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12 col-md-6">
@@ -98,14 +124,14 @@
                                         {{ __('RFC') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="rfc" class="form-control" wire:model="user.rfc" placeholder="Ingrese el RFC del empleado" oninput="this.value = this.value.toUpperCase()">
+                                    <input type="text" id="rfc" class="form-control" wire:model="user.rfc" placeholder="Ingrese el RFC" oninput="this.value = this.value.toUpperCase()">
                                     @error('user.rfc') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Número del infonavit') }}
                                     </label>
-                                    <input type="text" id="número_del_infonavit" class="form-control" wire:model="user.número_del_infonavit" placeholder="Ingrese el número del infonavit del empleado">
+                                    <input type="text" id="número_del_infonavit" class="form-control" wire:model="user.número_del_infonavit" placeholder="Ingrese el número del infonavit">
                                     @error('user.número_del_infonavit') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -123,7 +149,7 @@
                                 <h5 class="py-1 text-center">Datos del trabajo</h5>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Número de empleado') }}
                                         <span class="text-danger">*</span>
@@ -131,23 +157,52 @@
                                     <input type="number" id="número_de_empleado" class="form-control" wire:model="user.número_de_empleado" placeholder="Ingrese el número de empleado">
                                     @error('user.número_de_empleado') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Fecha de ingreso') }}
+                                    </label>
+                                    <input type="date" id="fecha_de_ingreso" class="form-control" wire:model="fecha_de_ingreso" placeholder="Ingrese la fecha de ingreso">
+                                    @error('fecha_de_ingreso') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label class="col-form-label">
                                         {{ __('Puesto') }}
                                     </label>
-                                    <input type="text" id="puesto" class="form-control" wire:model="user.puesto" placeholder="Ingrese el puesto del empleado">
+                                    <input type="text" id="puesto" class="form-control" wire:model="user.puesto" placeholder="Ingrese el puesto">
                                     @error('user.puesto') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label class="col-form-label">
+                                        {{ __('Tipo de puesto') }}
+                                    </label>
+                                    <select class="form-control" id="tipo_de_puesto" wire:model="tipo_de_puesto">
+                                        <option value="">Selecciona una opción</option>
+                                        <option>Directiva</option>
+                                        <option>Gerencial</option>
+                                        <option>Coordinación</option>
+                                        <option>Jefatura</option>
+                                        <option>Sub jefatura</option>
+                                        <option>Administrativa</option>
+                                        <option>Operativa</option>
+                                        <option>Residencia de obra</option>
+                                        <option>Superintendencia</option>
+                                        <option>Temporal</option>
+                                        <option>Productivo</option>
+                                    </select>
+                                    @error('tipo_de_puesto') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <div>
                                         <label class="col-form-label">
-                                            {{ __('Tipo de empleado') }}
+                                            {{ __('Estatus') }}
                                             <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control" id="tipo" wire:model="tipo">
                                             <option value="">Selecciona una opción</option>
                                             <option>Empleado</option>
-                                            <option>Recluta</option>
+                                            <option>Reclutado</option>
+                                            <option>Prospecto</option>
+                                            <option>Por contratar</option>
                                         </select>
                                     </div>
                                     @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -167,6 +222,22 @@
                                     </div>
                                     @error('company') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
+                                @if(!is_null($cost_centers))
+                                    <div class="form-group col-12">
+                                        <div>
+                                            <label class="col-form-label">
+                                                {{ __('Centro de costos') }}
+                                            </label>
+                                            <select class="form-control" id="cost_centers" wire:model="cost_center">
+                                                <option value="">Selecciona una opción</option>
+                                                @foreach($cost_centers as $cost_center)
+                                                    <option value="{{ $cost_center->id}}">{{ $cost_center->folio }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @error('cost_center') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -293,6 +364,11 @@
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
             @this.set('company', data);
+            });
+
+            $('#cost_centers').on('change', function (e) {
+                var data = $('#cost_centers').select2("val");
+            @this.set('cost_center', data);
             });
             /////
 

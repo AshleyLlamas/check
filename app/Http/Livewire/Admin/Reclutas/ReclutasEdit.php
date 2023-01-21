@@ -17,7 +17,7 @@ class ReclutasEdit extends Component
     public $user, $document;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $company, $puesto, $tipo;
+    public $foto, $qr, $name, $email, $curp, $company, $puesto, $tipo_de_puesto, $tipo;
 
     public $documento_de_identificación_oficial, $documento_del_comprobante_de_domicilio, $documento_de_no_antecedentes_penales,
         $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
@@ -30,6 +30,7 @@ class ReclutasEdit extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->curp = $user->curp;
+        $this->tipo_de_puesto = $this->user->tipo_de_puesto;
         $this->company = $user->company_id;
         $this->tipo = $user->tipo;
     }
@@ -43,12 +44,13 @@ class ReclutasEdit extends Component
         $array['user.name'] = 'required|string|max:255';
         $array['curp'] = ['required', 'string', 'min:18', 'max:18', 'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', 'unique:users,curp,'.$this->user->id];
         $array['email'] = ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id];
-        $array['user.número_de_inscripción_al_imss'] = 'required|string|max:255';
+        $array['user.número_de_inscripción_al_imss'] = 'nullable|string|max:255';
         $array['user.rfc'] = ['required',/* 'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/',*/'string','max:255'];
         $array['user.número_del_infonavit'] = 'nullable|string|max:255';
 
         //Work
         $array['user.puesto'] = 'nullable|string|max:255';
+        $array['tipo_de_puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];
         $array['tipo'] = ['required'];
 
@@ -63,6 +65,10 @@ class ReclutasEdit extends Component
     
         return $array;
     }
+
+    protected $messages = [
+        'tipo.required' => 'El campo estatus es requerido.'
+    ];
 
     public function updatedemail($email){
         $this->qr = 'email='.$this->email.'&curp='.$this->curp;
@@ -135,6 +141,7 @@ class ReclutasEdit extends Component
         $this->user->email = $this->email;
         $this->user->curp = $this->curp;
         $this->user->password = Hash::make(mb_strtoupper($this->curp, 'UTF-8'));
+        $this->user->tipo_de_puesto = $this->tipo_de_puesto;
         $this->user->company_id = $this->company;
         $this->user->tipo = $this->tipo;
 

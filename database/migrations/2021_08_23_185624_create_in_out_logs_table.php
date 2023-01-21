@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAreasTable extends Migration
+class CreateInOutLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('areas', function (Blueprint $table) {
+        Schema::create('in_out_logs', function (Blueprint $table) {
             $table->id();
-
-            $table->string('área')->nullable();
-
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
-
+            $table->unsignedInteger('user_id');
+            $table->time('in_time')->nullable();
+            $table->time('out_time')->nullable();
+            $table->double('time_calc')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateAreasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('areas');
+        Schema::dropIfExists('in_out_logs');
     }
 }

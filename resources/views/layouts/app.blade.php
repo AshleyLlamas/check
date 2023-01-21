@@ -30,6 +30,19 @@
     @livewireStyles
 
     @stack('css')
+
+    <style>
+    .navbar-button{
+        border-radius: 5px;
+        background: #065694;
+        margin: 5px;
+    }
+
+    /* #navbarSupportedContent{
+        margin-left: 5px;
+        margin-right: 5px;
+    } */
+</style>
     
 </head>
 <body>
@@ -54,8 +67,8 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a>
+                                <li class="nav-item navbar-button">
+                                    <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Ingresar') }}</a>
                                 </li>
                             @endif
 
@@ -65,15 +78,53 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('ckeck') }}">{{ __('Checador') }}</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                            <li class="nav-item dropdown navbar-button">
+                                <a id="navbarDropdownEmpresas" class="nav-link dropdown-toggle text-white mx-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-building"></i> EMPRESAS
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end border-0" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    
+                                    <a class="dropdown-item" href="https://www.constructoramakro.com">
+                                        {{ __('Web Makro') }}
+                                    </a>
+                                    <a class="dropdown-item" href="https://www.magnamaq.com">
+                                        {{ __('Web MagnaMaq') }}
+                                    </a>
+                                    <a class="dropdown-item" href="https://www.trituasfaltos.com">
+                                        {{ __('Web TrituAsfaltos') }}
+                                    </a>
+                                    <a class="dropdown-item" href="https://www.magnamaq.mx">
+                                        {{ __('intranet MagnaMaq') }}
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown navbar-button">
+                                <a id="navbarDropdownCorreo" class="nav-link dropdown-toggle text-white mx-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fa-solid fa-envelope"></i> CORREO
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    
+                                    <a class="dropdown-item" href="https://outlook.office365.com/mail/">
+                                        {{ __('Microsoft 365') }}
+                                    </a>
+                                    <a class="dropdown-item" href="https://host2068.hostmonster.com:2083/">
+                                        {{ __('Host Moster (.com.mx)') }}
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item navbar-button">
+                                <a class="nav-link text-white mx-2" href="{{ route('ckeck') }}"><i class="fa-solid fa-check-to-slot"></i> {{ __('CHECADOR') }}</a>
+                            </li>
+                            <li class="nav-item dropdown navbar-button">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-uppercase text-white mx-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     
                                     <a class="dropdown-item" href="{{ route('profile') }}">
                                         {{ __('Mi perfil') }}
@@ -90,6 +141,12 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar sesión') }}
                                     </a>
+
+                                    {{-- <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Cerrar sesi贸n') }}
+                                    </a> --}}
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

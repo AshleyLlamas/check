@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
-                                        {{ __('Nombre del rol') }}
+                                        {{ __('Nombre del área') }}
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" id="área" class="form-control" wire:model="area.área" placeholder="Ingrese el nombre del área">
@@ -48,6 +48,44 @@
                                     </div>
                                     @error('user') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Ubicación') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" id="área" class="form-control" wire:model="area.ubicación" placeholder="Ingrese la ubicación del área">
+                                    @error('area.ubicación') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Empresa / Compañia') }}
+                                        </label>
+                                        <select class="form-control" id="companies" wire:model="company">
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($companies as $company)
+                                                <option value="{{ $company->id}}">{{ $company->nombre_de_la_compañia }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('company') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                @if(!is_null($cost_centers))
+                                    <div class="form-group col-12">
+                                        <div>
+                                            <label class="col-form-label">
+                                                {{ __('Centro de costos') }}
+                                            </label>
+                                            <select class="form-control" id="cost_centers" wire:model="cost_center">
+                                                <option value="">Selecciona una opción</option>
+                                                @foreach($cost_centers as $cost_center)
+                                                    <option value="{{ $cost_center->id}}">{{ $cost_center->folio }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @error('cost_center') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -65,6 +103,21 @@
 @push('js')
     <script>
         $(document).ready(function () {
+
+            $('#companies').select2();
+
+            $('#companies').on('change', function (e) {
+                var data = $('#companies').select2("val");
+            @this.set('company', data);
+            });
+
+            $('#cost_centers').select2();
+
+            $('#cost_centers').on('change', function (e) {
+                var data = $('#cost_centers').select2("val");
+            @this.set('cost_center', data);
+            });
+            
             $('#users').select2();
 
             $('#users').on('change', function (e) {

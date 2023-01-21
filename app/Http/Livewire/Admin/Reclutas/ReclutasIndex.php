@@ -45,13 +45,13 @@ class ReclutasIndex extends Component
 
     public function render()
     {
-        $users = User::where('tipo', 'Recluta')
+        $users = User::where('tipo', 'Reclutado')->orWhere('tipo', 'Prospecto', 'Por contratar')
                         ->where('name', 'LIKE', '%' . $this->search . '%')
                         ->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
         
-        $all_users = User::where('tipo', 'Recluta')->count();
+        $all_users = User::where('tipo', 'Reclutado')->count();
         
         return view('livewire.admin.reclutas.reclutas-index', [
             'users' => $users,

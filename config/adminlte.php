@@ -318,22 +318,16 @@ return [
         ],
         ['header' => 'CONTENIDO'],
         [
+            'text'        => 'Centro de costos',
+            'route'         => 'admin.cost_centers.index',
+            'icon' => 'fas fa-solid fa-money-bill',
+            'can' => 'admin.cost_centers.index'
+        ],
+        [
             'text'        => 'Areas',
             'route'         => 'admin.areas.index',
             'icon' => 'fas fa-solid fa-briefcase',
             'can' => 'admin.areas.index'
-        ],
-        [
-            'text'        => 'Empleados',
-            'route'         => 'admin.users.index',
-            'icon' => 'fas fa-fw fa-user',
-            'can' => 'admin.users.index'
-        ],
-        [
-            'text'        => 'Reclutas',
-            'route'         => 'admin.reclutas.index',
-            'icon' => 'fas fa-regular fa-user',
-            'can' => 'admin.reclutas.index'
         ],
         [
             'text'        => 'Checadores',
@@ -342,11 +336,30 @@ return [
             'can' => 'admin.checks.index'
         ],
         [
+            'text'        => 'Vacaciones',
+            'route'         => 'admin.vacations.index',
+            'icon' => 'fas fa-solid fa-earth-americas',
+            'can' => 'admin.vacations.index'
+        ],
+        [
             'text'        => 'Roles',
             'route'         => 'admin.roles.index',
             'icon' => 'fas fa-solid fa-key',
             'can' => 'admin.roles.index',
             'color' => 'red'
+        ],
+        ['header' => 'USUARIOS'],
+        [
+            'text'        => 'Empleados',
+            'route'         => 'admin.users.index',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'admin.users.index'
+        ],
+        [
+            'text'        => 'Reclutados',
+            'route'         => 'admin.reclutas.index',
+            'icon' => 'fas fa-regular fa-user',
+            'can' => 'admin.reclutas.index'
         ],
     ],
 

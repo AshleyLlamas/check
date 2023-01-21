@@ -30,13 +30,19 @@ class User extends Authenticatable
         'name',
         'email',
         'curp',
+        'fecha_de_nacimiento',
+        'fecha_de_ingreso',
+        'whatsapp',
         'password',
+        'estatus',
         'puesto',
+        'tipo_de_puesto',
         'tipo',
         'número_de_inscripción_al_imss',
         'rfc',
         'número_del_infonavit',
         'company_id',
+        'cost_center_id',
         'address',
         'document_id',
         'slug'
@@ -90,6 +96,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Check');
     }
 
+    //Uno a Muchos
+    public function approvals(){
+        return $this->hasMany('App\Models\Approval');
+    }
+
+    //Uno a Muchos
+    public function vacations(){
+        return $this->hasMany('App\Models\Vacation');
+    }
+
     //Uno a Uno Inversa
     public function document(){
         return $this->belongsTo('App\Models\UserDocuments');
@@ -105,8 +121,14 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Area');
     }
 
+
     //Muchos a Muchos
     public function areas(){
         return $this->belongsToMany('App\Models\Area')->withPivot('encargado_id');
+    }
+
+    //Uno a Muchos inversa
+    public function cost_center(){
+        return $this->belongsTo('App\Models\CostCenter');
     }
 }
