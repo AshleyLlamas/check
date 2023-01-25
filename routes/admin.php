@@ -33,7 +33,7 @@ Route::resource('checks', CheckController::class)->only(['index', 'show'])->name
 Route::resource('schedules', ScheduleController::class)->only(['destroy', 'edit'])->names('admin.schedules');
 
 //Assistances
-Route::get('/assistances/{assistance}', [AssistanceController::class, 'show'])->name('admin.assistances.show');
+Route::resource('assistances', AssistanceController::class)->only(['index', 'show'])->names('admin.assistances');
 
 //Vacaciones
 Route::resource('vacations', VacationController::class)->only(['index', 'create', 'show'])->names('admin.vacations');

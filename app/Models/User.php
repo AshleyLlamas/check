@@ -106,6 +106,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Vacation');
     }
 
+    //Uno a Muchos
+    public function justify_attendances(){
+        return $this->hasMany('App\Models\JustifyAttendance');
+    }
+
     //Uno a Uno Inversa
     public function document(){
         return $this->belongsTo('App\Models\UserDocuments');

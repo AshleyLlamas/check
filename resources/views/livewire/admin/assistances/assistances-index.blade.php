@@ -6,7 +6,7 @@
     @endif
     <div class="card">
         <div class="card-header bg-primary">
-            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas las asistencias <span class="badge badge-light"> {{$all_checks}}</span></h5>
+            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas las asistencias <span class="badge badge-light"> {{$all_assistances}}</span></h5>
         </div>
         <div class="card-header">
             <div class="row">
@@ -29,58 +29,48 @@
             </div>
         </div>
         <div class="card-body p-0 table-responsive">
-            @if ($checks->count())
+            @if ($assistances->count())
                 <table class="table table-hover text-center">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Usuario</th>
-                            <th>Entrada</th>
-                            <th>Salida</th>
                             <th>Estatus</th>
-                            @can('admin.checks.show')
+                            <th>observación</th>
+                            @can('admin.assistances.show')
                                 <th></th>
                             @endcan
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($checks as $check)
+                        @foreach ($assistances as $assistance)
                             <tr>
-                                <td>{{$check->id}}</td>
+                                <td>{{$assistance->id}}</td>
                                 <td>
-                                    @isset($check->user_id)
+                                    @isset($assistance->user_id)
                                         @can('admin.users.show')
-                                            <a href="{{ route('admin.users.show', $check->user) }}">{{$check->user->name}}</a>
+                                            <a href="{{ route('admin.users.show', $assistance->user) }}">{{$assistance->user->name}}</a>
                                         @else
-                                            {{$check->user->name}}
+                                            {{$assistance->user->name}}
                                         @endcan
                                     @else
                                         N/A
                                     @endisset
                                 </td>
                                 <td>
-                                    @isset($check->in)
-                                        {{$check->in->hora}}
+                                    @isset($assistance->asistencia)
+                                        {{$assistance->asistencia}}
+                                    @endisset
+                                </td>
+                                <td>
+                                    @isset($assistance->observación)
+                                        {{$assistance->observación}}
                                     @else
                                         N/A
                                     @endisset
                                 </td>
-                                <td>
-                                    @isset($check->out)
-                                        {{$check->out->hora}}
-                                    @else
-                                        N/A
-                                    @endisset
-                                </td>
-                                <td>
-                                    @isset($check->assistance)
-                                        <i class="fa-solid fa-circle-check" style="color: green"></i>
-                                    @else
-                                        <i class="fa-solid fa-hourglass-start" style="color: gray"></i>
-                                    @endisset
-                                </td>
-                                @can('admin.checks.show')
-                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.checks.show', $check)}}"><i class="fas fa-eye"></i></a></td>
+                                @can('admin.assistances.show')
+                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.assistances.show', $assistance)}}"><i class="fas fa-eye"></i></a></td>
                                 @endcan
                             </tr>
                         @endforeach
@@ -93,7 +83,7 @@
             @endif
         </div>
         <div class="card-footer">
-            {{$checks->links()}}
+            {{$assistances->links()}}
         </div>
     </div>
 </div>

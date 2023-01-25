@@ -125,14 +125,21 @@ class UsersShow extends Component
 
         foreach(Assistance::where('user_id', $this->user->id)->get() as $assistance){
 
+            $asistencia = $assistance->asistencia;
+
             if($assistance->asistencia == 'No asistió'){
-                $color = 'red';
+                if($assistance->justify_attendance){
+                    $asistencia = 'Justificado';
+                    $color = 'orange';
+                }else{
+                    $color = 'red'; $assistance->asistencia;
+                }
             }else{
                 $color = 'gray';
             }
 
             $json_dias[] = array(
-              'title' => $assistance->asistencia,
+              'title' => $asistencia,
               'start' => date('Y-m-d\TH:i:s', strtotime($assistance->created_at->format('Y-m-d'))),
               'end' => date('Y-m-d\TH:i:s', strtotime($assistance->created_at->format('Y-m-d'))),
               'allDay' => true,

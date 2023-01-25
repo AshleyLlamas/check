@@ -27,4 +27,9 @@ class Assistance extends Model
     public function check(){
         return $this->belongsTo('App\Models\Check');
     }
+
+    //Uno a Uno
+    public function justify_attendance(){
+        return $this->hasOne('App\Models\JustifyAttendance');
+    }
 }

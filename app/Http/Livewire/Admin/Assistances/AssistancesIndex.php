@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Checks;
+namespace App\Http\Livewire\Admin\Assistances;
 
-use App\Models\Check;
+use App\Models\Assistance;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ChecksIndex extends Component
+class AssistancesIndex extends Component
 {
     use WithPagination;
 
@@ -44,16 +44,17 @@ class ChecksIndex extends Component
 
     public function render()
     {
-        $checks = Check::where('fecha', 'LIKE', '%' . $this->date . '%')
+        $assistances = Assistance::whereDate('created_at', '=' , Carbon::now()->formatLocalized($this->date))
                         ->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
         
-        $all_checks = Check::count();
+        $all_assistances = Assistance::whereDate('created_at', '=' , Carbon::now()->formatLocalized($this->date))->count();
 
-        return view('livewire.admin.checks.checks-index', [
-            'checks' => $checks,
-            'all_checks' => $all_checks
+
+        return view('livewire.admin.assistances.assistances-index', [
+            'assistances' => $assistances,
+            'all_assistances' => $all_assistances
         ]);
     }
 }

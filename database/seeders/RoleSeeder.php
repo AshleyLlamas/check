@@ -111,6 +111,13 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.cost_centers.destroy',
         'description' => 'Eliminar centro de costo.'])->syncRoles([$role1]);
 
+        //Assistances
+        $permission = Permission::create(['name' => 'admin.assistances.index',
+        'description' => 'Ver todas las asistencias.'])->syncRoles([$role1]);
+        
+        $permission = Permission::create(['name' => 'admin.assistances.show',
+        'description' => 'Ver asistencia.'])->syncRoles([$role1]);
+
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',
         'description' => 'Ver todas los roles.'])->syncRoles([$role1]);

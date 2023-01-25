@@ -123,6 +123,34 @@
                                     @endisset
                                 </th>
                             </tr>
+                            <tr>
+                                <th scope="col" class="border-right text-center align-middle">
+                                    Director general
+                                    @isset($vacation->approval_dg)
+                                        @can('admin.users.show')
+                                            <p><a href="{{route('admin.users.show', $vacation->approval_dg->user)}}">{{$vacation->approval_dg->user->name}}</a></p>
+                                        @else
+                                            <p class="text-secondary">
+                                                {{$vacation->approval_dg->user->name}}
+                                            </p>
+                                        @endcan
+                                    @endisset
+                                </th>
+                                <th scope="row">
+                                    @isset($vacation->approval_dg)
+                                        <div class="text-center pb-3">
+                                            <span class="badge badge-pill @if($vacation->approval_dg->aprobación == 'Aprobado') badge-success @else badge-danger @endif">{{$vacation->approval_dg->aprobación}}</span>
+                                        </div>
+                                        <div class="rounded bg-light p-2">
+                                            {!!$vacation->approval_dg->observaciones!!}
+                                        </div>
+                                    @else
+                                        <div  class="row justify-content-center">
+                                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#createApprovalDgModal"><i class="fa-solid fa-plus"></i> Crear aprobación</button>
+                                        </div>
+                                    @endisset
+                                </th>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -172,6 +200,30 @@
                     </div>
                 </div>
                 <!--Cerrar modal-->
+
+                <!-- Modal create -->
+                <div wire:ignore.self class="modal fade" id="createApprovalDgModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary">
+                                    <h5 class="modal-title">Crear aprobación</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                        
+                                    <form wire:submit.prevent="createApprovalDg">
+                                        @include('admin.vacations.partials.form-approval')
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Cerrar modal-->
+
             </div>
         </div>
     </div>
@@ -227,6 +279,7 @@
         window.addEventListener('close-modal', event =>{
             $('#createApprovalJefeModal').modal('hide');
             $('#createApprovalRhModal').modal('hide');
+            $('#createApprovalDgModal').modal('hide');
         });
     </script>
 @endpush

@@ -336,6 +336,12 @@ return [
             'can' => 'admin.checks.index'
         ],
         [
+            'text'        => 'Asistencia',
+            'route'         => 'admin.assistances.index',
+            'icon' => 'fas fa-solid fa-clock',
+            'can' => 'admin.assistances.index'
+        ],
+        [
             'text'        => 'Vacaciones',
             'route'         => 'admin.vacations.index',
             'icon' => 'fas fa-solid fa-earth-americas',

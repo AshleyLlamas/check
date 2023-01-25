@@ -27,6 +27,21 @@ class Approval extends Model
         return $this->hasOne('App\Models\Vacation');
     }
 
+    //Uno a Uno
+    public function vacation_dg(){
+        return $this->hasOne('App\Models\Vacation');
+    }
+
+    //Uno a Uno
+    public function justify_attendance_jefe(){
+        return $this->hasOne('App\Models\Vacation');
+    }
+
+    //Uno a Uno
+    public function justify_attendance_rh(){
+        return $this->hasOne('App\Models\Vacation');
+    }
+
     //Uno a Muchos inversa
     public function user(){
         return $this->belongsTo('App\Models\User');

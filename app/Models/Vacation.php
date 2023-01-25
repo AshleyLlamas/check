@@ -37,4 +37,9 @@ class Vacation extends Model
     public function approval_rh(){
         return $this->belongsTo('App\Models\Approval');
     }
+
+    //Uno a Uno Inversa
+    public function approval_dg(){
+        return $this->belongsTo('App\Models\Approval');
+    }
 }

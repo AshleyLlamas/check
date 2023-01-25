@@ -31,6 +31,9 @@ class CreateVacationsTable extends Migration
             $table->unsignedBigInteger('approval_rh_id')->nullable();
             $table->foreign('approval_rh_id')->references('id')->on('approvals')->onDelete('cascade')->onUpdate('cascade');
 
+            $table->unsignedBigInteger('approval_dg_id')->nullable();
+            $table->foreign('approval_dg_id')->references('id')->on('approvals')->onDelete('cascade')->onUpdate('cascade');
+            
             $table->enum('estatus', ['En espera', 'Aprobado', 'No aprobado']);
 
             $table->timestamps();
