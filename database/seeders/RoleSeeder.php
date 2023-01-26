@@ -118,6 +118,38 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.assistances.show',
         'description' => 'Ver asistencia.'])->syncRoles([$role1]);
 
+        //ADMONITIONS
+        $permission = Permission::create(['name' => 'admin.admonitions.index',
+        'description' => 'Ver todas las amonestaciónes.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonitions.show',
+        'description' => 'Ver amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonitions.edit',
+        'description' => 'Editar amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonitions.create',
+        'description' => 'Crear amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonitions.destroy',
+        'description' => 'Eliminar amonestación.'])->syncRoles([$role1]);
+
+        //ADMINISTRATIVE RECORDS
+        $permission = Permission::create(['name' => 'admin.administrative_records.index',
+        'description' => 'Ver todas las amonestaciónes.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.administrative_records.show',
+        'description' => 'Ver amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.administrative_records.edit',
+        'description' => 'Editar amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.administrative_records.create',
+        'description' => 'Crear amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.administrative_records.destroy',
+        'description' => 'Eliminar amonestación.'])->syncRoles([$role1]);
+
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',
         'description' => 'Ver todas los roles.'])->syncRoles([$role1]);

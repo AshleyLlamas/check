@@ -2,6 +2,8 @@
 
 //Home
 
+use App\Http\Controllers\Admin\AdministrativeRecordController;
+use App\Http\Controllers\Admin\AdmonitionController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\CheckController;
 use App\Http\Controllers\Admin\HomeController;
@@ -38,8 +40,14 @@ Route::resource('assistances', AssistanceController::class)->only(['index', 'sho
 //Vacaciones
 Route::resource('vacations', VacationController::class)->only(['index', 'create', 'show'])->names('admin.vacations');
 
+//Admonitions
+Route::resource('admonitions', AdmonitionController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.admonitions');
+
+//Administrative records
+Route::resource('administrative-records', AdministrativeRecordController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.administrative_records');
+
 //Cost centers
-Route::resource('cost_centers', CostCenterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.cost_centers');
+Route::resource('cost-centers', CostCenterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.cost_centers');
 
 //Roles
 Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.roles');

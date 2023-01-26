@@ -348,6 +348,18 @@ return [
             'can' => 'admin.vacations.index'
         ],
         [
+            'text'        => 'Amonestación',
+            'route'         => 'admin.admonitions.index',
+            'icon' => 'fas fa-solid fa-circle-exclamation',
+            'can' => 'admin.admonitions.index'
+        ],
+        [
+            'text'        => 'Acta administrativa',
+            'route'         => 'admin.administrative_records.index',
+            'icon' => 'fas fa-solid fa-earth-americas',
+            'can' => 'admin.administrative_records.index'
+        ],
+        [
             'text'        => 'Roles',
             'route'         => 'admin.roles.index',
             'icon' => 'fas fa-solid fa-key',
