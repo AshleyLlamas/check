@@ -316,56 +316,6 @@ return [
             'route'         => 'admin.index',
             'icon'        => 'fas fa-home',
         ],
-        ['header' => 'CONTENIDO'],
-        [
-            'text'        => 'Centro de costos',
-            'route'         => 'admin.cost_centers.index',
-            'icon' => 'fas fa-solid fa-money-bill',
-            'can' => 'admin.cost_centers.index'
-        ],
-        [
-            'text'        => 'Areas',
-            'route'         => 'admin.areas.index',
-            'icon' => 'fas fa-solid fa-briefcase',
-            'can' => 'admin.areas.index'
-        ],
-        [
-            'text'        => 'Checadores',
-            'route'         => 'admin.checks.index',
-            'icon' => 'fas fa-solid fa-clock',
-            'can' => 'admin.checks.index'
-        ],
-        [
-            'text'        => 'Asistencia',
-            'route'         => 'admin.assistances.index',
-            'icon' => 'fas fa-solid fa-clock',
-            'can' => 'admin.assistances.index'
-        ],
-        [
-            'text'        => 'Vacaciones',
-            'route'         => 'admin.vacations.index',
-            'icon' => 'fas fa-solid fa-earth-americas',
-            'can' => 'admin.vacations.index'
-        ],
-        [
-            'text'        => 'Amonestación',
-            'route'         => 'admin.admonitions.index',
-            'icon' => 'fas fa-solid fa-circle-exclamation',
-            'can' => 'admin.admonitions.index'
-        ],
-        [
-            'text'        => 'Acta administrativa',
-            'route'         => 'admin.administrative_records.index',
-            'icon' => 'fas fa-solid fa-earth-americas',
-            'can' => 'admin.administrative_records.index'
-        ],
-        [
-            'text'        => 'Roles',
-            'route'         => 'admin.roles.index',
-            'icon' => 'fas fa-solid fa-key',
-            'can' => 'admin.roles.index',
-            'color' => 'red'
-        ],
         ['header' => 'USUARIOS'],
         [
             'text'        => 'Empleados',
@@ -378,6 +328,63 @@ return [
             'route'         => 'admin.reclutas.index',
             'icon' => 'fas fa-regular fa-user',
             'can' => 'admin.reclutas.index'
+        ],
+        ['header' => 'CHECADORES Y ASISTENCIAS'],
+        [
+            'text'        => 'Checadores',
+            'route'         => 'admin.checks.index',
+            'icon' => 'fas fa-solid fa-clock',
+            'can' => 'admin.checks.index'
+        ],
+        [
+            'text'        => 'Asistencia',
+            'route'         => 'admin.assistances.index',
+            'icon' => 'fas fa-solid fa-clock',
+            'can' => 'admin.assistances.index'
+        ],
+        ['header' => 'CONTENIDO'],
+        [
+            'text'        => 'Actas administrativas',
+            'route'         => 'admin.administrative_records.index',
+            'icon' => 'fas fa-solid fa-circle-exclamation',
+            'can' => 'admin.administrative_records.index'
+        ],
+        [
+            'text'        => 'Amonestaciones',
+            'route'         => 'admin.admonitions.index',
+            'icon' => 'fas fa-solid fa-circle-exclamation',
+            'can' => 'admin.admonitions.index'
+        ],
+        [
+            'text'        => 'Tipo de amonestaciones',
+            'route'         => 'admin.admonition_types.index',
+            'icon' => 'fas fa-solid fa-circle-exclamation',
+            'can' => 'admin.admonition_types.index'
+        ], 
+        [
+            'text'        => 'Areas',
+            'route'         => 'admin.areas.index',
+            'icon' => 'fas fa-solid fa-briefcase',
+            'can' => 'admin.areas.index'
+        ],
+        [
+            'text'        => 'Centro de costos',
+            'route'         => 'admin.cost_centers.index',
+            'icon' => 'fas fa-solid fa-money-bill',
+            'can' => 'admin.cost_centers.index'
+        ],
+        [
+            'text'        => 'Vacaciones',
+            'route'         => 'admin.vacations.index',
+            'icon' => 'fas fa-solid fa-earth-americas',
+            'can' => 'admin.vacations.index'
+        ],  
+        [
+            'text'        => 'Roles',
+            'route'         => 'admin.roles.index',
+            'icon' => 'fas fa-solid fa-key',
+            'can' => 'admin.roles.index',
+            'color' => 'red'
         ],
     ],
 

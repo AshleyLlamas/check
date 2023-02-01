@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Admonitions;
+namespace App\Http\Livewire\Admin\AdmonitionTypes;
 
-use App\Models\Admonition;
+use App\Models\admonition_typeType;
+use App\Models\AdmonitionType;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AdmonitionsIndex extends Component
+class AdmonitionTypesIndex extends Component
 {
     use WithPagination;
 
@@ -37,16 +38,16 @@ class AdmonitionsIndex extends Component
 
     public function render()
     {
-        $admonitions = Admonition::
+        $admonition_types = AdmonitionType::
                         orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
         
-        $all_admonitions = Admonition::count();
+        $all_admonition_types = AdmonitionType::count();
 
-        return view('livewire.admin.admonitions.admonitions-index', [
-            'admonitions' => $admonitions,
-            'all_admonitions' => $all_admonitions
+        return view('livewire.admin.admonition-types.admonition-types-index', [
+            'admonition_types' => $admonition_types,
+            'all_admonition_types' => $all_admonition_types
         ]);
     }
 }

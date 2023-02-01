@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdministrativeRecord;
+
+use PDF;
+
 use Illuminate\Http\Request;
 
 class AdministrativeRecordController extends Controller
@@ -14,6 +17,7 @@ class AdministrativeRecordController extends Controller
         $this->middleware('can:admin.administrative_records.show')->only('show');
         $this->middleware('can:admin.administrative_records.create')->only('create');
         $this->middleware('can:admin.administrative_records.destroy')->only('destroy');
+        $this->middleware('can:admin.administrative_records.pdfs')->only('pdf');
     }
 
     public function index()
@@ -41,5 +45,14 @@ class AdministrativeRecordController extends Controller
         $administrative_record->delete();
 
         return redirect()->route('admin.administrative_records.index')->with('eliminar', 'ok');
+    }
+
+    public function pdf(AdministrativeRecord $administrative_record){
+
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView("pdfs/admin/administrativeRecord", [
+            'administrative_record' => $administrative_record
+        ]);
+
+        return $pdf->stream("administrative-record.pdf");
     }
 }

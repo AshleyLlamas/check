@@ -29,6 +29,9 @@ class CreateAdmonitionsTable extends Migration
             $table->unsignedBigInteger('alta_id')->nullable();
             $table->foreign('alta_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
 
+            $table->unsignedBigInteger('admonition_type_id')->nullable();
+            $table->foreign('admonition_type_id')->references('id')->on('admonition_types')->onDelete('set null')->onUpdate('cascade');
+
             $table->timestamps();
         });
     }

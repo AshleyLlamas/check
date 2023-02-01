@@ -111,6 +111,31 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\JustifyAttendance');
     }
 
+    //Uno a Muchos
+    public function admonitions(){  //Todas las amonestaciones que tiene un usuario
+        return $this->hasMany('App\Models\Admonition');
+    }
+
+    //Uno a Muchos
+    public function admonitionsRequested(){ //Todas las solicitudes de amonestación que dió un usuario
+        return $this->hasMany('App\Models\Admonition');
+    }
+    
+    //Uno a Muchos
+    public function admonitionsDischarged(){ //Todas las amonestaciones que dió dealta un usuario
+        return $this->hasMany('App\Models\Admonition');
+    }
+
+    //Uno a Muchos
+    public function administrativeRecordsDischarged(){ //Todas las actas administrativas que subio un usuario
+        return $this->hasMany('App\Models\AdministrativeRecord');
+    }
+
+    //Uno a Muchos
+    public function collaborationsInAdministrativeRecords(){ //Todas las actas administrativas que tiene un usuario
+        return $this->hasMany('App\Models\AdministrativeRecord');
+    }
+
     //Uno a Uno Inversa
     public function document(){
         return $this->belongsTo('App\Models\UserDocuments');

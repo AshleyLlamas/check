@@ -2,12 +2,62 @@
 
 namespace App\Http\Livewire\Admin\AdministrativeRecords;
 
+use App\Models\User;
 use Livewire\Component;
+use App\Models\AdministrativeRecord;
+use App\Models\AdmonitionType;
 
 class AdministrativeRecordsCreate extends Component
 {
+
+    public $colaborador, $admonition_type, $comentarios_del_colaborador, $observaciones, $categoria_del_permiso, $fecha_del_permiso;
+
+    public function rules(){
+        
+        $array = [];
+        
+        $array['colaborador'] = 'required';
+        $array['comentarios_del_colaborador'] = ['required','string','max:429496729'];
+        $array['observaciones'] = ['required', 'string', 'max:429496729'];
+        $array['admonition_type'] = ['required'];
+        $array['categoria_del_permiso'] = ['required'];
+        $array['fecha_del_permiso'] = ['required', 'date', 'after_or_equal:today'];
+
+        return $array;
+    }
+
+    public function save(){
+
+        $this->validate();
+        
+        if($this->admonition_type == ''){
+            $this->admonition_type = null;
+        }
+
+        AdministrativeRecord::create([
+            'colaborador_id' => $this->colaborador,
+            'admonition_type_id' => $this->admonition_type,
+            'comentarios_del_colaborador' => $this->comentarios_del_colaborador,
+            'observaciones' => $this->observaciones,
+            'fecha_del_permiso' => $this->fecha_del_permiso,
+            'categoria_del_permiso' => $this->categoria_del_permiso,
+            'alta_id' => auth()->user()->id
+        ]);
+
+        session()->flash('message', 'Acta administrativa creada satisfactoriamente.');
+
+        return redirect(route('admin.administrative_records.index'));
+
+    }
+
     public function render()
     {
-        return view('livewire.admin.administrative-records.administrative-records-create');
+        $users = User::orderBy('name')->get();
+        $admonition_types = AdmonitionType::orderBy('tipo')->get();
+
+        return view('livewire.admin.administrative-records.administrative-records-create', [
+            'users' => $users,
+            'admonition_types' => $admonition_types
+        ]);
     }
 }

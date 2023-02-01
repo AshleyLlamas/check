@@ -134,21 +134,44 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.admonitions.destroy',
         'description' => 'Eliminar amonestación.'])->syncRoles([$role1]);
 
+        $permission = Permission::create(['name' => 'admin.admonitions.pdfs',
+        'description' => 'Ver pdf de la amonestación.'])->syncRoles([$role1]);
+
+        //ADMONITION TYPES
+        $permission = Permission::create(['name' => 'admin.admonition_types.index',
+        'description' => 'Ver todos los tipos de amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonition_types.show',
+        'description' => 'Ver tipo de amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonition_types.edit',
+        'description' => 'Editar tipo de amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonition_types.create',
+        'description' => 'Crear tipo de amonestación.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.admonition_types.destroy',
+        'description' => 'Eliminar tipo de amonestación.'])->syncRoles([$role1]);
+
         //ADMINISTRATIVE RECORDS
         $permission = Permission::create(['name' => 'admin.administrative_records.index',
-        'description' => 'Ver todas las amonestaciónes.'])->syncRoles([$role1]);
+        'description' => 'Ver todas las actas administrativas.'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'admin.administrative_records.show',
-        'description' => 'Ver amonestación.'])->syncRoles([$role1]);
+        'description' => 'Ver acta administrativa.'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'admin.administrative_records.edit',
-        'description' => 'Editar amonestación.'])->syncRoles([$role1]);
+        'description' => 'Editar acta administrativa.'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'admin.administrative_records.create',
-        'description' => 'Crear amonestación.'])->syncRoles([$role1]);
+        'description' => 'Crear acta administrativa.'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'admin.administrative_records.destroy',
-        'description' => 'Eliminar amonestación.'])->syncRoles([$role1]);
+        'description' => 'Eliminar acta administrativa.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.administrative_records.pdfs',
+        'description' => 'Ver pdf de las actas administrativas.'])->syncRoles([$role1]);
+
 
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',

@@ -30,7 +30,8 @@
                         <tr>
                             <th>#</th>
                             <th>Colaborador</th>
-                            <th>Encargado</th>
+                            <th>Tipo de amonestación</th>
+                            <th>Permiso</th>
                             @can('admin.administrative_records.show')
                                 <th></th>
                             @endcan
@@ -58,15 +59,18 @@
                                     @endisset
                                 </td>
                                 <td>
-                                    @isset($administrative_record->user)
-                                        @can('admin.users.show')
-                                            <a href="{{ route('admin.users.show', $administrative_record->user) }}">{{$administrative_record->user->name}}</a>
-                                        @else
-                                            {{$administrative_record->user->name}}
-                                        @endcan
+                                    @isset($administrative_record->admonitionType)
+                                       {{$administrative_record->admonitionType->tipo}}
                                     @else
                                         N/A
                                     @endisset
+                                </td>
+                                <td>
+                                    @if(isset($administrative_record->categoria_del_permiso) && $administrative_record->fecha_del_permiso)
+                                       <b>{{$administrative_record->categoria_del_permiso}}:</b> {{$administrative_record->fecha_del_permiso->format('d/m/Y')}}
+                                    @else
+                                        N/A
+                                    @endif
                                 </td>
                                 @can('admin.administrative_records.show')
                                     <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.administrative_records.show', $administrative_record)}}"><i class="fas fa-eye"></i></a></td>

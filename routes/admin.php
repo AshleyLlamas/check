@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\ReclutaController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\VacationController;
-use App\Models\CostCenter;
+use App\Http\Controllers\Admin\AdmonitionTypeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('', [HomeController::class, 'index'])->name('admin.index');
@@ -42,9 +42,17 @@ Route::resource('vacations', VacationController::class)->only(['index', 'create'
 
 //Admonitions
 Route::resource('admonitions', AdmonitionController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.admonitions');
+    //PDFS
+    Route::get('/admonitions/pdfs/{admonition}', [AdmonitionController::class, 'pdf'])->middleware('auth', 'can:admin.admonitions.pdfs')->name('pdfs.admonitions.view');
+
+//Admonition types
+Route::resource('admonition-types', AdmonitionTypeController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.admonition_types');
 
 //Administrative records
 Route::resource('administrative-records', AdministrativeRecordController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.administrative_records');
+
+    //PDFS
+    Route::get('/administrative-records/pdfs/{administrative_record}', [AdministrativeRecordController::class, 'pdf'])->middleware('auth', 'can:admin.administrative_records.pdfs')->name('pdfs.administrative_records.view');
 
 //Cost centers
 Route::resource('cost-centers', CostCenterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.cost_centers');

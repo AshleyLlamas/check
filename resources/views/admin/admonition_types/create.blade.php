@@ -3,7 +3,7 @@
 @section('title', 'Asistencia')
 
 @section('content')
-    @livewire('admin.administrative-records.administrative-records-create')
+    @livewire('admin.admonition-types.admonition-types-create')
 @stop
 
 @section('css')

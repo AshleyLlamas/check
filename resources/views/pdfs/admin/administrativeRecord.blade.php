@@ -1,36 +1,39 @@
-<div class="py-4">
-    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            @can('admin.administrative_records.index')
-                <li class="breadcrumb-item"><a href="{{route('admin.administrative_records.index')}}">Todas las actas administrativas</a></li>
-            @endcan
-            <li class="breadcrumb-item active">Ver acta administrativa</li>
-        </ol>
-    </nav>
-    <div class="card">
-        <div class="card-body">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                @can('admin.administrative_records.pdfs')
-                    <a class="btn btn-secondary btn-sm" href="{{ route('pdfs.administrative_records.view', $administrative_record) }}"><i class="fa-solid fa-file-pdf"></i> PDF</a>   
-                @endcan
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="border border-dark table-responsive">
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>PDF</title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <!-- STILE -->
+        <style>
+            body{
+                font-family: "source_sans_proregular", Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;      
+                text-align: justify;
+            }
+
+            p{
+                font-size: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <p class="mb-1">{{$administrative_record->created_at->format("d/m/Y")}}</p>
+        <div class="contenido">
+            <!-- TABLA -->
+            
                 <table class="table table-borderless">
                     <thead>
-                        <tr scope="row" class="align-middle">
-                            <th colspan="5" class="mb-1"><p class="mb-1">{{$administrative_record->created_at->format("d/m/Y")}}</p></th>
-                        </tr>
                         <tr scope="row" class="align-middle text-center">
-                            <th colspan="5" class="mb-1"><h3>Acta administrativa</h3></th>
+                            <th colspan="5"><p style="font-size: 20px">Acta administrativa</p></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="text-center">
-                            <th colspan="5"><p class="bg-dark mb-1">DATOS DEL COLABORADOR</p></th>
+                            <th colspan="5"><p class="bg-dark mb-1 text-white">DATOS DEL COLABORADOR</p></th>
                         </tr>
                         <tr scope="row" class="align-middle text-uppercase">
                             <th>
@@ -88,13 +91,13 @@
                             </th>
                         </tr>
                         <tr class="text-center">
-                            <th colspan="5"><p class="bg-dark mb-1">TIPO DE AMONESTACIÓN</p></th>
+                            <th colspan="5"><p class="bg-dark mb-1 text-white">TIPO DE AMONESTACIÓN</p></th>
                         </tr>
                         <tr scope="row" class="align-top">
                             <th colspan="5">
                                 <div class="text-center">
                                     <div class="mx-5">
-                                        <p class="mb-1 border rounded border-dark bg-success text-uppercase">
+                                        <p class="mb-1 border rounded border-dark text-uppercase">
                                             {{$administrative_record->admonitionType->tipo}}
                                         </p>
                                     </div>
@@ -107,61 +110,43 @@
                             </th>
                         </tr>
                         <tr class="text-center">
-                            <th colspan="5"><p class="bg-dark mb-1">CATEGORIA DEL PERMISO</p></th>
+                            <th colspan="5"><p class="bg-dark mb-1 text-white">CATEGORIA DEL PERMISO</p></th>
                         </tr>
                         <tr scope="row" class="align-top">
                             <th colspan="5">
-                                <div class="row text-center">
-                                    <div class="col mx-5">
-                                        <p class="font-italic">DIA DE AUSENCIA</p>
-                                        <p class="mb-1 pl-2 border rounded border-dark @if($administrative_record->categoria_del_permiso == 'Día de ausencia') bg-success @endif">
-                                            FECHA AUSENCIA @if($administrative_record->categoria_del_permiso == 'Día de ausencia') {{$administrative_record->fecha_del_permiso->format("d/m/Y")}} @endif
-                                        </p>
-                                    </div>
-                                    <div class="col mx-5">
-                                        <p class="font-italic">DIA DE SUSPENSIÓN</p>
-                                        <p class="mb-1 pl-2 border rounded border-dark @if($administrative_record->categoria_del_permiso == 'Fecha de suspención') bg-success @endif">
-                                            FECHA DE SUSPENSIÓN @if($administrative_record->categoria_del_permiso == 'Fecha de suspención') {{$administrative_record->fecha_del_permiso->format("d/m/Y")}} @endif
+                                <div class="text-center">
+                                    <div class="mx-5">
+                                        <p class="mb-1 pl-2 border rounded border-dark text-uppercase">
+                                            {{$administrative_record->categoria_del_permiso}} {{$administrative_record->fecha_del_permiso->format("d/m/Y")}}
                                         </p>
                                     </div>
                                 </div>
                             </th>
                         </tr>
                         <tr class="text-center">
-                            <th colspan="5"><p class="bg-dark mb-1">OBSERVACIONES</p></th>
+                            <th colspan="5"><p class="bg-dark mb-1 text-white">OBSERVACIONES</p></th>
                         </tr>
                         <tr>
                             <th colspan="5">
-                                <div class="mx-5 my-3 p-3 border rounded border-dark">
+                                <div class="mx-5 p-3 border rounded border-dark">
                                     {!!$administrative_record->observaciones!!}
                                 </div>
                             </th>
                         </tr>
                         <tr class="text-center">
-                            <th colspan="5"><p class="bg-dark mb-1">COMENTARIOS DEL COLABORADOR</p></th>
+                            <th colspan="5"><p class="bg-dark mb-1 text-white">COMENTARIOS DEL COLABORADOR</p></th>
                         </tr>
                         <tr>
                             <th colspan="5">
-                                <div class="mx-5 my-3 p-3 border rounded border-dark">
+                                <div class="mx-5 p-3 border rounded border-dark">
                                     {!!$administrative_record->comentarios_del_colaborador!!}
                                 </div>
                             </th>
                         </tr>
                     </tbody>
                 </table>
-            </div>
+
+            <!-- CIERRE DE LA TABLA -->
         </div>
-    </div>
-</div>
-
-@push('css')
-    <style>
-        .borderless td, .borderless th {
-            border: none;
-        }
-
-        table, p{
-            user-select: none;
-        }
-    </style>
-@endpush
+    </body>
+</html>
