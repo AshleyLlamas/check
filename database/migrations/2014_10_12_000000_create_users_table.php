@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->enum('tipo', ['Empleado', 'Prospecto', 'Reclutado', 'Por contratar'])->nullable();
 
             $table->string('número_de_inscripción_al_imss')->nullable();
-             
+
             $table->string('rfc')->nullable();
             $table->string('número_del_infonavit')->nullable();
 
@@ -48,7 +48,10 @@ class CreateUsersTable extends Migration
 
             $table->unsignedBigInteger('document_id')->nullable();
             $table->foreign('document_id')->references('id')->on('user_documents')->onDelete('cascade')->onUpdate('cascade');
-            
+
+            $table->unsignedBigInteger('setting_id')->nullable();
+            $table->foreign('setting_id')->references('id')->on('user_settings')->onDelete('cascade')->onUpdate('cascade');
+
             $table->string('slug')->nullable();
 
             $table->timestamps();

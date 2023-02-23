@@ -10,7 +10,7 @@ class Area extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated'];
-    
+
     protected $fillable = [
         'área',
         'user_id',
@@ -18,6 +18,11 @@ class Area extends Model
         'cost_center_id',
         'company_id'
     ];
+
+    //Uno a uno polimorfica
+    public function inventory(){
+        return $this->morphOne('App\Models\Inventory', 'propietariable');
+    }
 
     //Uno a Uno Inversa
     public function user(){

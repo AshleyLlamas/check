@@ -98,23 +98,23 @@ class RoleSeeder extends Seeder
         //Center cost
         $permission = Permission::create(['name' => 'admin.cost_centers.index',
         'description' => 'Ver todos los centros de costos.'])->syncRoles([$role1]);
-        
+
         $permission = Permission::create(['name' => 'admin.cost_centers.show',
         'description' => 'Ver centro de costo.'])->syncRoles([$role1]);
-        
+
         $permission = Permission::create(['name' => 'admin.cost_centers.edit',
         'description' => 'Editar centro de costo.'])->syncRoles([$role1]);
-        
+
         $permission = Permission::create(['name' => 'admin.cost_centers.create',
         'description' => 'Crear centro de costo.'])->syncRoles([$role1]);
-        
+
         $permission = Permission::create(['name' => 'admin.cost_centers.destroy',
         'description' => 'Eliminar centro de costo.'])->syncRoles([$role1]);
 
         //Assistances
         $permission = Permission::create(['name' => 'admin.assistances.index',
         'description' => 'Ver todas las asistencias.'])->syncRoles([$role1]);
-        
+
         $permission = Permission::create(['name' => 'admin.assistances.show',
         'description' => 'Ver asistencia.'])->syncRoles([$role1]);
 
@@ -172,6 +172,38 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.administrative_records.pdfs',
         'description' => 'Ver pdf de las actas administrativas.'])->syncRoles([$role1]);
 
+
+        //ADMONITIONS
+        $permission = Permission::create(['name' => 'admin.inventories.index',
+        'description' => 'Ver todo el inventario.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.inventories.show',
+        'description' => 'Ver inventario.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.inventories.edit',
+        'description' => 'Editar inventario.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.inventories.create',
+        'description' => 'Crear inventario.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.inventories.destroy',
+        'description' => 'Eliminar inventario.'])->syncRoles([$role1]);
+
+        //ADMONITIONS
+        $permission = Permission::create(['name' => 'admin.calendars.index',
+        'description' => 'Ver todos los días no laborales.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.calendars.show',
+        'description' => 'Ver día no laboral.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.calendars.edit',
+        'description' => 'Editar día no laboral.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.calendars.create',
+        'description' => 'Crear día no laboral.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.calendars.destroy',
+        'description' => 'Eliminar día no laboral.'])->syncRoles([$role1]);
 
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',

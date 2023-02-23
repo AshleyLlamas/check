@@ -10,7 +10,7 @@ class Company extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated'];
-    
+
     protected $fillable = [
         'nombre_de_la_compañia'
     ];
@@ -23,5 +23,10 @@ class Company extends Model
     //Uno a Muchos
     public function checks(){
         return $this->hasMany('App\Models\Check');
+    }
+
+    //Uno a Muchos
+    public function inventories(){
+        return $this->hasMany('App\Models\Inventory');
     }
 }

@@ -34,7 +34,7 @@ class UsersCreate extends Component
         $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
 
     public function rules(){
-        
+
         $array = [];
 
         //User
@@ -61,7 +61,7 @@ class UsersCreate extends Component
         $array['tipo_de_puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];
         $array['cost_center'] = ['nullable'];
-        
+
         if($this->área || $this->encargado){
             $array['área'] = ['required'];
             $array['encargado'] = ['required'];
@@ -88,7 +88,7 @@ class UsersCreate extends Component
         $array['role'] = ['required'];
 
        //$array['password'] = 'required|confirmed';
-    
+
         return $array;
     }
 
@@ -160,7 +160,7 @@ class UsersCreate extends Component
         }else{
             $documento_del_curriculum_vitae = null;
         }
-        
+
         $document = UserDocuments::create([
             'documento_de_identificación_oficial' => $documento_de_identificación_oficial,
             'documento_del_comprobante_de_domicilio' => $documento_del_comprobante_de_domicilio,
@@ -170,8 +170,6 @@ class UsersCreate extends Component
             'documento_de_la_carta_de_pasante' => $documento_de_la_carta_de_pasante,
             'documento_del_curriculum_vitae' => $documento_del_curriculum_vitae
         ]);
-        
-
 
         if(isset($this->código_del_país) || isset($this->número_de_teléfono) && $this->código_del_país != '' && $this->número_de_teléfono != ''){
             $whatsapp = $this->código_del_país.$this->número_de_teléfono;
@@ -185,7 +183,7 @@ class UsersCreate extends Component
             $cost_center = $this->cost_center;
         }
 
-        //USER  
+        //USER
         $user = User::create([
             'qr' => $this->qr,
             'name' => $this->name,
@@ -224,7 +222,7 @@ class UsersCreate extends Component
                 'imageable_type' => 'App\Models\User'
             ]);
         }
-        
+
 
         //SCHEDULE
         if(count($this->days)){

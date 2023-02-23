@@ -10,12 +10,27 @@ class Approval extends Model
     use HasFactory;
 
     protected $guarded = ['id', 'created_at', 'updated'];
-    
+
     protected $fillable = [
         'aprobación',
         'user_id',
         'observaciones',
     ];
+
+    //Uno a Uno
+    public function extraHour_jefe(){
+        return $this->hasOne('App\Models\ExtraHour');
+    }
+
+    //Uno a Uno
+    public function extraHour_rh(){
+        return $this->hasOne('App\Models\ExtraHour');
+    }
+
+    //Uno a Uno
+    public function extraHour_dg(){
+        return $this->hasOne('App\Models\ExtraHour');
+    }
 
     //Uno a Uno
     public function vacation_jefe(){

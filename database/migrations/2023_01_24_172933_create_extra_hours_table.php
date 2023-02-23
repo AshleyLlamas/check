@@ -16,14 +16,18 @@ class CreateExtraHoursTable extends Migration
         Schema::create('extra_hours', function (Blueprint $table) {
             $table->id();
 
+            $table->integer('fecha')->nullable();
+            $table->longText('observación')->nullable();
+
+            //De quien es la hora extra?
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
 
+            //Que asistencia contó la hr extra?
             $table->unsignedBigInteger('assistance_id')->nullable();
-            $table->foreign('assistance_id')->references('id')->on('assistances')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('assistance_id')->references('id')->on('assistances')->onDelete('set null')->onUpdate('cascade');
 
-            $table->integer('horas_extra')->nullable();
-
+            //Aprovaciones
             $table->unsignedBigInteger('approval_jefe_id')->nullable();
             $table->foreign('approval_jefe_id')->references('id')->on('approvals')->onDelete('cascade')->onUpdate('cascade');
 

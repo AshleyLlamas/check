@@ -360,12 +360,18 @@ return [
             'route'         => 'admin.admonition_types.index',
             'icon' => 'fas fa-solid fa-circle-exclamation',
             'can' => 'admin.admonition_types.index'
-        ], 
+        ],
         [
             'text'        => 'Areas',
             'route'         => 'admin.areas.index',
             'icon' => 'fas fa-solid fa-briefcase',
             'can' => 'admin.areas.index'
+        ],
+        [
+            'text'        => 'Calendario',
+            'route'         => 'admin.calendars.index',
+            'icon' => 'fas fa-regular fa-calendar-days',
+            //'can' => 'admin.calendars.index'
         ],
         [
             'text'        => 'Centro de costos',
@@ -374,11 +380,17 @@ return [
             'can' => 'admin.cost_centers.index'
         ],
         [
+            'text'        => 'Inventario',
+            'route'         => 'admin.inventories.index',
+            'icon' => 'fas fa-solid fa-warehouse',
+            'can' => 'admin.inventories.index'
+        ],
+        [
             'text'        => 'Vacaciones',
             'route'         => 'admin.vacations.index',
             'icon' => 'fas fa-solid fa-earth-americas',
             'can' => 'admin.vacations.index'
-        ],  
+        ],
         [
             'text'        => 'Roles',
             'route'         => 'admin.roles.index',

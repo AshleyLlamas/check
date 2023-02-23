@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable; 
+    use HasApiTokens, HasFactory, Notifiable;
 
     use HasRoles;
 
@@ -23,7 +23,7 @@ class User extends Authenticatable
      */
 
     protected $guarded = ['id', 'created_at', 'updated'];
-    
+
     protected $fillable = [
         'qr',
         'número_de_empleado',
@@ -71,9 +71,24 @@ class User extends Authenticatable
         return 'slug';
     }
 
+    //Uno a Uno
+    public function userSetting(){
+        return $this->hasOne('App\Models\UserSetting');
+    }
+
+    //Uno a uno polimorfica
+    public function inventory(){
+        return $this->morphOne('App\Models\Inventory', 'propietariable');
+    }
+
      //Uno a Uno Inversa
      public function company(){
         return $this->belongsTo('App\Models\Company');
+    }
+
+    //Uno a Muchos
+    public function inventories(){
+        return $this->hasMany('App\Models\Inventory');
     }
 
     //Uno a Muchos
@@ -120,7 +135,7 @@ class User extends Authenticatable
     public function admonitionsRequested(){ //Todas las solicitudes de amonestación que dió un usuario
         return $this->hasMany('App\Models\Admonition');
     }
-    
+
     //Uno a Muchos
     public function admonitionsDischarged(){ //Todas las amonestaciones que dió dealta un usuario
         return $this->hasMany('App\Models\Admonition');
@@ -155,6 +170,11 @@ class User extends Authenticatable
     //Muchos a Muchos
     public function areas(){
         return $this->belongsToMany('App\Models\Area')->withPivot('encargado_id');
+    }
+
+    //Uno a Muchos
+    public function extraHours(){
+        return $this->hasMany('App\Models\ExtraHour');
     }
 
     //Uno a Muchos inversa

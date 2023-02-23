@@ -1,0 +1,109 @@
+<div class="pt-4">
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todos los articulos electrónicos <span class="badge badge-light"> {{$all_electronics}}</span></h5>
+        </div>
+        <div class="card-header">
+            <div class="row">
+                <div class="col-xl-8 col-lg-7 col-md-7 col-sm-7">
+                    <div class="input-group my-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        </div>
+                        <input wire:model="search" class="form-control" placeholder="Ingrese la clave qr del electrónico">
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                    <div class="form-group my-2" wire:model="order">
+                        <select class="form-control" id="orderFormControlSelect">
+                        <option value="1">Ordernar por más reciente</option>
+                        <option value="2">Ordernar por más antiguo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-1 col-lg-2 col-md-2 col-sm-2">
+                    <a class="btn btn-success btn-block  my-2 @cannot('admin.electronics.create') disabled @endcannot" href="{{ route('admin.electronics.create') }}"><i class="fa-solid fa-plus"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0 table-responsive">
+            @if ($electronics->count())
+                <table class="table table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Área</th>
+                            <th>Encargado</th>
+                            @can('admin.electronics.show')
+                                <th></th>
+                            @endcan
+                            @can('admin.electronics.edit')
+                                <th></th>
+                            @endcan
+                            @can('admin.electronics.destroy')
+                                <th></th>
+                            @endcan
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($electronics as $electronic)
+                            <tr>
+                                <td>{{$electronic->id}}</td>
+                                <td>
+                                    @isset($electronic->área)
+                                        @can('admin.electronics.show')
+                                            <a href="{{ route('admin.electronics.show', $electronic) }}">{{$electronic->área}}</a>
+                                        @else
+                                            {{$electronic->área}}
+                                        @endcan
+                                    @else
+                                        N/A
+                                    @endisset
+                                </td>
+                                <td>
+                                    @isset($electronic->user)
+                                        @can('admin.users.show')
+                                            <a href="{{ route('admin.users.show', $electronic->user) }}">{{$electronic->user->name}}</a>
+                                        @else
+                                            {{$electronic->user->name}}
+                                        @endcan
+                                    @else
+                                        N/A
+                                    @endisset
+                                </td>
+                                @can('admin.electronics.show')
+                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.electronics.show', $electronic)}}"><i class="fas fa-eye"></i></a></td>
+                                @endcan
+                                @can('admin.electronics.edit')
+                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.electronics.edit', $electronic)}}"><i class="fas fa-edit"></i></a></td>
+                                @endcan
+                                @can('admin.electronics.destroy')
+                                    <td width="10px">
+                                        <form action="{{ route('admin.electronics.destroy', $electronic) }}" method="POST" class="alert-delete">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="delete()"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </td>
+                                @endcan
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <div class="my-5">
+                    <p class="text-center text-danger"><strong>Sin registro</strong></p>
+                </div>
+            @endif
+        </div>
+        <div class="card-footer">
+            {{$electronics->links()}}
+        </div>
+    </div>
+</div>
+

@@ -100,6 +100,16 @@
     </div>
 </div>
 
+
+@push('css')
+    <style>
+    .select2 {
+        width:100%!important;
+    }
+    </style>
+@endpush
+
+
 @push('js')
     <script>
         $(document).ready(function () {

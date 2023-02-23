@@ -20,8 +20,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        //$schedule->command('make:absence')->dailyAt('23:50');
-        $schedule->command('make:absence')->everyMinute();
+        $schedule->command('make:absence')->dailyAt('23:50');
+        //$schedule->command('make:absence')->everyMinute();
 
         // $schedule->command('inspire')->hourly();
     }

@@ -7,5 +7,5 @@
                 @livewire('auth.profile', ['user' => Auth::user()], key(Auth::user()->id))
             </div>
         </div>
-    </section>  
+    </section>
 @endsection
