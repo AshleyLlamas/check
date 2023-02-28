@@ -6,7 +6,7 @@
     @endif
     <div class="card">
         <div class="card-header bg-primary">
-            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas las áreas <span class="badge badge-light"> {{$all_areas}}</span></h5>
+            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas las horas extras <span class="badge badge-light"> {{$all_extraHours}}</span></h5>
         </div>
         <div class="card-header">
             <div class="row">
@@ -15,7 +15,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
                         </div>
-                        <input wire:model="search" class="form-control" placeholder="Ingrese el nombre del área">
+                        <input type="date" wire:model="date" class="form-control">
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
@@ -27,64 +27,76 @@
                     </div>
                 </div>
                 <div class="col-xl-1 col-lg-2 col-md-2 col-sm-2">
-                    <a class="btn btn-success btn-block  my-2 @cannot('admin.areas.create') disabled @endcannot" href="{{ route('admin.areas.create') }}"><i class="fa-solid fa-plus"></i></a>
+                    <a class="btn btn-success btn-block  my-2 @cannot('admin.extra_hours.create') disabled @endcannot" href="{{ route('admin.extra_hours.create') }}"><i class="fa-solid fa-plus"></i></a>
                 </div>
             </div>
         </div>
         <div class="card-body p-0 table-responsive">
-            @if ($areas->count())
+            @if ($extraHours->count())
                 <table class="table table-hover text-center">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Área</th>
-                            <th>Encargado</th>
-                            @can('admin.areas.show')
+                            <th>Horas extras</th>
+                            <th>Fecha</th>
+                            <th>Usuario</th>
+                            <th>Estatus</th>
+                            @can('admin.extra_hours.show')
                                 <th></th>
                             @endcan
-                            @can('admin.areas.edit')
+                            @can('admin.extra_hours.edit')
                                 <th></th>
                             @endcan
-                            @can('admin.areas.destroy')
+                            @can('admin.extra_hours.destroy')
                                 <th></th>
                             @endcan
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($areas as $area)
-                            <tr>
-                                <td>{{$area->id}}</td>
+                        @foreach ($extraHours as $extraHour)
+                            <tr @if($extraHour->estatus != 'Aprobado') class="table-danger" @endif>
+                                <td>{{$extraHour->id}}</td>
                                 <td>
-                                    @isset($area->área)
-                                        @can('admin.areas.show')
-                                            <a href="{{ route('admin.areas.show', $area) }}">{{$area->área}}</a>
-                                        @else
-                                            {{$area->área}}
-                                        @endcan
+                                    @isset($extraHour->horas)
+                                        {{$extraHour->horas}}
                                     @else
                                         N/A
                                     @endisset
                                 </td>
                                 <td>
-                                    @isset($area->user)
+                                    @isset($extraHour->fecha)
+                                        {{$extraHour->fecha->format('d/m/Y')}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </td>
+                                <td>
+                                    @isset($extraHour->user)
                                         @can('admin.users.show')
-                                            <a href="{{ route('admin.users.show', $area->user) }}">{{$area->user->name}}</a>
+                                            <a href="{{ route('admin.users.show', $extraHour->user) }}">{{$extraHour->user->name}}</a>
                                         @else
-                                            {{$area->user->name}}
+                                            {{$extraHour->user->name}}
                                         @endcan
                                     @else
                                         N/A
                                     @endisset
                                 </td>
-                                @can('admin.areas.show')
-                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.areas.show', $area)}}"><i class="fas fa-eye"></i></a></td>
+                                <td>
+                                    @isset($extraHour->estatus)
+                                        {{$extraHour->estatus}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </td>
+                                @can('admin.extra_hours.show')
+                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.extra_hours.show', $extraHour)}}"><i class="fas fa-eye"></i></a></td>
                                 @endcan
-                                @can('admin.areas.edit')
-                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.areas.edit', $area)}}"><i class="fas fa-edit"></i></a></td>
+                                @can('admin.extra_hours.edit')
+                                    <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.extra_hours.edit', $extraHour)}}"><i class="fas fa-edit"></i></a></td>
                                 @endcan
-                                @can('admin.areas.destroy')
+                                @can('admin.extra_hours.destroy')
                                     <td width="10px">
-                                        <form action="{{ route('admin.areas.destroy', $area) }}" method="POST" class="alert-delete">
+                                        <form action="{{ route('admin.extra_hours.destroy', $extraHour) }}" method="POST" class="alert-delete">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="delete()"><i class="fas fa-trash-alt"></i></button>
@@ -102,7 +114,7 @@
             @endif
         </div>
         <div class="card-footer">
-            {{$areas->links()}}
+            {{$extraHours->links()}}
         </div>
     </div>
 </div>
@@ -112,7 +124,7 @@
         <script>
             Swal.fire(
             '¡Eliminado!',
-            'El área se elimino con éxito.',
+            'La hora extra se elimino con éxito.',
             'success'
             )
         </script>
@@ -123,7 +135,7 @@
         e.preventDefault();
         Swal.fire({
         title: '¿Estas seguro?',
-        text: "El área se eliminara definitivamente",
+        text: "La hora extra se eliminara definitivamente",
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',

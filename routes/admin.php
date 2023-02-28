@@ -16,10 +16,10 @@ use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\VacationController;
 use App\Http\Controllers\Admin\AdmonitionTypeController;
 use App\Http\Controllers\Admin\ElectronicController;
+use App\Http\Controllers\Admin\ExtraHourController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\NonWorkingDayController;
 use App\Http\Controllers\Admin\PrinterController;
-use App\Models\Admonition;
 use Illuminate\Support\Facades\Route;
 
 Route::get('', [HomeController::class, 'index'])->name('admin.index');
@@ -54,6 +54,9 @@ Route::resource('electronics', ElectronicController::class)->only(['index', 'cre
 //Printers
 Route::resource('printers', PrinterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.printers');
 
+//Horas extras
+Route::resource('extra-hours', ExtraHourController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.extra_hours');
+
 //Admonitions
 Route::resource('admonitions', AdmonitionController::class)->only(['index', 'show'])->names('admin.admonitions');
     //PDFS
@@ -64,7 +67,6 @@ Route::resource('admonition-types', AdmonitionTypeController::class)->only(['ind
 
 //Calendar
 Route::get('/calendars', [NonWorkingDayController::class, 'index'])->name('admin.calendars.index');
-Route::get('/calendars/{non_working_day}', [NonWorkingDayController::class, 'show'])->name('admin.calendars.show');
 Route::get('/calendars/create', [NonWorkingDayController::class, 'create'])->name('admin.calendars.create');
 Route::get('/calendars/edit/{non_working_day}', [NonWorkingDayController::class, 'edit'])->name('admin.calendars.edit');
 Route::delete('/calendars/{non_working_day}', [NonWorkingDayController::class, 'destroy'])->name('admin.calendars.destroy');

@@ -189,7 +189,7 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.inventories.destroy',
         'description' => 'Eliminar inventario.'])->syncRoles([$role1]);
 
-        //ADMONITIONS
+        //Calendario (dias no laborales)
         $permission = Permission::create(['name' => 'admin.calendars.index',
         'description' => 'Ver todos los días no laborales.'])->syncRoles([$role1]);
 
@@ -204,6 +204,22 @@ class RoleSeeder extends Seeder
 
         $permission = Permission::create(['name' => 'admin.calendars.destroy',
         'description' => 'Eliminar día no laboral.'])->syncRoles([$role1]);
+
+        //Horas extras
+        $permission = Permission::create(['name' => 'admin.extra_hours.index',
+        'description' => 'Ver todas las horas extras.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.extra_hours.show',
+        'description' => 'Ver hora extra.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.extra_hours.edit',
+        'description' => 'Editar hora extra.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.extra_hours.create',
+        'description' => 'Crear hora extra.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.extra_hours.destroy',
+        'description' => 'Eliminar hora extra.'])->syncRoles([$role1]);
 
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',

@@ -52,7 +52,7 @@ class NonWorkingDaysIndex extends Component
             );
         }
 
-        $no_working_days = NonWorkingDay::whereDate('created_at', '=' , Carbon::now()->formatLocalized($this->date))
+        $no_working_days = NonWorkingDay::where('fecha', 'LIKE', '%' .  Carbon::now()->formatLocalized($this->date) . '%')
                     ->orderBy($this->sort, $this->direction)
                     ->latest('id')
                     ->paginate();

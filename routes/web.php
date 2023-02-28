@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('home')->name('home');
 // });
 
+
 Route::view('/profile', 'auth.profile')->middleware('auth')->name('profile');
 
 Route::view('/check', 'check')->middleware('auth')->name('ckeck');

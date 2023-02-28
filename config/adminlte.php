@@ -380,6 +380,12 @@ return [
             'can' => 'admin.cost_centers.index'
         ],
         [
+            'text'        => 'Horas extras',
+            'route'         => 'admin.extra_hours.index',
+            'icon' => 'fas fa-solid fa-plus-minus',
+            'can' => 'admin.extra_hours.index'
+        ],
+        [
             'text'        => 'Inventario',
             'route'         => 'admin.inventories.index',
             'icon' => 'fas fa-solid fa-warehouse',

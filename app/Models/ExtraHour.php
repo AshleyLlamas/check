@@ -11,15 +11,25 @@ class ExtraHour extends Model
 
     protected $guarded = ['id', 'created_at', 'updated'];
 
+    protected $dates = ['fecha'];
+
     protected $fillable = [
         'fecha',
+        'horas',
         'observación',
+        'creador_id',
         'user_id',
+        'estatus',
         'assistance_id',
         'approval_jefe_id',
         'approval_rh_id',
         'approval_dg_id'
     ];
+
+    //Uno a Muchos inversa
+    public function creador(){
+        return $this->belongsTo('App\Models\User');
+    }
 
     //Uno a Muchos inversa
     public function user(){

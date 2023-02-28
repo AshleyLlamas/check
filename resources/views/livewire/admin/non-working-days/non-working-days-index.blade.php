@@ -9,15 +9,15 @@
             <h5 class="text-center my-2"><i class="fa-regular fa-calendar-days"></i> Calendario</h5>
         </div>
         <div class="card-body table-responsive">
-            <div>
-                <div id='calendar' wire:ignore></div>
+            <div wire:ignore>
+                <div id='calendar'></div>
             </div>
         </div>
     </div>
     {{-- LIST --}}
     <div class="card">
         <div class="card-header bg-primary">
-            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas los días no laborales <span class="badge badge-light"> {{$all_no_working_days}}</span></h5>
+            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todos los días no laborales <span class="badge badge-light"> {{$all_no_working_days}}</span></h5>
         </div>
         <div class="card-header">
             <div class="row">
@@ -48,14 +48,17 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Razón</th>
                             <th>Fecha</th>
+                            <th>Sueldo</th>
+                            <th>Multiplicador por laborar</th>
                             @can('admin.no_working_days.show')
                                 <th></th>
                             @endcan
-                            @can('admin.no_working_days.edit')
+                            @can('admin.calendars.edit')
                                 <th></th>
                             @endcan
-                            @can('admin.no_working_days.destroy')
+                            @can('admin.calendars.destroy')
                                 <th></th>
                             @endcan
                         </tr>
@@ -65,16 +68,37 @@
                             <tr>
                                 <td>{{$no_working_day->id}}</td>
                                 <td>
-                                    @isset($no_working_day->fecha)
-                                        {{$no_working_day->fecha}}
+                                    @isset($no_working_day->razón)
+                                        {{$no_working_day->razón}}
                                     @else
                                         N/A
                                     @endisset
                                 </td>
-                                @can('admin.no_working_days.edit')
+                                <td>
+                                    @isset($no_working_day->fecha)
+                                        {{$no_working_day->fecha->format('d/m/Y')}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </td>
+                                <td>
+                                    @isset($no_working_day->sueldo)
+                                        {{$no_working_day->sueldo}} de sueldo
+                                    @else
+                                        N/A
+                                    @endisset
+                                </td>
+                                <td>
+                                    @isset($no_working_day->multiplicador)
+                                        (Sueldo) x {{$no_working_day->multiplicador}}
+                                    @else
+                                        N/A
+                                    @endisset
+                                </td>
+                                @can('admin.calendars.edit')
                                     <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.calendars.edit', $no_working_day)}}"><i class="fas fa-edit"></i></a></td>
                                 @endcan
-                                @can('admin.no_working_days.destroy')
+                                @can('admin.calendars.destroy')
                                     <td width="10px">
                                         <form action="{{ route('admin.calendars.destroy', $no_working_day) }}" method="POST" class="alert-delete">
                                             @csrf
@@ -113,13 +137,43 @@
             center: 'title',
         },
             initialDate: {!! json_encode($hoy) !!},
-            navLinks: true, // can click day/week names to navigate views
+            navLinks: false, // can click day/week names to navigate views
             editable: false,
             selectable: false,
             dayMaxEvents: false, // allow "more" link when too many events
             events: {!! json_encode($json_dias) !!}
         });
-        calendar.render();
+            calendar.render();
         });
     </script>
+
+    @if (session('eliminar') == 'ok')
+        <script>
+            Swal.fire(
+            '¡Eliminado!',
+            'El día no laboral se elimino con éxito.',
+            'success'
+            )
+        </script>
+    @endif
+
+        <script>
+            $('.alert-delete').submit(function (e) {
+            e.preventDefault();
+            Swal.fire({
+            title: '¿Estas seguro?',
+            text: "El día no laboral se eliminara definitivamente",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, ¡Eliminar!',
+            cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                })
+            });
+        </script>
+
 @endpush
