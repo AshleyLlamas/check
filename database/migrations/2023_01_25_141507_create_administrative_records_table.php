@@ -22,15 +22,16 @@ class CreateAdministrativeRecordsTable extends Migration
             $table->unsignedBigInteger('admonition_type_id')->nullable();
             $table->foreign('admonition_type_id')->references('id')->on('admonition_types')->onDelete('set null')->onUpdate('cascade');
 
-            $table->longText('comentarios_del_colaborador')->nullable();
+            $table->string('comentarios_del_colaborador')->nullable();
             $table->longText('observaciones')->nullable();
             $table->date('fecha_del_permiso')->nullable();
             $table->enum('categoria_del_permiso', ['Día de ausencia', 'Fecha de suspención'])->nullable();
 
             $table->unsignedBigInteger('alta_id')->nullable();
             $table->foreign('alta_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
-            
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

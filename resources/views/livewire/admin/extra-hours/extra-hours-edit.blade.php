@@ -58,6 +58,7 @@
                                 </div>
                                 <div class="form-group col-12" wire:ignore>
                                     <label for="observación" class="col-form-label">{{ __('Observación') }}</label>
+                                    <span class="text-danger">*</span>
                                     <textarea class="form-control" wire:model="observación" id="observación">{!! $observación !!}</textarea>
                                 </div>
                                 @error('observación') <span class="text-danger error">{{ $message }}</span>@enderror

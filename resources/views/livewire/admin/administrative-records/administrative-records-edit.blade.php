@@ -41,16 +41,35 @@
                                     </div>
                                     @error('colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12" wire:ignore>
+                                <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Comentarios del colaborador') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <form method="post" wire:model="comentarios_del_colaborador">
-                                        <textarea id="comentarios_del_colaborador" name="comentarios_del_colaborador">{{$comentarios_del_colaborador}}</textarea>
-                                    </form>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" lang="es" wire:model="comentarios_del_colaborador" accept="image/*">
+                                        <label class="custom-file-label" for="customFileLang">Selecciona una imagen</label>
+                                        @error('comentarios_del_colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div>
+                                        {{-- <div wire:loading wire:target="comentarios_del_colaborador">
+                                            <button class="btn btn-white mt-3" type="button" disabled>
+                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                Cargando...
+                                            </button>
+                                        </div> --}}
+                                        <div class="pt-3">
+                                            @if($comentarios_del_colaborador)
+                                                <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{$comentarios_del_colaborador->temporaryurl()}}">
+                                            @else
+                                                @isset($administrative_record->comentarios_del_colaborador)
+                                                    <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{Storage::url($administrative_record->comentarios_del_colaborador)}}">
+                                                @endisset
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @error('comentarios_del_colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                @error('comentarios_del_colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                         </div>
                     </div>
@@ -138,23 +157,6 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <script>
-
-        $('#comentarios_del_colaborador').summernote({
-            tabsize: 2,
-            height: 200,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-            ],
-            callbacks: {
-                onChange: function(contents, $editable) {
-                    @this.set('comentarios_del_colaborador', contents);
-                }
-            }
-        });
 
         $('#observaciones').summernote({
             tabsize: 2,

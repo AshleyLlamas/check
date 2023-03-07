@@ -22,6 +22,7 @@ class CreateMunicipalitiesTable extends Migration
             $table->foreign('state_id')->references('id')->on('states')->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

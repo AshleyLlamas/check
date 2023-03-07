@@ -26,6 +26,7 @@ class CreateAssistancesTable extends Migration
             $table->longText('observación')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

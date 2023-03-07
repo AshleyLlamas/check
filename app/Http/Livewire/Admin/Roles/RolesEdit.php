@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Role;
 
 class RolesEdit extends Component
 {
-    public $role;
+    public $role, $nombre;
 
     public $permisos = [];
 
@@ -18,9 +18,9 @@ class RolesEdit extends Component
     }
 
     public function rules(){
-        
+
         $array = [];
-        
+
         $array['nombre'] = 'required|string|max:255';
         $array['permisos'] = 'required';
 
@@ -38,10 +38,10 @@ class RolesEdit extends Component
 
         return redirect()->route('admin.roles.index')->with('message', 'Rol se editó con éxito.');
     }
-    
+
     public function render()
     {
-        $permissions = Permission::all()->sortBy('name');
+        $permissions = Permission::orderBy('name')->get();
 
         return view('livewire.admin.roles.roles-edit', [
             'permissions' => $permissions

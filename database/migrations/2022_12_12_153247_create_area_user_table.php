@@ -26,6 +26,7 @@ class CreateAreaUserTable extends Migration
             $table->foreign('encargado_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

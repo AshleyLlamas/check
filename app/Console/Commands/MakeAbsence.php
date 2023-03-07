@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Assistance;
 use App\Models\Check;
+use App\Models\NonWorkingDay;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Vacation;
@@ -37,7 +38,7 @@ class MakeAbsence extends Command
     public function __construct()
     {
         parent::__construct();
-        
+
         switch(substr(Carbon::now()->formatLocalized('%A'), 0, 2)){
             case "lu":
                 $this->clave = "Lunes";
@@ -70,7 +71,6 @@ class MakeAbsence extends Command
      */
     public function handle()
     {
-
         //GENERAR ESTATUS INACTIVO PARA USUARIOS EN VACACIONES
         if(Vacation::where('estatus', 'Aprobado')->whereDate('fecha_inicial', '>=' , Carbon::now()->formatLocalized('%Y-%m-%d'))->count()){
 
@@ -97,24 +97,29 @@ class MakeAbsence extends Command
             }
         }
 
-        //GENERAR INASISTENCIAS
-        $users = User::where('estatus', 'Activo')->whereHas('schedules', function($query) {
-            $query->where('día', '=', $this->clave)->where('actual', true);
-        })->get();
+        //VER SI EL DIA DE HOY SE TRABAJA
+        if(!NonWorkingDay::where('fecha', '=', Carbon::now()->format('Y-m-d'))->first()){
+            //SE TRABAJA
 
-        foreach($users as $user){
-            $existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+            //GENERAR INASISTENCIAS
+            $users = User::where('estatus', 'Activo')->whereHas('schedules', function($query) {
+                $query->where('día', '=', $this->clave)->where('actual', true);
+            })->get();
 
-            if(!$existe_un_check){
-                Assistance::create([
-                    'user_id' => $user->id,
-                    'asistencia' => 'No asistió',
-                    'observación' => 'Sin especificar'
-                ]);
+            foreach($users as $user){
+                $existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+
+                if(!$existe_un_check){
+                    Assistance::create([
+                        'user_id' => $user->id,
+                        'asistencia' => 'No asistió',
+                        'observación' => 'Sin especificar'
+                    ]);
+                }
             }
         }
 
-        //$texto = "[".date("Y-m-d H:i:s")."] - Hola, estoy funcionado"; 
+        //$texto = "[".date("Y-m-d H:i:s")."] - Hola, estoy funcionado";
         //Storage::append("archivo.text", $texto);
     }
 }

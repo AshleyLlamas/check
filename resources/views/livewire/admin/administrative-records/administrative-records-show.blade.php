@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="btn-group" role="group" aria-label="Basic example">
                 @can('admin.administrative_records.pdfs')
-                    <a class="btn btn-secondary btn-sm" href="{{ route('pdfs.administrative_records.view', $administrative_record) }}"><i class="fa-solid fa-file-pdf"></i> PDF</a>   
+                    <a class="btn btn-secondary btn-sm" href="{{ route('pdfs.administrative_records.view', $administrative_record) }}"><i class="fa-solid fa-file-pdf"></i> PDF</a>
                 @endcan
             </div>
         </div>
@@ -34,7 +34,7 @@
                         </tr>
                         <tr scope="row" class="align-middle text-uppercase">
                             <th>
-                                <p class="mb-1">COD. EMP. 
+                                <p class="mb-1">COD. EMP.
                                     <span class="text-secondary pl-3">
                                         @isset($administrative_record->colaborador->número_de_empleado)
                                             {{$administrative_record->colaborador->número_de_empleado}}
@@ -58,7 +58,7 @@
                             <th>
                                 <p class="mb-1">OBRA/DEPTO
                                     <span class="text-secondary pl-3">
-                                        
+
                                     </span>
                                 </p>
                             </th>
@@ -142,9 +142,19 @@
                         </tr>
                         <tr>
                             <th colspan="5">
-                                <div class="mx-5 my-3 p-3 border rounded border-dark">
+                                {{-- <div class="mx-5 my-3 p-3 border rounded border-dark">
                                     {!!$administrative_record->comentarios_del_colaborador!!}
-                                </div>
+                                </div> --}}
+                                @if($administrative_record->comentarios_del_colaborador)
+                                    @php
+                                        $extension = pathinfo($administrative_record->comentarios_del_colaborador)['extension'];
+                                    @endphp
+                                    @if($extension =="jpg" || $extension == "jpeg" || $extension == "png")
+                                        <div class="pt-3">
+                                            <img style="display: block; margin-left: auto; margin-right: auto;"  class="img-fluid" src="{{Storage::url($administrative_record->comentarios_del_colaborador)}}">
+                                        </div>
+                                    @endif
+                                @endif
                             </th>
                         </tr>
                     </tbody>

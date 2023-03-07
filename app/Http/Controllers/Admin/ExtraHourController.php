@@ -12,6 +12,10 @@ class ExtraHourController extends Controller
         return view('admin.extra_hours.index');
     }
 
+    public function show(ExtraHour $extraHour){
+        return view('admin.extra_hours.show', compact('extraHour'));
+    }
+
     public function create(){
         return view('admin.extra_hours.create');
     }

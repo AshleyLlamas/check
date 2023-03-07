@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="col-8">
                                     <h3 class="profile-username text-center">{{$assistance->user->name}}</h3>
-            
+
                                     @isset($user->puesto)
                                         <p class="text-muted text-center mb-0 pb-0">{{$assistance->user->puesto}}</p>
                                     @endisset
@@ -43,7 +43,10 @@
                     <div class="card shadow-none border h-100">
                         <div class="text-center pt-4">
                             <h5 class="mb"><b><i class="fa-regular fa-calendar"></i> Fecha</b> <br> <p class="text-secondary">{{$assistance->created_at->formatlocalized('%d/%m/%Y')}}</p></h5>
-                            <h5 class="mb-1"><b>Asistencia</h5></b><h3><span class="badge @if($assistance->asistencia == 'Asistió') badge-success @else badge-danger @endif"> {{$assistance->asistencia}}</span></h3> 
+                            <h5 class="mb-1"><b>Asistencia</h5></b><h3><span class="badge @if($assistance->asistencia == 'Asistió') badge-success @else badge-danger @endif"> {{$assistance->asistencia}}</span></h3>
+                            @isset($assistance->extra_hour->horas)
+                                <h5 class="mb"><b>Horas extras</b> <br> <p class="text-secondary"><a href="{{route('admin.extra_hours.show', $assistance->extra_hour)}}">{{$assistance->extra_hour->horas}} Hrs.</a></p></h5>
+                            @endisset
                         </div>
                     </div>
                 </div>
@@ -100,9 +103,8 @@
                                                             badge-secondary
                                                     @endswitch
                                                 ">
-                                                {{$assistance->justify_attendance->estatus}}</span> 
+                                                {{$assistance->justify_attendance->estatus}}</span>
                                             </td>
-
                                         </tr>
                                         <tr>
                                             <th scope="col" class="border-right"><i class="fa-solid fa-users"></i></th>
@@ -168,7 +170,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-        
+
                                 <!-- Modal create -->
                                 <div wire:ignore.self class="modal fade" id="createApprovalJefeModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -181,7 +183,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                        
+
                                                     <form wire:submit.prevent="createApprovalJefe">
                                                         @include('admin.vacations.partials.form-approval')
                                                     </form>
@@ -191,7 +193,7 @@
                                     </div>
                                 </div>
                                 <!--Cerrar modal-->
-        
+
                                 <!-- Modal create -->
                                 <div wire:ignore.self class="modal fade" id="createApprovalRhModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -204,7 +206,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                        
+
                                                     <form wire:submit.prevent="createApprovalRh">
                                                         @include('admin.vacations.partials.form-approval')
                                                     </form>
@@ -218,7 +220,7 @@
                                 <div class="m-3">
                                     <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#createJustifyAttendanceModal"><i class="fa-solid fa-plus"></i> Crear justificante</button>
                                 </div>
-                                
+
                                 <!-- MODAL -->
                                 <div wire:ignore.self class="modal fade" id="createJustifyAttendanceModal" tabindex="-1" aria-labelledby="createJustifyAttendanceModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -230,7 +232,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                    
+
                                                 <form wire:submit.prevent="createJustifyAttendance">
                                                     {{-- <div class="form-group">
                                                         <label class="col-form-label">

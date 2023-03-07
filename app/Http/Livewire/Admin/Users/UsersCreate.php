@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\UserDocuments;
+use App\Models\UserSetting;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -22,7 +23,7 @@ class UsersCreate extends Component
     use WithFileUploads;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $código_del_país, $número_de_teléfono, $fecha_de_nacimiento, $número_de_empleado, $company, $cost_centers, $cost_center, $área, $encargado, $fecha_de_ingreso, $puesto, $tipo_de_puesto, $password, $password_confirmation, $role,
+    public $foto, $qr, $name, $email, $curp, $código_del_país, $número_de_teléfono, $fecha_de_nacimiento, $número_de_empleado, $company, $cost_centers, $cost_center, $área, $encargado, $fecha_de_ingreso, $puesto, $derecho_a_hora_extra = 'No', $recontratable = 'Si', $tipo_de_puesto, $password, $password_confirmation, $role = 3,
         $número_de_inscripción_al_imss, $rfc, $número_del_infonavit;
 
     //Schedule
@@ -66,6 +67,10 @@ class UsersCreate extends Component
             $array['área'] = ['required'];
             $array['encargado'] = ['required'];
         }
+
+        //User Settings
+        $array['derecho_a_hora_extra'] = "required|in:Si,No";
+        $array['recontratable'] = "required|in:Si,No";
 
         //Schedule
         if(count($this->days)){
@@ -208,6 +213,13 @@ class UsersCreate extends Component
             'slug' => Str::random(30)
         ]);
 
+        if($this->derecho_a_hora_extra || $this->recontratable){
+            UserSetting::create([
+                'derecho_a_hora_extra' => $this->derecho_a_hora_extra,
+                'recontratable' => $this->recontratable,
+                'user_id' => $user->id
+            ]);
+        }
         //ÁREA Y ENCARGADO
         if($this->área || $this->encargado){
             $user->areas()->sync($this->área, ['encargado_id' => $this->encargado]);

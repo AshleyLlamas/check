@@ -21,11 +21,12 @@ class CreateAddressesTable extends Migration
             $table->string('número_exterior')->nullable();
             $table->string('colonia')->nullable();
             $table->string('código_postal')->nullable();
-            
+
             $table->unsignedBigInteger('municipality_id')->nullable();
             $table->foreign('municipality_id')->references('id')->on('municipalities')->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

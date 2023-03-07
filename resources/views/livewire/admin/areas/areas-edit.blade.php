@@ -2,9 +2,9 @@
     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
         <ol class="breadcrumb">
             @can('admin.areas.index')
-                <li class="breadcrumb-item"><a href="{{route('admin.areas.index')}}">Todas las áreas</a></li>
+                <li class="breadcrumb-item"><a href="{{route('admin.areas.index')}}">Todas las áreas o proyectos</a></li>
             @endcan
-            <li class="breadcrumb-item active">Nueva área</li>
+            <li class="breadcrumb-item active">Nueva área o proyecto</li>
         </ol>
     </nav>
     <div class="card">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col m-2">
                             <div class="border-bottom">
-                                <h5 class="py-1 text-center">Área</h5>
+                                <h5 class="py-1 text-center">Área o proyecto</h5>
                             </div>
                             <div class="row">
                                 <div class="form-group col-12">
@@ -117,7 +117,7 @@
                 var data = $('#cost_centers').select2("val");
             @this.set('cost_center', data);
             });
-            
+
             $('#users').select2();
 
             $('#users').on('change', function (e) {

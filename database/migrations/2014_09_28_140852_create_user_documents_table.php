@@ -25,6 +25,7 @@ class CreateUserDocumentsTable extends Migration
             $table->string('documento_del_curriculum_vitae')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

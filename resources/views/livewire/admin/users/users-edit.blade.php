@@ -173,22 +173,9 @@
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label class="col-form-label">
-                                        {{ __('Tipo de puesto') }}
+                                        {{ __('Nivel del puesto') }}
                                     </label>
-                                    <select class="form-control" id="tipo_de_puesto" wire:model="tipo_de_puesto">
-                                        <option value="">Selecciona una opción</option>
-                                        <option>Directiva</option>
-                                        <option>Gerencial</option>
-                                        <option>Coordinación</option>
-                                        <option>Jefatura</option>
-                                        <option>Sub jefatura</option>
-                                        <option>Administrativa</option>
-                                        <option>Operativa</option>
-                                        <option>Residencia de obra</option>
-                                        <option>Superintendencia</option>
-                                        <option>Temporal</option>
-                                        <option>Productivo</option>
-                                    </select>
+                                    <input type="text" id="tipo_de_puesto" class="form-control" wire:model="tipo_de_puesto" placeholder="Ingrese el nivel del puesto de empleado">
                                     @error('tipo_de_puesto') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
@@ -238,6 +225,33 @@
                                         @error('cost_center') <span class="text-danger error">{{ $message }}</span>@enderror
                                     </div>
                                 @endif
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Derecho a horas extras') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" id="derecho_a_hora_extra" wire:model="derecho_a_hora_extra">
+                                            <option value="">Selecciona una opción</option>
+                                            <option value="No">No</option>
+                                            <option value="Si">Si</option>
+                                        </select>
+                                    </div>
+                                    @error('derecho_a_hora_extra') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Recontratable') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" id="recontratable" wire:model="recontratable">
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    @error('recontratable') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -310,33 +324,35 @@
                         </div>
                     </div>
                     {{--Rol--}}
-                    <div class="row rounded border">
-                        <div class="bg-gray rounded-left">
-                            <div class="m-3">
-                                <div class="my-auto"><i class="fa-solid fa-unlock"></i></div>
+                    @can('admin.roles.user')
+                        <div class="row rounded border">
+                            <div class="bg-gray rounded-left">
+                                <div class="m-3">
+                                    <div class="my-auto"><i class="fa-solid fa-unlock"></i></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col m-2">
-                            <div class="border-bottom">
-                                <h5 class="py-1 text-center">Rol</h5>
-                            </div>
-                            <div>
-                                <div class="form-group">
-                                    <label class="col-form-label">
-                                        {{ __('Rol') }}
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <select class="form-control" aria-label="Default select example" wire:model="role">
-                                        <option value="">Selecciona una opción</option>
-                                        @foreach ($roles as $role)
-                                            <option value="{{$role->id}}">{{$role->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('role') <span class="text-danger error">{{ $message }}</span>@enderror
+                            <div class="col m-2">
+                                <div class="border-bottom">
+                                    <h5 class="py-1 text-center">Rol</h5>
+                                </div>
+                                <div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">
+                                            {{ __('Rol') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" aria-label="Default select example" wire:model="role">
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach ($roles as $role)
+                                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('role') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endcan
                 </div>
             </form>
         </div>

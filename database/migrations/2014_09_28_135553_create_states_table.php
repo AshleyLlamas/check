@@ -17,8 +17,9 @@ class CreateStatesTable extends Migration
             $table->id();
 
             $table->string('nombre_del_estado')->nullable();
-            
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

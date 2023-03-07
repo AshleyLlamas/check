@@ -46,6 +46,8 @@
                                     <div wire:ignore>
                                         <label class="col-form-label">
                                             {{ __('Usuario') }}
+                                            <small>(Con derecho a horas extras)</small>
+                                            <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control" id="users">
                                             <option value="">Selecciona una opción</option>
@@ -58,6 +60,7 @@
                                 </div>
                                 <div class="form-group col-12" wire:ignore>
                                     <label for="observación" class="col-form-label">{{ __('Observación') }}</label>
+                                    <span class="text-danger">*</span>
                                     <input type="text" id="observación" name="observación" class="form-control" wire:model="observación" placeholder="Ingrese la observación">
                                 </div>
                                 @error('observación') <span class="text-danger error">{{ $message }}</span>@enderror

@@ -30,6 +30,7 @@ class CreateSchedulesTable extends Migration
             $table->boolean('actual')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

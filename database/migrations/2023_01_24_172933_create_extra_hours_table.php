@@ -45,6 +45,7 @@ class CreateExtraHoursTable extends Migration
             $table->foreign('approval_dg_id')->references('id')->on('approvals')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

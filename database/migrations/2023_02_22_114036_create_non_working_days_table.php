@@ -22,6 +22,7 @@ class CreateNonWorkingDaysTable extends Migration
             $table->integer('multiplicador')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

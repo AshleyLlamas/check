@@ -41,14 +41,39 @@
                                     </div>
                                     @error('colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12" wire:ignore>
+                                {{-- <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Comentarios del colaborador') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" id="comentarios_del_colaborador" name="comentarios_del_colaborador" class="form-control" wire:model="comentarios_del_colaborador" placeholder="Ingrese la comentarios_del_colaborador">
+                                    <input type="file" class="form-control-file" id="comentarios_del_colaborador" wire:model.defer="comentarios_del_colaborador">
+                                    @error('comentarios_del_colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div> --}}
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Comentarios del colaborador') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" lang="es" wire:model="comentarios_del_colaborador" accept="image/*">
+                                        <label class="custom-file-label" for="customFileLang">Selecciona una imagen</label>
+                                        @error('comentarios_del_colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div>
+                                        {{-- <div wire:loading wire:target="comentarios_del_colaborador">
+                                            <button class="btn btn-white mt-3" type="button" disabled>
+                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                Cargando...
+                                            </button>
+                                        </div> --}}
+                                        <div class="pt-3">
+                                            @if($comentarios_del_colaborador)
+                                                <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{$comentarios_del_colaborador->temporaryurl()}}">
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @error('comentarios_del_colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                @error('comentarios_del_colaborador') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
                         </div>
                     </div>
@@ -121,7 +146,7 @@
         </div>
         <div class="card-footer">
             <div class="text-center">
-                <button type="button" wire:loading.attr="disabled" wire:click.prevent="save()" wire:target="save" class="btn btn-success">Guardar</button>
+                <button type="button" wire:loading.attr="disabled" wire:click.prevent="save()" wire:target="save, comentarios_del_colaborador" class="btn btn-success">Guardar</button>
             </div>
         </div>
     </div>
@@ -133,24 +158,6 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <script>
-
-        $('#comentarios_del_colaborador').summernote({
-            tabsize: 2,
-            height: 200,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-            ],
-            callbacks: {
-                onChange: function(contents, $editable) {
-                    @this.set('comentarios_del_colaborador', contents);
-                }
-            }
-        });
-
         $('#observaciones').summernote({
             tabsize: 2,
             height: 200,

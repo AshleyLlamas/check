@@ -19,6 +19,7 @@ class CreatePrintersTable extends Migration
             $table->enum('tipo', ['Impresora', 'Plotter'])->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

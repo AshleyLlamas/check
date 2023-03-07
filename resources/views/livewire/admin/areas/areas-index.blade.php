@@ -6,7 +6,7 @@
     @endif
     <div class="card">
         <div class="card-header bg-primary">
-            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas las áreas <span class="badge badge-light"> {{$all_areas}}</span></h5>
+            <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas las áreas o proyectos <span class="badge badge-light"> {{$all_areas}}</span></h5>
         </div>
         <div class="card-header">
             <div class="row">
@@ -37,7 +37,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Área</th>
+                            <th>Área o proyecto</th>
                             <th>Encargado</th>
                             @can('admin.areas.show')
                                 <th></th>

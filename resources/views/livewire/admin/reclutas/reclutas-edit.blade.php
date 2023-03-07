@@ -69,7 +69,7 @@
                                     <input type="text" id="name" class="form-control" wire:model="user.name" placeholder="Ingrese el nombre del empleado">
                                     @error('user.name') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                
+
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Correo') }}

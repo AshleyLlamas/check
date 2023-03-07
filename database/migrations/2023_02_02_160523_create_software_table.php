@@ -26,6 +26,7 @@ class CreateSoftwareTable extends Migration
             $table->foreign('computer_id')->references('id')->on('computers')->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

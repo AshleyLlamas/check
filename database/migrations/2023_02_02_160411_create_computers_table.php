@@ -23,6 +23,7 @@ class CreateComputersTable extends Migration
             $table->string('sistema_operativo')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

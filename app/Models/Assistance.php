@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Assistance extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id', 'created_at', 'updated'];
 
@@ -31,5 +32,10 @@ class Assistance extends Model
     //Uno a Uno
     public function justify_attendance(){
         return $this->hasOne('App\Models\JustifyAttendance');
+    }
+
+    //Uno a Uno
+    public function extra_hour(){
+        return $this->hasOne('App\Models\ExtraHour');
     }
 }

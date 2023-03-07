@@ -11,7 +11,7 @@
         <!-- STILE -->
         <style>
             body{
-                font-family: "source_sans_proregular", Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;      
+                font-family: "source_sans_proregular", Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
                 text-align: justify;
             }
 
@@ -24,7 +24,7 @@
         <p class="mb-1">{{$administrative_record->created_at->format("d/m/Y")}}</p>
         <div class="contenido">
             <!-- TABLA -->
-            
+
                 <table class="table table-borderless">
                     <thead>
                         <tr scope="row" class="align-middle text-center">
@@ -37,7 +37,7 @@
                         </tr>
                         <tr scope="row" class="align-middle text-uppercase">
                             <th>
-                                <p class="mb-1">COD. EMP. 
+                                <p class="mb-1">COD. EMP.
                                     <span class="text-secondary pl-3">
                                         @isset($administrative_record->colaborador->número_de_empleado)
                                             {{$administrative_record->colaborador->número_de_empleado}}
@@ -61,7 +61,7 @@
                             <th>
                                 <p class="mb-1">OBRA/DEPTO
                                     <span class="text-secondary pl-3">
-                                        
+
                                     </span>
                                 </p>
                             </th>
@@ -138,9 +138,10 @@
                         </tr>
                         <tr>
                             <th colspan="5">
-                                <div class="mx-5 p-3 border rounded border-dark">
+                                {{-- <div class="mx-5 p-3 border rounded border-dark">
                                     {!!$administrative_record->comentarios_del_colaborador!!}
-                                </div>
+                                </div> --}}
+                                <img width="100%" src="{{asset('storage/'.$administrative_record->comentarios_del_colaborador)}}" alt="">
                             </th>
                         </tr>
                     </tbody>

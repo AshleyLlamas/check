@@ -36,6 +36,7 @@ class CreateJustifyAttendancesTable extends Migration
             //agregar tabla aprobación
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

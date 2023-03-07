@@ -15,7 +15,7 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></div>
                         </div>
-                        <input wire:model="search" class="form-control" placeholder="Ingrese el nombre del empleado">
+                        <input wire:model="search" class="form-control" placeholder="Ingrese el nombre o número del empleado">
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">

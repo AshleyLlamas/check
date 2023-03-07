@@ -33,6 +33,7 @@ class CreateInventoriesTable extends Migration
             $table->string('factura')->nullable(); //IMAGEN
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Accesory extends Model
 {
-    use HasFactory;
+    use HasFactory, softDeletes;
 
     protected $guarded = ['id', 'created_at', 'updated'];
 

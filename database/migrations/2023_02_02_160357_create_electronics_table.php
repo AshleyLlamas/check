@@ -24,6 +24,7 @@ class CreateElectronicsTable extends Migration
             $table->string('electronicable_type')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

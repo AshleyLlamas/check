@@ -16,9 +16,14 @@ class CreateUserSettingsTable extends Migration
         Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
 
-            $table->enum('derecho_a_hora_extra', [false, true]);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->enum('derecho_a_hora_extra', ['No', 'Si'])->default('No')->nullable();
+            $table->enum('recontratable', ['No', 'Si'])->default('Si')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

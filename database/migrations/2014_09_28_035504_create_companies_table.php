@@ -19,6 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('nombre_de_la_compañia');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class ExtraHour extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id', 'created_at', 'updated'];
 
@@ -34,6 +34,11 @@ class ExtraHour extends Model
     //Uno a Muchos inversa
     public function user(){
         return $this->belongsTo('App\Models\User');
+    }
+
+    //Uno a Uno Inversa
+    public function assistance(){
+        return $this->belongsTo('App\Models\Assistance');
     }
 
     //Uno a Uno Inversa

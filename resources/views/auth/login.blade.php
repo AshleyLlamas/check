@@ -4,7 +4,7 @@
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card border-0 rounded-0">
+            {{-- <div class="card border-0 rounded-0">
                 <div class="card-header bg-white border-0 pt-4">
                     <h2 class="text-center mb-1">INGRESAR</h2>
                 </div>
@@ -58,17 +58,19 @@
                                     {{ __('Ingresar') }}
                                 </button>
 
-                                {{-- @if (Route::has('password.request'))
+                                @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('¿Olvidaste tu contraseña?') }}
                                     </a>
-                                @endif --}}
+                                @endif
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> --}}
         </div>
+
+        @livewire('login')
     </div>
 </div>
 @endsection

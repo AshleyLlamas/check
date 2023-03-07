@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('estatus')->nullable()->default('Activo');
             $table->string('puesto')->nullable();
             $table->string('tipo_de_puesto')->nullable();
+            $table->decimal('sueldo_semanal', 10, 2)->nullable();
 
             $table->enum('tipo', ['Empleado', 'Prospecto', 'Reclutado', 'Por contratar'])->nullable();
 
@@ -49,12 +50,10 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('document_id')->nullable();
             $table->foreign('document_id')->references('id')->on('user_documents')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->unsignedBigInteger('setting_id')->nullable();
-            $table->foreign('setting_id')->references('id')->on('user_settings')->onDelete('cascade')->onUpdate('cascade');
-
             $table->string('slug')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

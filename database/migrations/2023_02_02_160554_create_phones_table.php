@@ -22,6 +22,7 @@ class CreatePhonesTable extends Migration
             $table->enum('tipo', ['Celular', 'Fijo']);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -21,6 +21,7 @@ class CreateTimeChecksTable extends Migration
             $table->string('observación');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

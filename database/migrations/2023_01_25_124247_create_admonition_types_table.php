@@ -19,6 +19,7 @@ class CreateAdmonitionTypesTable extends Migration
             $table->string('tipo')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

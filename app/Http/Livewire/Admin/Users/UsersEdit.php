@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\CostCenter;
 use App\Models\Image;
 use App\Models\User;
+use App\Models\UserSetting;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -20,7 +21,7 @@ class UsersEdit extends Component
     public $user, $document;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $fecha_de_nacimiento, $código_del_país, $número_de_teléfono, $número_de_empleado, $fecha_de_ingreso, $company, $cost_centers, $cost_center, $puesto, $tipo_de_puesto, $tipo, $password, $password_confirmation, $role;
+    public $foto, $qr, $name, $email, $curp, $fecha_de_nacimiento, $código_del_país, $número_de_teléfono, $número_de_empleado, $fecha_de_ingreso, $company, $cost_centers, $cost_center, $puesto, $tipo_de_puesto, $tipo, $derecho_a_hora_extra, $recontratable, $password, $password_confirmation, $role;
 
     public $documento_de_identificación_oficial, $documento_del_comprobante_de_domicilio, $documento_de_no_antecedentes_penales,
         $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
@@ -43,6 +44,11 @@ class UsersEdit extends Component
             $this->cost_centers = CostCenter::where('company_id', $user->company_id)->orderBy('folio')->get();
         }
 
+        if(isset($user->userSetting)){
+            $this->derecho_a_hora_extra = $user->userSetting->derecho_a_hora_extra;
+            $this->recontratable = $user->userSetting->recontratable;
+        }
+
         $this->cost_center = $this->user->cost_center_id;
         $this->company = $user->company_id;
         $this->tipo = $user->tipo;
@@ -58,7 +64,7 @@ class UsersEdit extends Component
     }
 
     public function rules(){
-        
+
         $array = [];
 
         //User
@@ -85,6 +91,10 @@ class UsersEdit extends Component
         $array['cost_center'] = ['nullable'];
         $array['tipo'] = ['required'];
 
+        //User Settings
+        $array['derecho_a_hora_extra'] = "required|in:Si,No";
+        $array['recontratable'] = "required|in:Si,No";
+
         //Docs
         $array['documento_de_identificación_oficial'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
         $array['documento_del_comprobante_de_domicilio'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
@@ -95,7 +105,7 @@ class UsersEdit extends Component
         $array['documento_del_curriculum_vitae'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
 
         $array['role'] = ['required'];
-    
+
         return $array;
     }
 
@@ -132,6 +142,20 @@ class UsersEdit extends Component
                 ]);
             }
 
+        }
+
+        if($this->derecho_a_hora_extra){
+            if(isset($this->user->userSetting)){
+                $this->user->userSetting->derecho_a_hora_extra = $this->derecho_a_hora_extra;
+                $this->user->userSetting->recontratable = $this->recontratable;
+                $this->user->userSetting->save();
+            }else{
+                UserSetting::create([
+                    'derecho_a_hora_extra' => $this->derecho_a_hora_extra,
+                    'recontratable' => $this->recontratable,
+                    'user_id' => $this->user->id
+                ]);
+            }
         }
 
         //Docs

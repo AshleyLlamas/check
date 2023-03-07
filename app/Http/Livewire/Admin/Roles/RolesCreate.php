@@ -13,9 +13,9 @@ class RolesCreate extends Component
     public $permisos = [];
 
     public function rules(){
-        
+
         $array = [];
-        
+
         $array['nombre'] = 'required|string|max:255';
         $array['permisos'] = 'required';
 
@@ -37,7 +37,7 @@ class RolesCreate extends Component
 
     public function render()
     {
-        $permissions = Permission::all()->sortBy('name');
+        $permissions = Permission::orderBy('name')->get();
 
         return view('livewire.admin.roles.roles-create', [
             'permissions' => $permissions

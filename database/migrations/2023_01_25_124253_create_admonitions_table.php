@@ -33,6 +33,7 @@ class CreateAdmonitionsTable extends Migration
             $table->foreign('admonition_type_id')->references('id')->on('admonition_types')->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

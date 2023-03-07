@@ -48,8 +48,8 @@
             @case('Área')
                 <select class="form-control" id="areas">
                     <option value="">Selecciona una opción</option>
-                    @foreach($areas as $areas)
-                        <option value="{{ $areas->id}}">{{ $areas->name }}</option>
+                    @foreach($areas as $area)
+                        <option value="{{ $area->id}}">{{ $area->área }}</option>
                     @endforeach
                 </select>
             @break

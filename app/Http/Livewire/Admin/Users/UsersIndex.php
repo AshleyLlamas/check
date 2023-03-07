@@ -47,10 +47,11 @@ class UsersIndex extends Component
     {
         $users = User::where('tipo', 'Empleado')
                         ->where('name', 'LIKE', '%' . $this->search . '%')
+                        ->orwhere('número_de_empleado', 'LIKE', '%' . $this->search . '%')
                         ->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
-        
+
         $all_users = User::where('tipo', 'Empleado')->count();
 
         return view('livewire.admin.users.users-index', [

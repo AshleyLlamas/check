@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\NonWorkingDays;
 
 use App\Models\NonWorkingDay;
+use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -49,6 +50,19 @@ class NonWorkingDaysIndex extends Component
               'end' => date('Y-m-d\TH:i:s', strtotime($day->fecha->format('Y-m-d'))),
               'allDay' => true,
               'color' => 'gray',
+            );
+        }
+
+        foreach(User::where('fecha_de_nacimiento', '!=', null)->get() as $user){
+
+            $dia = Carbon::now()->format('Y').$user->fecha_de_nacimiento->format('-m-d');
+
+            $json_dias[] = array(
+                'title' => 'Cumpleaños de '.$user->name,
+                'start' => date('Y-m-d\TH:i:s', strtotime($dia)),
+                'end' => date('Y-m-d\TH:i:s', strtotime($dia)),
+                'allDay' => true,
+                'color' => 'purple',
             );
         }
 

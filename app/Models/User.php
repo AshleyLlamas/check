@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     use HasRoles;
 
@@ -23,6 +23,8 @@ class User extends Authenticatable
      */
 
     protected $guarded = ['id', 'created_at', 'updated'];
+
+    protected $dates = ['fecha_de_nacimiento'];
 
     protected $fillable = [
         'qr',
@@ -38,6 +40,7 @@ class User extends Authenticatable
         'puesto',
         'tipo_de_puesto',
         'tipo',
+        'sueldo_semanal',
         'número_de_inscripción_al_imss',
         'rfc',
         'número_del_infonavit',
@@ -45,6 +48,7 @@ class User extends Authenticatable
         'cost_center_id',
         'address',
         'document_id',
+        'setting_id',
         'slug'
     ];
 

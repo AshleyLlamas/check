@@ -61,7 +61,11 @@ class ExtraHoursCreate extends Component
 
     public function render()
     {
-        $users = User::orderBy('name')->get();
+        //$users = User::orderBy('name')->get();
+
+        $users = User::where('estatus', 'Activo')->whereHas('userSetting', function($query) {
+            $query->where('derecho_a_hora_extra', '=', 'Si');
+        })->orderBy('name')->get();
 
         return view('livewire.admin.extra-hours.extra-hours-create', [
             'users' => $users
