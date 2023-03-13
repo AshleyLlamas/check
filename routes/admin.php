@@ -46,13 +46,13 @@ Route::resource('assistances', AssistanceController::class)->only(['index', 'sho
 Route::resource('vacations', VacationController::class)->only(['index', 'create', 'show'])->names('admin.vacations');
 
 //Inventories
-//Route::resource('inventories', InventoryController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.inventories');
+Route::resource('inventories', InventoryController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.inventories');
 
 //Electronic
-//Route::resource('electronics', ElectronicController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.electronics');
+Route::resource('electronics', ElectronicController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.electronics');
 
 //Printers
-//Route::resource('printers', PrinterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.printers');
+Route::resource('printers', PrinterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.printers');
 
 //Horas extras
 Route::resource('extra-hours', ExtraHourController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.extra_hours');

@@ -385,12 +385,12 @@ return [
             'icon' => 'fas fa-solid fa-plus-minus',
             'can' => 'admin.extra_hours.index'
         ],
-        // [
-        //     'text'        => 'Inventario',
-        //     'route'         => 'admin.inventories.index',
-        //     'icon' => 'fas fa-solid fa-warehouse',
-        //     'can' => 'admin.inventories.index'
-        // ],
+        [
+            'text'        => 'Inventario',
+            'route'         => 'admin.inventories.index',
+            'icon' => 'fas fa-solid fa-warehouse',
+            'can' => 'admin.inventories.index'
+        ],
         [
             'text'        => 'Vacaciones',
             'route'         => 'admin.vacations.index',

@@ -88,6 +88,8 @@ class CheckCreate extends Component
                     $out_estatus = 'Salió despues';
                     $out_observación = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
 
+                    if(isset($this->user->userSetting)){
+                        //SI EXISTE HORAS EXTRAS
                     if($this->user->userSetting->derecho_a_hora_extra == 'Si'){
                         //SI PUEDE GENERAR HORA EXTRA
 
@@ -104,6 +106,7 @@ class CheckCreate extends Component
                             ]);
                         }
                     }
+                }
                 }
 
                 $out = TimeCheck::create([

@@ -245,7 +245,7 @@
             float: right;
             line-height: 20px;
             padding-left: 5px;
-        
+
         }
 
         @keyframes youtubeAnim{
