@@ -26,3 +26,19 @@
     @error('serie') <span class="text-danger error">{{ $message }}</span>@enderror
 </div>
 
+
+<div class="form-group col-12">
+    <div wire:ignore>
+        <label class="col-form-label">
+            {{ __('Compañia / Empresa') }}
+            <span class="text-danger">*</span>
+        </label>
+        <select class="form-control" id="companies" wire:model=company>
+            <option value="">Selecciona una opción</option>
+            @foreach($companies as $company)
+                <option value="{{ $company->id}}">{{ $company->nombre_de_la_compañia }}</option>
+            @endforeach
+        </select>
+    </div>
+    @error('company') <span class="text-danger error">{{ $message }}</span>@enderror
+</div>

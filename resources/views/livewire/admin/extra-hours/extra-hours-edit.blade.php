@@ -113,7 +113,9 @@
     <script>
         $(document).ready(function () {
 
-            $('#users').select2();
+            $('#users').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#users').on('change', function (e) {
                 var data = $('#users').select2("val");

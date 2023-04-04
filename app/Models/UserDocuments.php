@@ -18,7 +18,8 @@ class UserDocuments extends Model
         'documento_de_la_licencia_de_conducir',
         'documento_de_la_cedula_profesional',
         'documento_de_la_carta_de_pasante',
-        'documento_del_curriculum_vitae'
+        'documento_del_curriculum_vitae',
+        'documento_del_contrato'
     ];
 
     //Uno a Uno

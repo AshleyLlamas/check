@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\MyResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +25,7 @@ class User extends Authenticatable
 
     protected $guarded = ['id', 'created_at', 'updated'];
 
-    protected $dates = ['fecha_de_nacimiento'];
+    protected $dates = ['fecha_de_nacimiento', 'fecha_de_ingreso'];
 
     protected $fillable = [
         'qr',
@@ -40,7 +41,8 @@ class User extends Authenticatable
         'puesto',
         'tipo_de_puesto',
         'tipo',
-        'sueldo_semanal',
+        'salario_legal',
+        'salario_complemento',
         'número_de_inscripción_al_imss',
         'rfc',
         'número_del_infonavit',
@@ -96,9 +98,9 @@ class User extends Authenticatable
     }
 
     //Uno a Muchos
-    public function schedules(){
-        return $this->hasMany('App\Models\Schedule');
-    }
+    // public function schedules(){
+    //     return $this->hasMany('App\Models\Schedule');
+    // }
 
     //Uno a Muchos
     public function assistances(){
@@ -184,5 +186,19 @@ class User extends Authenticatable
     //Uno a Muchos inversa
     public function cost_center(){
         return $this->belongsTo('App\Models\CostCenter');
+    }
+
+    //Uno a muchos polimorfico
+    public function schedules(){
+        return $this->morphMany('App\Models\Schedule', 'scheduleble');
+    }
+
+    public function encargado($encargado){
+        return User::where('id', $encargado)->first();
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MyResetPassword($token));
     }
 }

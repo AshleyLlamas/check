@@ -49,7 +49,7 @@
                                 <h5 class="py-1 text-center">Permisos</h5>
                             </div>
                             <div class="row m-3">
-                                @foreach ($permissions as $permission)
+                                @foreach ($permissions as $n => $permission)
                                     @if (($n+1) % 2)
                                         <br>
                                     @endif

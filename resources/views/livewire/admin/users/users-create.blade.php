@@ -209,9 +209,6 @@
                                     <div wire:ignore>
                                         <label class="col-form-label">
                                             {{ __('Área / Proyecto') }}
-                                            @if(!is_null($área) || !is_null($encargado))
-                                                <span class="text-danger">*</span>
-                                            @endif
                                         </label>
                                         <select class="form-control" id="área" wire:model="área">
                                             <option value="">Selecciona una opción</option>
@@ -226,9 +223,6 @@
                                     <div wire:ignore>
                                         <label class="col-form-label">
                                             {{ __('Encargado') }}
-                                            @if(!is_null($área) || !is_null($encargado))
-                                                <span class="text-danger">*</span>
-                                            @endif
                                         </label>
                                         <select class="form-control" id="users" wire:model="encargado">
                                             <option value="">Selecciona una opción</option>
@@ -239,6 +233,12 @@
                                     </div>
                                     @error('encargado') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
+                            </div>
+                            <div class="border-bottom">
+                                {{-- TRABAJO P2/ CONFIGURACIÓN --}}
+                                <h5 class="py-1 text-center">Configuración</h5>
+                            </div>
+                            <div>
                                 <div class="form-group col-12">
                                     <div wire:ignore>
                                         <label class="col-form-label">
@@ -266,9 +266,52 @@
                                     @error('recontratable') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
+                                    <div>
+                                        <label class="col-form-label">
+                                            {{ __('Estatus') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" id="estatus" wire:model="estatus">
+                                            <option value="Activo">Activo</option>
+                                            <option value="Inactivo">Inactivo (No se le generará inasistencias)</option>
+                                            <option value="Baja definitiva">Baja definitiva (Ya no elabora)</option>
+                                        </select>
+                                    </div>
+                                    @error('estatus') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{--Horarios--}}
+                    <div class="row rounded border mb-4">
+                        <div class="bg-gray rounded-left">
+                            <div class="m-3">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                        </div>
+                        <div class="col m-2">
+                            <div class="border-bottom">
+                                <h5 class="py-1 text-center">Horario</h5>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Horario predeterminados') }}
+                                        </label>
+                                        <select class="form-control" id="horario_predeterminado" wire:model="horario_predeterminado">
+                                            <option value="">No</small> </option>
+                                            <optgroup label="Horarios predeterminados">
+                                            @foreach ($default_schedules as $default_schedule)
+                                                <option value="{{$default_schedule->id}}">{{$default_schedule->nombre_del_horario}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('horario_predeterminado') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
                                     <label class="col-form-label">
-                                        {{ __('Días laborales a la semana') }}
-                                        <span class="text-danger">*</span>
+                                        {{ __('Customizar horario') }}
                                     </label>
                                     <div wire:ignore>
                                         <select class="w-100" id="days" name="days[]" multiple="multiple">
@@ -281,15 +324,13 @@
                                             <option>Domingo</option>
                                         </select>
                                     </div>
+                                    @error('days') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 @if(count($days))
                                     <div class="col-12">
                                         <div class="table-responsive">
                                             <table class="table text-center border">
                                                 <thead>
-                                                    <tr>
-                                                        <th colspan="{{count($days)+1}}"><b>Horario</b></th>
-                                                    </tr>
                                                     <tr>
                                                         <th class="bg-secondary"><i class="fa-solid fa-clock"></i></th>
                                                         @foreach ($days as $day)
@@ -336,7 +377,7 @@
                                 <h5 class="py-1 text-center">Documentos</h5>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Identificación oficial / INE') }}
                                         {{-- <span class="text-danger">*</span> --}}
@@ -344,7 +385,7 @@
                                     <input type="file" class="form-control-file" id="documento_de_identificación_oficial" wire:model.defer="documento_de_identificación_oficial">
                                     @error('documento_de_identificación_oficial') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Comprobante de domicilio') }}
                                         {{-- <span class="text-danger">*</span> --}}
@@ -352,7 +393,7 @@
                                     <input type="file" class="form-control-file" id="documento_del_comprobante_de_domicilio" wire:model.defer="documento_del_comprobante_de_domicilio">
                                     @error('documento_del_comprobante_de_domicilio') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('No atecendentes penales') }}
                                         {{-- <span class="text-danger">*</span> --}}
@@ -360,28 +401,28 @@
                                     <input type="file" class="form-control-file" id="documento_de_no_antecedentes_penales" wire:model.defer="documento_de_no_antecedentes_penales">
                                     @error('documento_de_no_antecedentes_penales') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Licencia de conducir') }}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_la_licencia_de_conducir" wire:model.defer="documento_de_la_licencia_de_conducir">
                                     @error('documento_de_la_licencia_de_conducir') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Cedula profesional') }}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_la_cedula_profesional" wire:model.defer="documento_de_la_cedula_profesional">
                                     @error('documento_de_la_cedula_profesional') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Carta de pasante') }}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_la_carta_de_pasante" wire:model.defer="documento_de_la_carta_de_pasante">
                                     @error('documento_de_la_carta_de_pasante') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Curriculum Vitae (CV)') }}
                                         {{-- <span class="text-danger">*</span> --}}
@@ -389,12 +430,20 @@
                                     <input type="file" class="form-control-file" id="documento_del_curriculum_vitae" wire:model.defer="documento_del_curriculum_vitae">
                                     @error('documento_del_curriculum_vitae') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
+                                    <label class="col-form-label">
+                                        {{ __('Contrato firmado') }}
+                                        {{-- <span class="text-danger">*</span> --}}
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_del_contrato" wire:model.defer="documento_del_contrato">
+                                    @error('documento_del_contrato') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
                             </div>
                         </div>
                     </div>
                     {{--Rol--}}
                     @can('admin.roles.user')
-                        <div class="row rounded border">
+                        <div class="row rounded border mb-4">
                             <div class="bg-gray rounded-left">
                                 <div class="m-3">
                                     <div class="my-auto"><i class="fa-solid fa-unlock"></i></div>
@@ -422,7 +471,7 @@
                             </div>
                         </div>
                     @endcan
-                    {{-- Contaseña
+                    {{--Contaseña--}}
                     <div class="row rounded border">
                         <div class="bg-gray rounded-left">
                             <div class="m-3">
@@ -435,26 +484,39 @@
                             </div>
                             <div>
                                 <div class="row">
-                                    <div class="form-group col-12 col-md-6 col-sm-6">
-                                        <label class="col-form-label">
-                                            {{ __('Contraseña') }}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="password" class="form-control" wire:model="password" required autocomplete="new-password" placeholder="Ingrese la contraseña del empleado">
-                                        @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
+                                    <div wire:model="registrarPor" class="m-3 col-12">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="curp" checked>
+                                            <label class="form-check-label" for="inlineRadio1">Registrar por CURP</label>
+                                        </div>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="password">
+                                            <label class="form-check-label" for="inlineRadio2">Registrar por contraseña</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-12 col-md-6 col-sm-6">
-                                        <label class="col-form-label">
-                                            {{ __('Confirmar contraseña') }}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="password" class="form-control" wire:model="password_confirmation" required autocomplete="new-password" placeholder="Nuevamente ingrese la contraseña del empleado">
-                                        @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
-                                    </div>
+                                    @if ($registrarPor == 'password')
+                                        <div class="form-group col-12 col-md-6 col-sm-6">
+                                            <label class="col-form-label">
+                                                {{ __('Contraseña') }}
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="password" class="form-control" wire:model="password" required autocomplete="new-password" placeholder="Ingrese la contraseña del empleado">
+                                            @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
+                                        </div>
+                                        <div class="form-group col-12 col-md-6 col-sm-6">
+                                            <label class="col-form-label">
+                                                {{ __('Confirmar contraseña') }}
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="password" class="form-control" wire:model="password_confirmation" required autocomplete="new-password" placeholder="Nuevamente ingrese la contraseña del empleado">
+                                            @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </form>
         </div>
@@ -477,21 +539,27 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $('#companies').select2();
+            $('#companies').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
             @this.set('company', data);
             });
 
-            $('#cost_centers').select2();
+            $('#cost_centers').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#cost_centers').on('change', function (e) {
                 var data = $('#cost_centers').select2("val");
             @this.set('cost_center', data);
             });
 
-            $('#users').select2();
+            $('#users').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#users').on('change', function (e) {
                 var data = $('#users').select2("val");
@@ -499,7 +567,9 @@
             });
             /////
 
-            $('#days').select2();
+            $('#days').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#days').on('change', function (e) {
                 var data = $('#days').select2("val");

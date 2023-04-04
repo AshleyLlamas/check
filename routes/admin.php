@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\VacationController;
 use App\Http\Controllers\Admin\AdmonitionTypeController;
+use App\Http\Controllers\Admin\ComputerController;
+use App\Http\Controllers\Admin\DefaultScheduleController;
 use App\Http\Controllers\Admin\ElectronicController;
 use App\Http\Controllers\Admin\ExtraHourController;
 use App\Http\Controllers\Admin\InventoryController;
@@ -29,6 +31,9 @@ Route::resource('areas', AreaController::class)->only(['index', 'create', 'edit'
 
 //Users
 Route::resource('users', UserController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.users');
+    //PDFS
+    Route::get('/contratos-de-tiempo-determinado/pdfs/{user}', [UserController::class, 'contratoTD'])->middleware('auth')->name('pdfs.contratoTD.view');
+    Route::get('/contratos-de-tiempo-indeterminado/pdfs/{user}', [UserController::class, 'contratoTI'])->middleware('auth')->name('pdfs.contratoTI.view');
 
 //Reclutas
 Route::resource('recluta', ReclutaController::class, ['parameters'=> ['{user}' => 'user']])->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.reclutas');
@@ -54,8 +59,14 @@ Route::resource('electronics', ElectronicController::class)->only(['index', 'cre
 //Printers
 Route::resource('printers', PrinterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.printers');
 
+//Computers
+Route::resource('computers', ComputerController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.computers');
+
 //Horas extras
 Route::resource('extra-hours', ExtraHourController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.extra_hours');
+
+//Admonition types
+Route::resource('default-schedules', DefaultScheduleController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.default_schedules');
 
 //Admonitions
 Route::resource('admonitions', AdmonitionController::class)->only(['index', 'show', 'create'])->names('admin.admonitions');

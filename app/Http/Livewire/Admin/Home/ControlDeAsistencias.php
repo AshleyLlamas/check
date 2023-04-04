@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Home;
 
+use App\Models\Assistance;
 use App\Models\Check;
 use App\Models\Company;
 use App\Models\User;
@@ -24,25 +25,30 @@ class ControlDeAsistencias extends Component
         $compañia = Company::where('id', $this->company)->first()->nombre_de_la_compañia;
 
         $empleados = User::where('company_id', $this->company)->count();
-        $asistencias = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->count();
-        //$con_retardo = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->join('time_checks', 'checks.id', '=', 'time_checks.id')->where('estatus', 'Llego tarde')->count();
-        $con_retardo = Check::where('company_id', $this->company)->whereHas('in', function($query) {
-            $query->where('estatus', '=', 'Llego tarde');
-        })
+
+        $asistencias = Check::whereDate('fecha',  $this->fecha)
+        // ->where('company_id', $this->company)
         ->count();
-        //$faltaron = Check::where('fecha', $this->fecha)->where('company_id', $this->company)->join('assistances', 'checks.id', '=', 'assistances.id')->where('asistencia', 'Inasistencia')->count();
-        $faltaron = User::where('company_id', $this->company)->whereHas('assistances', function($query) {
-            $query->where('asistencia', '=', 'No asistió');
-        })
-        ->count();
+
+        $faltaron = Assistance::where('asistencia', 'No asistió')->whereDate('created_at', $this->fecha)->count();
+
+
+        // $faltaron = User::where('company_id', $this->company)->whereHas('assistances', function($query) {
+        //     $query->where('asistencia', '=', 'No asistió')->whereHas('check', function($query) {
+        //         $query->whereDate('fecha', $this->fecha);
+        //     });
+        // })
+        // ->count();
+
+        $justificaciones = 0;
 
         return view('livewire.admin.home.control-de-asistencias', [
             'companies' => $companies,
             'compañia' => $compañia,
             'empleados' => $empleados,
             'asistencias' => $asistencias,
-            'con_retardo' => $con_retardo,
-            'faltaron' => $faltaron
+            'faltaron' => $faltaron,
+            'justificaciones' => $justificaciones
         ]);
     }
 }

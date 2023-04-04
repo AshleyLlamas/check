@@ -39,17 +39,16 @@ class ChecksIndex extends Component
     public function __construct()
     {
         $hoy = Carbon::now();
-        $this->date = $hoy->format('Y-m-d');
+        $this->date = Carbon::now()->formatLocalized('%Y-%m-%d');
     }
 
     public function render()
     {
-        $checks = Check::where('fecha', 'LIKE', '%' . $this->date . '%')
-                        ->orderBy($this->sort, $this->direction)
+        $checks = Check::whereDate('fecha',  $this->date)->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
-        
-        $all_checks = Check::count();
+
+        $all_checks = Check::whereDate('fecha',  $this->date)->count();
 
         return view('livewire.admin.checks.checks-index', [
             'checks' => $checks,

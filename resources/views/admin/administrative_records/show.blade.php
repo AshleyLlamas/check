@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Asistencia')
+@section('title', 'Intranet')
 
 @section('content')
     <div class="py-4">
@@ -13,5 +13,5 @@
 @endsection
 
 @section('css')
-    
+
 @endsection

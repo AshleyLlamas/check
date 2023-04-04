@@ -32,6 +32,8 @@ class CreateInventoriesTable extends Migration
             $table->string('garantia')->nullable(); //IMAGEN
             $table->string('factura')->nullable(); //IMAGEN
 
+            $table->enum('arrendado', ['No', 'Si'])->default('No');
+
             $table->timestamps();
             $table->softDeletes();
         });

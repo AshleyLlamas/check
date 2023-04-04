@@ -316,94 +316,155 @@ return [
             'route'         => 'admin.index',
             'icon'        => 'fas fa-home',
         ],
-        ['header' => 'USUARIOS'],
+        // [
+        //     'text'        => 'Reclutados',
+        //     'route'         => 'admin.reclutas.index',
+        //     'icon' => 'fas fa-regular fa-user',
+        //     'can' => 'admin.reclutas.index'
+        // ],
         [
-            'text'        => 'Empleados',
-            'route'         => 'admin.users.index',
-            'icon' => 'fas fa-fw fa-user',
-            'can' => 'admin.users.index'
+            'text'    => 'USUARIOS',
+            'submenu' => [
+                [
+                    'text'    => 'EMPLEADOS',
+                    'shift' => 'ml-3',
+                    'route'         => 'admin.users.index',
+                    'icon' => 'fas fa-fw fa-user',
+                    'can' => 'admin.users.index',
+                ],
+                [
+                    'text'    => 'ACTAS ADMINISTRATIVAS',
+                    'shift'   => 'ml-3',
+                    'icon' => 'fas fa-solid fa-circle-exclamation',
+                    'submenu' => [
+                        [
+                            'shift' => 'ml-4',
+                            'text'        => 'ACTAS ADMINISTRATIVAS',
+                            'route'         => 'admin.administrative_records.index',
+                            'icon' => 'fas fa-solid fa-circle-exclamation',
+                            'can' => 'admin.administrative_records.index'
+                        ],
+                        [
+                            'shift' => 'ml-4',
+                            'text'        => 'AMONESTACIONES',
+                            'route'         => 'admin.admonitions.index',
+                            'icon' => 'fas fa-solid fa-circle-exclamation',
+                            'can' => 'admin.admonitions.index'
+                        ],
+                        [
+                            'shift' => 'ml-4',
+                            'text'        => 'TIPOS DE AMONESTACIONES',
+                            'route'         => 'admin.admonition_types.index',
+                            'icon' => 'fas fa-solid fa-circle-exclamation',
+                            'can' => 'admin.admonition_types.index'
+                        ],
+                    ],
+                ],
+            ],
         ],
         [
-            'text'        => 'Reclutados',
-            'route'         => 'admin.reclutas.index',
-            'icon' => 'fas fa-regular fa-user',
-            'can' => 'admin.reclutas.index'
-        ],
-        ['header' => 'CHECADORES Y ASISTENCIAS'],
-        [
-            'text'        => 'Checadores',
-            'route'         => 'admin.checks.index',
-            'icon' => 'fas fa-solid fa-clock',
-            'can' => 'admin.checks.index'
-        ],
-        [
-            'text'        => 'Asistencia',
-            'route'         => 'admin.assistances.index',
-            'icon' => 'fas fa-solid fa-clock',
-            'can' => 'admin.assistances.index'
-        ],
-        ['header' => 'CONTENIDO'],
-        [
-            'text'        => 'Actas administrativas',
-            'route'         => 'admin.administrative_records.index',
-            'icon' => 'fas fa-solid fa-circle-exclamation',
-            'can' => 'admin.administrative_records.index'
-        ],
-        [
-            'text'        => 'Amonestaciones',
-            'route'         => 'admin.admonitions.index',
-            'icon' => 'fas fa-solid fa-circle-exclamation',
-            'can' => 'admin.admonitions.index'
-        ],
-        [
-            'text'        => 'Tipo de amonestaciones',
-            'route'         => 'admin.admonition_types.index',
-            'icon' => 'fas fa-solid fa-circle-exclamation',
-            'can' => 'admin.admonition_types.index'
-        ],
-        [
-            'text'        => 'Areas o proyectos',
-            'route'         => 'admin.areas.index',
-            'icon' => 'fas fa-solid fa-briefcase',
-            'can' => 'admin.areas.index'
-        ],
-        [
-            'text'        => 'Calendario',
-            'route'         => 'admin.calendars.index',
-            'icon' => 'fas fa-regular fa-calendar-days',
-            //'can' => 'admin.calendars.index'
+            'text'    => 'RECURSOS HUMANOS',
+            'submenu' => [
+                [
+                    'text'    => 'CHECADORES',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.checks.index',
+                    'icon' => 'fas fa-solid fa-clock',
+                    'can' => 'admin.checks.index'
+                ],
+                [
+                    'text'    => 'ASISTENCIAS',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.assistances.index',
+                    'icon' => 'fas fa-solid fa-clock',
+                    'can' => 'admin.assistances.index'
+                ],
+                [
+                    'text'        => 'CALENDARIO',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.calendars.index',
+                    'icon' => 'fas fa-regular fa-calendar-days',
+                    'can' => 'admin.calendars.index'
+                ],
+                [
+                    'text'        => 'HORAS EXTRAS',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.extra_hours.index',
+                    'icon' => 'fas fa-solid fa-plus-minus',
+                    'can' => 'admin.extra_hours.index'
+                ],
+                [
+                    'text'        => 'HORARIOS PREDETERMINADOS',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.default_schedules.index',
+                    'icon' => 'fas fa-solid fa-calendar-days',
+                    'can' => 'admin.default_schedules.index'
+                ],
+                [
+                    'text'        => 'VACACIONES',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.vacations.index',
+                    'icon' => 'fas fa-solid fa-earth-americas',
+                    'can' => 'admin.vacations.index'
+                ]
+            ],
         ],
         [
-            'text'        => 'Centro de costos',
-            'route'         => 'admin.cost_centers.index',
-            'icon' => 'fas fa-solid fa-money-bill',
-            'can' => 'admin.cost_centers.index'
+            'text'    => 'ADMINISTRACIÓN',
+            'submenu' => [
+                [
+                    'text'    => 'INVENTARIOS',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.inventories.index',
+                    'icon' => 'fas fa-solid fa-warehouse',
+                    'can' => 'admin.inventories.index'
+                ],
+                [
+                    'text'    => 'CENTROS DE COSTOS',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.cost_centers.index',
+                    'icon' => 'fas fa-solid fa-money-bill',
+                    'can' => 'admin.cost_centers.index'
+                ],
+                [
+                    'text'    => 'ÁREAS O PROYECTOS',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.areas.index',
+                    'icon' => 'fas fa-solid fa-briefcase',
+                    'can' => 'admin.areas.index'
+                ],
+            ],
         ],
         [
-            'text'        => 'Horas extras',
-            'route'         => 'admin.extra_hours.index',
-            'icon' => 'fas fa-solid fa-plus-minus',
-            'can' => 'admin.extra_hours.index'
-        ],
-        [
-            'text'        => 'Inventario',
-            'route'         => 'admin.inventories.index',
-            'icon' => 'fas fa-solid fa-warehouse',
-            'can' => 'admin.inventories.index'
-        ],
-        [
-            'text'        => 'Vacaciones',
-            'route'         => 'admin.vacations.index',
-            'icon' => 'fas fa-solid fa-earth-americas',
-            'can' => 'admin.vacations.index'
-        ],
-        [
-            'text'        => 'Roles',
-            'route'         => 'admin.roles.index',
-            'icon' => 'fas fa-solid fa-key',
-            'can' => 'admin.roles.index',
-            'color' => 'red'
-        ],
+            'text'    => 'TECNOLOGÍAS DE LA INFORMACIÓN',
+            'submenu' => [
+                [
+                    'text'    => 'ROLES',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.roles.index',
+                    'icon' => 'fas fa-solid fa-key',
+                    'can' => 'admin.roles.index',
+                    'color' => 'red'
+                ],
+            ],
+        ]
+        // [
+        //     'text'    => 'ADMINISTRACIÓN',
+        //     'submenu' => [
+        //         [
+        //             'text'    => 'AAAA',
+        //             'shift'   => 'ml-3',
+        //             'submenu' => [
+        //                 [
+        //                     'text'  => 'View Invites',
+        //                     'route' => 'admin.roles.index',
+        //                     'icon'  => 'fas  fa-users',
+        //                     'shift' => 'ml-4',
+        //                 ],
+        //             ],
+        //         ],
+        //     ],
+        // ]
     ],
 
     /*
@@ -474,6 +535,11 @@ return [
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css',
+                ]
             ],
         ],
         'Chartjs' => [
@@ -568,5 +634,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

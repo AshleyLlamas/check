@@ -19,7 +19,9 @@ class Schedule extends Model
         'hora_de_entrada',
         'hora_de_salida',
         'turno',
-        'user_id',
+        //'user_id', SE CAMBIO PARA SER POLIMORFICO
+        'scheduleble_id',
+        'scheduleble_type',
         'actual'
     ];
 
@@ -31,5 +33,10 @@ class Schedule extends Model
     //Uno a Uno
     public function check(){
         return $this->hasOne('App\Models\Check');
+    }
+
+    //Uno a Muchos polimorfico
+    public function scheduleble(){
+        return $this->MorphTo();
     }
 }

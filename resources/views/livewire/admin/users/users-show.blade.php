@@ -16,9 +16,9 @@
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-        
+
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
+                                <img class="profile-user-img img-fluid img-circle @if($user->estatus == 'Baja definitiva') img-gray @endif"
                                 src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
                                 alt="Fotografía">
                             </div>
@@ -43,12 +43,12 @@
                                 <h3 class="card-title"><i class="fa-solid fa-qrcode"></i> Código QR de acceso</h3>
                             </div>
                             <div class="card-body ">
-                                
+
                                     <div class="text-center pb-2">
                                         {!! QrCode::size(160)->generate('https://constructoramakro.mx/login/?'.$user->qr); !!}
                                         <a href="{{'https://constructoramakro.mx/login/?'.$user->qr}}">{{'https://constructoramakro.mx/login/?'.$user->qr}}</a>
                                     </div>
-                                
+
                             </div>
                         <!-- /.card-body -->
                         </div>
@@ -210,6 +210,43 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
+                    @if ($user->areas->count())
+
+                    @endif
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-briefcase"></i> Áreas / Proyectos - Encargados</h3>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Área / Proyecto</th>
+                                            <th scope="col">Encargado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($user->areas as $area)
+                                            <tr>
+                                                <th>{{$area->área}}</th>
+                                                <td>
+                                                    @if($area->encargado($area->pivot->encargado_id) != null)
+                                                        @can('admin.users.show')
+                                                            <a href="{{route('admin.users.show', $area->encargado($area->pivot->encargado_id))}}">{{$area->encargado($area->pivot->encargado_id)->name}}</a>
+                                                        @else
+                                                            {{$area->encargado($area->pivot->encargado_id)->name}}
+                                                        @endcan
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <!-- /.card-body -->
+                    </div>
                     <!-- /.card -->
                     <!-- Documentos -->
                     @isset($user->document)
@@ -240,6 +277,9 @@
                                     </div>
                                     <div class="col-12 col-lg-6 pt-2">
                                         <button type="button" class="h-100 btn @isset($user->document->documento_del_curriculum_vitae) btn-secondary @else btn-outline-secondary @endisset btn-block" data-toggle="modal" data-target="#curriculumVitae">Curriculum Vitae</button>
+                                    </div>
+                                    <div class="col-12 col-lg-6 pt-2">
+                                        <button type="button" class="h-100 btn @isset($user->document->documento_del_contrato) btn-secondary @else btn-outline-secondary @endisset btn-block" data-toggle="modal" data-target="#contrato">Contrato firmado</button>
                                     </div>
                                 </div>
                                 <!-- Modal identificación -->
@@ -428,7 +468,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal fade" id="curriculumVitae" tabindex="-1" aria-labelledby="curriculumVitaeLabel" aria-hidden="true">
+                                <div class="modal fade" id="curriculumVitae" tabindex="-1" aria-labelledby="contratoLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header bg-secondary">
@@ -456,6 +496,58 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                {{-- CONTRATO --}}
+                                <div class="modal fade" id="contrato" tabindex="-1" aria-labelledby="contratoLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-secondary">
+                                                <h5 class="modal-title" id="contratoLabel">Contrato firmado</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    @if($user->document->documento_del_contrato)
+                                                        @php
+                                                            $extension = pathinfo($user->document->documento_del_contrato)['extension'];
+                                                        @endphp
+                                                        @if($extension =="jpg" || $extension == "jpeg" || $extension == "png")
+                                                            <div class="pt-3">
+                                                                <img style="display: block; margin-left: auto; margin-right: auto;"  class="img-fluid" src="{{Storage::url($user->document->documento_del_contrato)}}">
+                                                            </div>
+                                                        @else
+                                                            <iframe width="100%" height="500px" src="{{Storage::url($user->document->documento_del_contrato)}}" frameborder="0"></iframe>
+                                                        @endif
+                                                    @else
+                                                        <p class="text-danger text-center mb-1"><strong>No se encontró ningún archivo</strong></p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    @endisset
+                    <!-- /.card -->
+                    <!-- Documentos -->
+                    @isset($user->document)
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fa-solid fa-file-contract"></i> Contratos</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6 pt-2">
+                                        <a type="button" href="{{route('pdfs.contratoTD.view', $user)}}" class="h-100 btn btn-secondary btn-block" target="_blank">Tiempo determinado</a>
+                                    </div>
+                                    <div class="col-12 col-lg-6 pt-2">
+                                        <a type="button" href="{{route('pdfs.contratoTI.view', $user)}}" class="h-100 btn btn-secondary btn-block" target="_blank">Tiempo indeterminado</a>
                                     </div>
                                 </div>
                             </div>
@@ -502,7 +594,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div>
+                            {{-- <div>
                                 @if (session()->has('message'))
                                     <div class="alert alert-success text-center"><i class="fa-solid fa-circle-check"></i> {{ session('message') }}</div>
                                 @endif
@@ -657,6 +749,40 @@
                                         </div>
                                     @endisset
                                 </div>
+                            </div> --}}
+                            <div class="table-responsive">
+                                @if($user->schedules->count())
+                                    <table class="table text-center table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th><i class="fa-solid fa-clock"></i></th>
+                                                @foreach ($user->schedules as $schedule)
+                                                    <th class="text-primary">{{$schedule->día}}</th>
+                                                @endforeach
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Entrada</th>
+                                            @foreach ($user->schedules as $n => $schedule)
+                                                <td>
+                                                    {{$schedule->hora_de_entrada->format('h:i a')}}
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                            <tr>
+                                                <th scope="row">Salida</th>
+                                                @foreach ($user->schedules as $n => $schedule)
+                                                    <td>
+                                                        {{$schedule->hora_de_salida->format('h:i a')}}
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p class="text-danger text-center mb-1"><b>Sin horario.</b></p>
+                                @endif
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -693,7 +819,7 @@
                                                     <th scope="col"><h5 class="mb-1 pt-1">Asistencia</h5></th>
                                                 </tr>
                                             </thead>
-                                            <tbody> 
+                                            <tbody>
                                                 @foreach ($user->checks as $check)
                                                     <tr>
                                                         <th>
@@ -742,6 +868,15 @@
 
     <!-- DELET SCHEDULE -->
 </div>
+
+@push('css')
+    <style>
+        .img-gray {
+            -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+            filter: grayscale(100%);
+        }
+    </style>
+@endpush
 
 @push('js')
 

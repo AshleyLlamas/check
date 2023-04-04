@@ -181,7 +181,7 @@
                                 <div class="form-group col-12">
                                     <div>
                                         <label class="col-form-label">
-                                            {{ __('Estatus') }}
+                                            {{ __('Tipo') }}
                                             <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control" id="tipo" wire:model="tipo">
@@ -228,6 +228,40 @@
                                 <div class="form-group col-12">
                                     <div wire:ignore>
                                         <label class="col-form-label">
+                                            {{ __('Área / Proyecto') }}
+                                        </label>
+                                        <select class="form-control" id="área" wire:model="área">
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($areas as $area)
+                                                <option value="{{ $area->id}}">{{ $area->área }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('área') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Encargado') }}
+                                        </label>
+                                        <select class="form-control" id="users" wire:model="encargado">
+                                            <option value="">Selecciona una opción</option>
+                                            @foreach($users as $encargado)
+                                                <option value="{{ $encargado->id}}">{{ $encargado->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('encargado') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+                            <div class="border-bottom">
+                                {{-- TRABAJO P2/ CONFIGURACIÓN --}}
+                                <h5 class="py-1 text-center">Configuración</h5>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
                                             {{ __('Derecho a horas extras') }}
                                             <span class="text-danger">*</span>
                                         </label>
@@ -252,6 +286,104 @@
                                     </div>
                                     @error('recontratable') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
+                                <div class="form-group col-12">
+                                    <div>
+                                        <label class="col-form-label">
+                                            {{ __('Estatus') }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" id="estatus" wire:model="estatus">
+                                            <option value="">Selecciona una opción</option>
+                                            <option value="Activo">Activo</option>
+                                            <option value="Inactivo">Inactivo (No se le generará inasistencias)</option>
+                                            <option value="Baja definitiva">Baja definitiva (Ya no elabora)</option>
+                                        </select>
+                                    </div>
+                                    @error('estatus') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{--Horarios--}}
+                    <div class="row rounded border mb-4">
+                        <div class="bg-gray rounded-left">
+                            <div class="m-3">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                        </div>
+                        <div class="col m-2">
+                            <div class="border-bottom">
+                                <h5 class="py-1 text-center">Horario</h5>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Horario predeterminados') }}
+                                        </label>
+                                        <select class="form-control" id="horario_predeterminado" wire:model="horario_predeterminado">
+                                            <option value="">No</small> </option>
+                                            <optgroup label="Horarios predeterminados">
+                                            @foreach ($default_schedules as $default_schedule)
+                                                <option value="{{$default_schedule->id}}">{{$default_schedule->nombre_del_horario}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('horario_predeterminado') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ __('Customizar horario') }}
+                                    </label>
+                                    <div wire:ignore>
+                                        <select class="w-100" id="days" name="days[]" multiple="multiple" wire:model="days">
+                                            <option>Lunes</option>
+                                            <option>Martes</option>
+                                            <option>Miércoles</option>
+                                            <option>Jueves</option>
+                                            <option>Viernes</option>
+                                            <option>Sábado</option>
+                                            <option>Domingo</option>
+                                        </select>
+                                    </div>
+                                    @error('days') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                @if(count($days))
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table text-center border">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="bg-secondary"><i class="fa-solid fa-clock"></i></th>
+                                                        @foreach ($days as $day)
+                                                            <th class="border-left bg-secondary">{{$day}}</th>
+                                                        @endforeach
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <th scope="row" class="bg-light">Entrada</th>
+                                                    @foreach ($days as $n => $day)
+                                                        <td class="border-left">
+                                                            <input type="time" class="form-control border-0" id="entrada{{$day}}" required wire:model="hora_de_entrada.{{$n}}">
+                                                            @error('hora_de_entrada.'.$n) <span class="text-danger error">{{ $message }}</span> @enderror
+                                                        </td>
+                                                    @endforeach
+                                                </tr>
+                                                    <tr>
+                                                        <th scope="row" class="bg-light">Salida</th>
+                                                        @foreach ($days as $n => $day)
+                                                            <td class="border-left">
+                                                                <input type="time" class="form-control border-0" id="salida{{$day}}" required wire:model="hora_de_salida.{{$n}}">
+                                                                @error('hora_de_salida.'.$n) <span class="text-danger error">{{ $message }}</span> @enderror
+                                                            </td>
+                                                        @endforeach
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -267,7 +399,7 @@
                                 <h5 class="py-1 text-center">Documentos</h5>
                             </div>
                             <div class="row">
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Identificación oficial / INE') }}
                                         {{-- <span class="text-danger">*</span> --}}
@@ -275,7 +407,7 @@
                                     <input type="file" class="form-control-file" id="documento_de_identificación_oficial" wire:model.defer="documento_de_identificación_oficial">
                                     @error('documento_de_identificación_oficial') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Comprobante de domicilio') }}
                                         {{-- <span class="text-danger">*</span> --}}
@@ -283,7 +415,7 @@
                                     <input type="file" class="form-control-file" id="documento_del_comprobante_de_domicilio" wire:model.defer="documento_del_comprobante_de_domicilio">
                                     @error('documento_del_comprobante_de_domicilio') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('No atecendentes penales') }}
                                         {{-- <span class="text-danger">*</span> --}}
@@ -291,34 +423,42 @@
                                     <input type="file" class="form-control-file" id="documento_de_no_antecedentes_penales" wire:model.defer="documento_de_no_antecedentes_penales">
                                     @error('documento_de_no_antecedentes_penales') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Licencia de conducir') }}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_la_licencia_de_conducir" wire:model.defer="documento_de_la_licencia_de_conducir">
                                     @error('documento_de_la_licencia_de_conducir') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Cedula profesional') }}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_la_cedula_profesional" wire:model.defer="documento_de_la_cedula_profesional">
                                     @error('documento_de_la_cedula_profesional') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Carta de pasante') }}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_de_la_carta_de_pasante" wire:model.defer="documento_de_la_carta_de_pasante">
                                     @error('documento_de_la_carta_de_pasante') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-3">
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
                                     <label class="col-form-label">
                                         {{ __('Curriculum Vitae (CV)') }}
                                         {{-- <span class="text-danger">*</span> --}}
                                     </label>
                                     <input type="file" class="form-control-file" id="documento_del_curriculum_vitae" wire:model.defer="documento_del_curriculum_vitae">
                                     @error('documento_del_curriculum_vitae') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12 col-sm-6 col-md-4 col-xl-4">
+                                    <label class="col-form-label">
+                                        {{ __('Contrato firmado') }}
+                                        {{-- <span class="text-danger">*</span> --}}
+                                    </label>
+                                    <input type="file" class="form-control-file" id="documento_del_contrato" wire:model.defer="documento_del_contrato">
+                                    @error('documento_del_contrato') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                         </div>
@@ -375,7 +515,9 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $('#companies').select2();
+            $('#companies').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
@@ -386,9 +528,20 @@
                 var data = $('#cost_centers').select2("val");
             @this.set('cost_center', data);
             });
+
+            $('#users').select2({
+                theme: 'bootstrap4'
+            });
+
+            $('#users').on('change', function (e) {
+                var data = $('#users').select2("val");
+            @this.set('encargado', data);
+            });
             /////
 
-            $('#days').select2();
+            $('#days').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#days').on('change', function (e) {
                 var data = $('#days').select2("val");

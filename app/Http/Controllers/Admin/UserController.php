@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class UserController extends Controller
 {
@@ -50,7 +52,7 @@ class UserController extends Controller
 
             $user->image->delete();
         }
-        
+
         //Documentos
         if($user->document){
 
@@ -99,5 +101,33 @@ class UserController extends Controller
             default:
 
         }
+    }
+
+    //CONTRATOS
+    public function contratoTD(User $user){
+        $edad = Carbon::parse($user->fecha_de_nacimiento)->age;
+
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView("pdfs/admin/contratos/contratoTD", [
+            'user' => $user,
+            'edad' => $edad
+        ]);
+
+        $pdf->set_option('isRemoteEnabled', true);
+
+        return $pdf->stream("contratoTD.pdf");
+    }
+
+    //CONTRATOS
+    public function contratoTI(User $user){
+        $edad = Carbon::parse($user->fecha_de_nacimiento)->age;
+
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView("pdfs/admin/contratos/contratoTI", [
+            'user' => $user,
+            'edad' => $edad
+        ]);
+
+        $pdf->set_option('isRemoteEnabled', true);
+
+        return $pdf->stream("contratoTI.pdf");
     }
 }

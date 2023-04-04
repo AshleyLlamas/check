@@ -163,9 +163,6 @@
             animation-play-state: paused;
         }
 
-
-
-
         /*  footer   */
         footer {
             background-color: #222;
@@ -209,7 +206,7 @@
         .youtubeBtn{
             position: fixed;
             left: 50%;
-        transform:translatex(-50%);
+            transform:translatex(-50%);
             bottom: 45px;
             cursor: pointer;
             transition: all .3s;

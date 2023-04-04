@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Asistencia')
+@section('title', 'Intranet')
 
 @section('content')
     @livewire('admin.admonition-types.admonition-types-index')
 @stop
 
 @section('css')
-    
+
 @stop
 
 @section('js')
-    
+
 @stop

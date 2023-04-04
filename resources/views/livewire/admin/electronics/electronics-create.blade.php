@@ -16,12 +16,19 @@
             <p class="ml-5"><b>Seleccione un tipo de electrónico:</b></p>
             <div class="mx-5 mb-5">
                 <div class="box w-100 text-success">
-                    <div class="row">
-                        <div class="col text-center">
+                    <div class="row text-center">
+                        <div class="col pt-2">
                             <a href="{{ route('admin.printers.create') }}" class="btn shadow-sm btn-light btn-lg p-5 w-100 border">
                                 <i class="fa-solid fa-print fa-4x"></i>
                                 <h2>Impresoras</h2>
                                 <span class="badge bg-white">{{$printers_all}}</span>
+                            </a>
+                        </div>
+                        <div class="col pt-2">
+                            <a href="{{ route('admin.computers.create') }}" class="btn shadow-sm btn-light btn-lg p-5 w-100 border">
+                                <i class="fa-solid fa-computer fa-4x"></i>
+                                <h2>Computadoras</h2>
+                                <span class="badge bg-white">{{$computers_all}}</span>
                             </a>
                         </div>
                     </div>

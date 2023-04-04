@@ -24,8 +24,11 @@ class CreateSchedulesTable extends Migration
 
             $table->string('turno')->nullable();
 
-            $table->unsignedBigInteger('user_id')->nullable()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // $table->unsignedBigInteger('user_id')->nullable()->nullable();
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedBigInteger('scheduleble_id');
+            $table->string('scheduleble_type');
 
             $table->boolean('actual')->nullable();
 

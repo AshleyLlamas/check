@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Admin\Users;
 use App\Models\Area;
 use App\Models\Company;
 use App\Models\CostCenter;
+use App\Models\DefaultSchedule;
 use App\Models\Image;
+use App\Models\Schedule;
 use App\Models\User;
 use App\Models\UserSetting;
 use Illuminate\Support\Facades\Hash;
@@ -21,10 +23,17 @@ class UsersEdit extends Component
     public $user, $document;
 
     //User
-    public $foto, $qr, $name, $email, $curp, $fecha_de_nacimiento, $código_del_país, $número_de_teléfono, $número_de_empleado, $fecha_de_ingreso, $company, $cost_centers, $cost_center, $puesto, $tipo_de_puesto, $tipo, $derecho_a_hora_extra, $recontratable, $password, $password_confirmation, $role;
+    public $foto, $qr, $name, $email, $curp, $fecha_de_nacimiento, $código_del_país, $número_de_teléfono, $número_de_empleado, $fecha_de_ingreso, $company, $cost_centers, $cost_center, $área, $encargado, $puesto, $tipo_de_puesto, $tipo, $derecho_a_hora_extra, $recontratable, $estatus, $password, $password_confirmation, $role;
 
     public $documento_de_identificación_oficial, $documento_del_comprobante_de_domicilio, $documento_de_no_antecedentes_penales,
-        $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae;
+        $documento_de_la_licencia_de_conducir , $documento_de_la_cedula_profesional, $documento_de_la_carta_de_pasante, $documento_del_curriculum_vitae, $documento_del_contrato;
+
+    //HORARIO
+    public $days = [];
+    public $hora_de_entrada, $hora_de_salida;
+
+    //HORARIO PREDETERMINADO
+    public $horario_predeterminado;
 
     public function mount(User $user){
         $this->user = $user;
@@ -49,18 +58,62 @@ class UsersEdit extends Component
             $this->recontratable = $user->userSetting->recontratable;
         }
 
+        $this->estatus = $user->estatus;
+
         $this->cost_center = $this->user->cost_center_id;
+
+        if($user->areas->count()){
+            $pivot = $user->areas->first()->pivot;
+
+            if($pivot != null){
+                $this->área = $pivot->area_id;
+                $this->encargado = $pivot->encargado_id;
+            }
+        }
+
         $this->company = $user->company_id;
         $this->tipo = $user->tipo;
 
         if($user->roles->count()){
             $this->role = $user->roles->pluck('id')[0];
         }
+
+        $schedules = Schedule::where('scheduleble_id', $user->id)->where('scheduleble_type', User::class)->orderBy('posición', 'asc');
+
+        $this->days = $schedules->pluck('día')->toArray();
+
+        foreach($schedules->get() as $i => $day){
+            $this->hora_de_entrada[$i] = $day->hora_de_entrada->format('H:i');
+            $this->hora_de_salida[$i] = $day->hora_de_salida->format('H:i');
+        }
     }
 
     public function updatedcompany($company){
         $this->cost_centers = CostCenter::where('company_id', $company)->orderBy('folio')->get();
         $this->cost_center = '';
+    }
+
+    public function updatedhorariopredeterminado($horario_predeterminado){
+        if($horario_predeterminado != ""){
+            $default_schedule = DefaultSchedule::where('id', $horario_predeterminado)->first();
+
+            $schedules = Schedule::where('scheduleble_id', $default_schedule->id)->where('scheduleble_type', DefaultSchedule::class)->orderBy('posición', 'asc');
+
+            $this->hora_de_entrada = [];
+            $this->hora_de_salida = [];
+
+            $this->days = $schedules->pluck('día')->toArray();
+
+            foreach($schedules->get() as $i => $day){
+                $this->hora_de_entrada[$i] = $day->hora_de_entrada->format('H:i');
+                $this->hora_de_salida[$i] = $day->hora_de_salida->format('H:i');
+            }
+
+        }else{
+            $this->days = [];
+            $this->hora_de_entrada = [];
+            $this->hora_de_salida = [];
+        }
     }
 
     public function rules(){
@@ -70,7 +123,7 @@ class UsersEdit extends Component
         //User
         $array['foto'] = 'nullable|image|mimes:jpeg,jpg,png|max:5048';
         $array['user.name'] = 'required|string|max:255';
-        $array['curp'] = ['required', 'string', 'min:18', 'max:18', 'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', 'unique:users,curp,'.$this->user->id];
+        $array['curp'] = ['required', 'string', 'min:18', 'max:18', 'unique:users,curp,'.$this->user->id];
         $array['fecha_de_nacimiento'] = 'nullable|date';
 
         if($this->código_del_país || $this->número_de_teléfono){
@@ -95,6 +148,19 @@ class UsersEdit extends Component
         $array['derecho_a_hora_extra'] = "required|in:Si,No";
         $array['recontratable'] = "required|in:Si,No";
 
+        $array['estatus'] = "required|in:Activo,Inactivo,Baja definitiva";
+
+        //Horario
+        $array['days'] = "nullable";
+
+        //Schedule
+        if(count($this->days)){
+            foreach($this->days as $n => $day){
+                $array['hora_de_entrada.'.$n] = 'required';
+                $array['hora_de_salida.'.$n] = 'required';
+            }
+        }
+
         //Docs
         $array['documento_de_identificación_oficial'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
         $array['documento_del_comprobante_de_domicilio'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
@@ -103,6 +169,7 @@ class UsersEdit extends Component
         $array['documento_de_la_cedula_profesional'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
         $array['documento_de_la_carta_de_pasante'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
         $array['documento_del_curriculum_vitae'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
+        $array['documento_del_contrato'] = ['nullable','mimes:jpg,jpeg,png,svg,pdf','max:6000'];
 
         $array['role'] = ['required'];
 
@@ -156,6 +223,14 @@ class UsersEdit extends Component
                     'user_id' => $this->user->id
                 ]);
             }
+        }else{
+            if(!isset($this->user->userSetting)){
+                UserSetting::create([
+                    'derecho_a_hora_extra' => 'No',
+                    'recontratable' => 'Si',
+                    'user_id' => $this->user->id
+                ]);
+            }
         }
 
         //Docs
@@ -194,6 +269,15 @@ class UsersEdit extends Component
             $this->document->documento_del_curriculum_vitae = $this->documento_del_curriculum_vitae->store('curriculums_vitaes');
         }
 
+        if($this->documento_del_contrato){
+            Storage::delete([$this->document->documento_del_contrato]);
+            $this->document->documento_del_contrato = $this->documento_del_contrato->store('contratos');
+        }
+
+        if(isset($this->user->document)){
+            $this->user->document->save();
+        }
+
         if($this->código_del_país != null || $this->número_de_teléfono != null && $this->código_del_país != '' && $this->número_de_teléfono != ''){
             $whatsapp = $this->código_del_país.$this->número_de_teléfono;
         }else{
@@ -212,10 +296,42 @@ class UsersEdit extends Component
         $this->user->cost_center_id = $this->cost_center;
         $this->user->tipo = $this->tipo;
 
+        $this->user->estatus = $this->estatus;
+
         //$user->roles()->detach();
+        $this->user->areas()->syncWithPivotValues($this->área, ['encargado_id' => $this->encargado]);
         $this->user->roles()->sync($this->role);
         $this->user->save();
         $this->document->save();
+
+        //Actualizar horario
+        $where_not_in_schedule = Schedule::where('scheduleble_id', $this->user->id)->where('scheduleble_type', User::class)->whereNotIn('día', $this->days);
+
+        $where_not_in_schedule->delete();
+
+        foreach($this->days as $n => $day){
+            $schedule = Schedule::where('scheduleble_id', $this->user->id)->where('scheduleble_type', User::class)->where('día', $day)->first();
+
+            //Si no existe crear un nuevo SCHEDULE
+            if(is_null($schedule)){
+                Schedule::create([
+                    'día' => $day,
+                    'hora_de_entrada' => $this->hora_de_entrada[$n],
+                    'hora_de_salida' => $this->hora_de_salida[$n],
+                    'turno' => null,
+                    //'user_id' => $user->id,
+                    'scheduleble_id' => $this->user->id,
+                    'scheduleble_type' => User::class,
+                    'posición' => $n+1,
+                    'actual' => true
+                ]);
+            }else{
+                $schedule->hora_de_entrada = $this->hora_de_entrada[$n];
+                $schedule->hora_de_salida = $this->hora_de_salida[$n];
+                $schedule->posición = $n+1;
+                $schedule->save();
+            }
+        }
 
         session()->flash('message', 'Empleado se editó satisfactoriamente.');
 
@@ -226,14 +342,19 @@ class UsersEdit extends Component
     {
             $companies = Company::orderBy('nombre_de_la_compañia')->get();
             $cost_centers = CostCenter::orderBy('folio')->get();
-            //$areas = Area::orderBy('área')->get();
+            $areas = Area::orderBy('área')->get();
+            $users = User::orderBy('name')->get();
             $roles = Role::orderBy('name')->get();
+
+            $default_schedules = DefaultSchedule::orderBy('nombre_del_horario')->get();
 
         return view('livewire.admin.users.users-edit', [
             'companies' => $companies,
             'cost_centers' => $cost_centers,
-            //'areas' => $areas,
-            'roles' => $roles
+            'areas' => $areas,
+            'roles' => $roles,
+            'users' => $users,
+            'default_schedules' => $default_schedules
         ]);
     }
 }

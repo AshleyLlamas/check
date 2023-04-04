@@ -18,7 +18,7 @@ class CheckCreate extends Component
 {
     public $user;
 
-    public $existe_un_check;
+    public $existe_un_check, $zk;
 
     public function mount(User $user){
         $this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
@@ -53,7 +53,7 @@ class CheckCreate extends Component
             break;
         }
 
-        $fecha_a_comparar = Schedule::where('user_id', $this->user->id)->where('día', $clave)->get()->last();
+        $fecha_a_comparar = Schedule::where('scheduleble_id', $this->user->id)->where('scheduleble_type', 'App\Models\User')->where('actual', true)->where('día', $clave)->get()->last();
 
         //El usuario tiene compañia?
         if($this->user->company){

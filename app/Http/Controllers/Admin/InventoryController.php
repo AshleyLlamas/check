@@ -38,7 +38,15 @@ class InventoryController extends Controller
 
     public function destroy(Inventory $inventory)
     {
-        $inventory->delete();
+
+        switch($inventory->inventariable_type){
+            case 'App\Models\Electronic':
+                $inventory->inventariable->electronicable->delete();
+                //ES ELECTRONICO
+                $inventory->inventariable->delete(); //Eliminar la categoria (ELECTRONICO)
+                $inventory->delete(); //Eliminar inventario
+            break;
+        }
 
         return redirect()->route('admin.inventories.index')->with('eliminar', 'ok');
     }

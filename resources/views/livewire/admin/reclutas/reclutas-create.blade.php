@@ -65,7 +65,7 @@
                                     <input type="text" id="name" class="form-control" wire:model="name" placeholder="Ingrese el nombre del empleado">
                                     @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
-                                
+
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
                                         {{ __('Correo') }}
@@ -342,7 +342,9 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $('#companies').select2();
+            $('#companies').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
@@ -350,7 +352,9 @@
             });
             /////
 
-            $('#days').select2();
+            $('#days').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#days').on('change', function (e) {
                 var data = $('#days').select2("val");

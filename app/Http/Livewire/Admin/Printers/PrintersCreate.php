@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Printers;
 
 use App\Models\Area;
+use App\Models\Company;
 use App\Models\Electronic;
 use App\Models\Inventory;
 use App\Models\Printer;
@@ -10,28 +11,28 @@ use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 
 class PrintersCreate extends Component
 {
     use WithFileUploads;
 
-    public $tipo;
+    public $tipo = 'Impresora';
 
     //Inventory
-    public $propietario, $garantía, $factura, $fecha_de_adquisición, $descripción;
+    public $propietario, $garantía, $factura, $fecha_de_adquisición, $descripción, $qr, $abreviación, $arrendado = 'No';
 
     //Electic
-    public $marca, $modelo, $serie;
+    public $marca, $modelo, $serie, $company;
 
     //Auxiliar
-    public $ordenante;
+    public $ordenante = null;
 
     public function rules(){
 
         $array = [];
 
-        $array['ordenante'] = 'required';
-        $array['tipo'] = 'required';
+        $array['tipo'] = 'required|in:Impresora,Plotter';
         $array['propietario'] = 'nullable';
         $array['garantía'] = 'nullable|image|mimes:jpeg,jpg,png,pdf|max:5048';
         $array['factura'] = 'nullable|image|mimes:jpeg,jpg,png,pdf|max:5048';
@@ -41,8 +42,45 @@ class PrintersCreate extends Component
         $array['marca'] = ['required', 'string', 'max:255'];
         $array['modelo'] = ['required', 'string', 'max:255'];
         $array['serie'] = ['required', 'string', 'max:255'];
+        $array['company'] = ['required'];
+        $array['qr'] = ['required', 'string', 'max:9', Rule::unique(Inventory::class)];
+        $array['arrendado'] = 'required|in:Si,No';
 
         return $array;
+    }
+
+    public function updatedcompany($company){
+        switch($company){
+            case 1:
+                $this->abreviación = 'C';
+            break;
+            case 2:
+                $this->abreviación = 'T';
+            break;
+            case 5:
+                $this->abreviación = 'M';
+            break;
+            case 6:
+                $this->abreviación = 'S';
+            break;
+            case 7:
+                $this->abreviación = 'L';
+            break;
+            case 8:
+                $this->abreviación = 'MK';
+            break;
+            default:
+                $this->abreviación = '??';
+            break;
+        }
+
+        if(Electronic::all()->count() != 0){
+            $number = Electronic::latest('id')->first()->id+1;
+        }else{
+            $number = 1;
+        }
+
+        $this->qr = $this->abreviación.'-E-'.str_pad($number,4,"0",STR_PAD_LEFT);
     }
 
     public function save(){
@@ -76,16 +114,34 @@ class PrintersCreate extends Component
             'electronicable_type' => 'App\Models\Printer'
         ]);
 
+        switch($this->ordenante){
+            case 'Usuario':
+                $propientariableId = $this->propietario;
+                $propientariableType = User::class ;
+            break;
+            case 'Área':
+                $propientariableId = $this->propietario;
+                $propientariableType = Area::class ;
+            break;
+            default:
+                $propientariableId = null;
+                $propientariableType = null;
+            break;
+        }
+
         //CREAR INVENTORY
         $inventory = Inventory::create([
-            'user_id' => $this->propietario,
+            'propietariable_id' => $propientariableId,
+            'propietariable_type' => $propientariableType,
             'descripción' => $this->descripción,
             'fecha_de_adquisición' => $this->fecha_de_adquisición,
-            'qr' => 'EIM-'.strtoupper(Str::random(6)),
+            'qr' => $this->qr,
             'inventariable_id' => $electronic->id,
             'inventariable_type' => 'App\Models\Electronic',
             'garantia' => $garantía,
-            'factura' => $factura
+            'factura' => $factura,
+            'company_id' => $this->company,
+            'arrendado' => $this->arrendado
         ]);
 
         session()->flash('message', $this->tipo.' creado satisfactoriamente.');
@@ -97,10 +153,12 @@ class PrintersCreate extends Component
     {
         $users = User::orderBy('name')->get();
         $areas = Area::orderBy('área')->get();
+        $companies = Company::orderBy('nombre_de_la_compañia')->get();
 
         return view('livewire.admin.printers.printers-create', [
             'users' => $users,
-            'areas' => $areas
+            'areas' => $areas,
+            'companies' => $companies
         ]);
     }
 }

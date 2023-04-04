@@ -30,7 +30,7 @@
                                         <select class="form-control" wire:model="tipo">
                                             <option value="">Selecciona una opción</option>
                                             <option value="Impresora">Impresora</option>
-                                            <option value="Ploter">Ploter</option>
+                                            <option value="Plotter">Plotter</option>
                                         </select>
                                     </div>
                                     @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -116,11 +116,22 @@
 
         $(document).ready(function () {
 
-            $('#users').select2();
+            $('#users').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#users').on('change', function (e) {
                 var data = $('#users').select2("val");
             @this.set('propietario', data);
+            });
+
+            $('#companies').select2({
+                theme: 'bootstrap4'
+            });
+
+            $('#companies').on('change', function (e) {
+                var data = $('#companies').select2("val");
+                @this.set('company', data);
             });
         });
     </script>

@@ -43,4 +43,8 @@ class Area extends Model
     public function cost_center(){
         return $this->belongsTo('App\Models\CostCenter');
     }
+
+    public function encargado($encargado){
+        return User::where('id', $encargado)->first();
+    }
 }

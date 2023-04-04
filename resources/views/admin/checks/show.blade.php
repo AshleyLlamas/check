@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Asistencia')
+@section('title', 'Intranet')
 
 @section('content')
     <div class="py-4">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="col">
                         <div class="border rounded bg-light p-4 h-100">
-                            <h5 class="mb-1"><b><i class="fa-regular fa-calendar"></i> Fecha:</b><br> <p class="text-secondary">{{$check->fecha->formatlocalized('%d/%m/%Y')}}</p></h5> 
+                            <h5 class="mb-1"><b><i class="fa-regular fa-calendar"></i> Fecha:</b><br> <p class="text-secondary">{{$check->fecha->formatlocalized('%d/%m/%Y')}}</p></h5>
                         </div>
                     </div>
                 </div>
@@ -72,9 +72,9 @@
 @stop
 
 @section('css')
-    
+
 @stop
 
 @section('js')
-    
+
 @stop

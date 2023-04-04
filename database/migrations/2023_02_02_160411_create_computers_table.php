@@ -22,6 +22,8 @@ class CreateComputersTable extends Migration
             $table->enum('tipo', ['Desktop', 'Laptop'])->nullable();
             $table->string('sistema_operativo')->nullable();
 
+            $table->string('resguardo')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

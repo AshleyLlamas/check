@@ -102,6 +102,9 @@
 
 
 @push('css')
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+
     <style>
     .select2 {
         width:100%!important;
@@ -114,21 +117,27 @@
     <script>
         $(document).ready(function () {
 
-            $('#companies').select2();
+            $('#companies').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
             @this.set('company', data);
             });
 
-            $('#cost_centers').select2();
+            $('#cost_centers').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#cost_centers').on('change', function (e) {
                 var data = $('#cost_centers').select2("val");
             @this.set('cost_center', data);
             });
 
-            $('#users').select2();
+            $('#users').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#users').on('change', function (e) {
                 var data = $('#users').select2("val");

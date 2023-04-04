@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FilesController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ImagesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +29,5 @@ Route::view('/check', 'check')->middleware('auth')->name('ckeck');
 Auth::routes(["register" => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/', [App\Http\Controllers\HomeController::class, 'create'])->name('info.create');

@@ -274,7 +274,9 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $('#companies').select2();
+            $('#companies').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#companies').on('change', function (e) {
                 var data = $('#companies').select2("val");
@@ -282,7 +284,9 @@
             });
             /////
 
-            $('#days').select2();
+            $('#days').select2({
+                theme: 'bootstrap4'
+            });
 
             $('#days').on('change', function (e) {
                 var data = $('#days').select2("val");

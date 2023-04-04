@@ -8,8 +8,9 @@
                     {{ session('message') }}
                 </div>
             @endif
-
-            {{-- @livewire('home') --}}
+            {{-- @isset($map)
+               {{print_r($map)}}
+            @endisset --}}
         </div>
     </div>
 @endsection

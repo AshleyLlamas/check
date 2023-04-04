@@ -221,6 +221,54 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.extra_hours.destroy',
         'description' => 'Eliminar hora extra.'])->syncRoles([$role1]);
 
+        //Horarios predeterminados
+        $permission = Permission::create(['name' => 'admin.default_schedules.index',
+        'description' => 'Ver todos los horarios predeterminados.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.default_schedules.show',
+        'description' => 'Ver horario predeterminado.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.default_schedules.edit',
+        'description' => 'Editar horario predeterminado.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.default_schedules.create',
+        'description' => 'Crear horario predeterminado.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.default_schedules.destroy',
+        'description' => 'Eliminar horario predeterminado.'])->syncRoles([$role1]);
+
+        //PRINTERS
+        $permission = Permission::create(['name' => 'admin.printers.index',
+        'description' => 'Ver todas las impresoras.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.printers.show',
+        'description' => 'Ver impresora.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.printers.edit',
+        'description' => 'Editar impresora.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.printers.create',
+        'description' => 'Crear impresora.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.printers.destroy',
+        'description' => 'Eliminar impresora.'])->syncRoles([$role1]);
+
+        //COMPUTERS
+        $permission = Permission::create(['name' => 'admin.computers.index',
+        'description' => 'Ver todas las computadoras.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.computers.show',
+        'description' => 'Ver computadora.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.computers.edit',
+        'description' => 'Editar computadora.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.computers.create',
+        'description' => 'Crear computadora.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.computers.destroy',
+        'description' => 'Eliminar computadora.'])->syncRoles([$role1]);
+
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',
         'description' => 'Ver todas los roles.'])->syncRoles([$role1]);

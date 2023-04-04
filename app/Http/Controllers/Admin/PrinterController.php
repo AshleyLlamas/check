@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class PrinterController extends Controller
 {
     public function __construct(){
-        $this->middleware('can:admin.inventories.index')->only('index');
-        $this->middleware('can:admin.inventories.edit')->only('edit');
-        $this->middleware('can:admin.inventories.show')->only('show');
-        $this->middleware('can:admin.inventories.create')->only('create');
-        $this->middleware('can:admin.inventories.destroy')->only('destroy');
+        $this->middleware('can:admin.printers.index')->only('index');
+        $this->middleware('can:admin.printers.edit')->only('edit');
+        $this->middleware('can:admin.printers.show')->only('show');
+        $this->middleware('can:admin.printers.create')->only('create');
+        $this->middleware('can:admin.printers.destroy')->only('destroy');
     }
 
     public function index()

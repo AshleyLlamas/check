@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DefaultSchedule;
 use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -25,6 +27,16 @@ class ScheduleController extends Controller
         $schedule->actual = false;
         $schedule->save();
 
-        return redirect()->route('admin.users.show', $schedule->user)->with('eliminar', 'ok');
+        switch($schedule->scheduleble_type){
+            case User::class:
+                return redirect()->route('admin.users.show', $schedule->scheduleble)->with('eliminar', 'ok');
+            break;
+            case DefaultSchedule::class:
+                return redirect()->route('admin.default_schedules.show', $schedule->scheduleble)->with('eliminar', 'ok');
+            break;
+            default:
+                return redirect()->route('admin.users.index');
+            break;
+        }
     }
 }

@@ -23,6 +23,7 @@ class CreateUserDocumentsTable extends Migration
             $table->string('documento_de_la_cedula_profesional')->nullable();
             $table->string('documento_de_la_carta_de_pasante')->nullable();
             $table->string('documento_del_curriculum_vitae')->nullable();
+            $table->string('documento_del_contrato')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

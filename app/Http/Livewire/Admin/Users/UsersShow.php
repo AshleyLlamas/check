@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Users;
 use App\Models\Assistance;
 use App\Models\Check;
 use App\Models\Schedule;
+use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -55,7 +56,7 @@ class UsersShow extends Component
             break;
         }
 
-        if(Schedule::where('user_id', $this->user->id)->where('día', $this->día)->where('actual', true)->first()){
+        if(Schedule::where('scheduleble_id', $this->user->id)->where('scheduleble_type', User::class)->where('día', $this->día)->where('actual', true)->first()){
             session()->flash('error', 'Día no valido, este día ya esta en el horario.');
         }else{
             if(isset($posición)){
@@ -64,12 +65,14 @@ class UsersShow extends Component
                     'día' => $this->día,
                     'hora_de_entrada' => $this->hora_de_entrada,
                     'hora_de_salida' => $this->hora_de_salida,
-                    'user_id' => $this->user->id,
+                    //'user_id' => $this->user->id,
+                    'scheduleble_id' => $this->user->id,
+                    'scheduleble_type' => 'App\Models\User',
                     'actual' => true
                 ]);
-        
+
                 session()->flash('message', 'Día agregado al horario satisfactoriamente.');
-        
+
                 $this->día = '';
                 $this->hora_de_entrada = '';
                 $this->hora_de_salida = '';
@@ -148,7 +151,7 @@ class UsersShow extends Component
             );
         }
 
-        $schedules = Schedule::where('user_id', $this->user->id)->where('actual', true)->orderBy('posición', 'asc')->get();
+        $schedules = Schedule::where('scheduleble_id', $this->user->id)->where('scheduleble_type', 'App\Models\User')->where('actual', true)->orderBy('posición', 'asc')->get();
 
         return view('livewire.admin.users.users-show', [
             'faltas' => $faltas,

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Asistencia')
+@section('title', 'Intranet')
 
 @section('content')
     @livewire('admin.printers.printers-index')

@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Assistance;
 use App\Models\Check;
 use App\Models\NonWorkingDay;
-use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Vacation;
 use Carbon\Carbon;
@@ -55,7 +54,7 @@ class MakeAbsence extends Command
             case "vi":
                 $this->clave = "Viernes";
             break;
-            case "sa":
+            case "sá":
                 $this->clave = "Sábado";
             break;
             case "do":
@@ -107,7 +106,7 @@ class MakeAbsence extends Command
             })->get();
 
             foreach($users as $user){
-                $existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+                $existe_un_check = Check::where('user_id', $user->id)->whereNotNull('out_id')->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
 
                 if(!$existe_un_check){
                     Assistance::create([

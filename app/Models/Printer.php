@@ -11,6 +11,8 @@ class Printer extends Model
 
     protected $guarded = ['id', 'created_at', 'updated'];
 
+    protected $dates = ['fecha_de_adquisición'];
+
     protected $fillable = [
         'tipo'
     ];

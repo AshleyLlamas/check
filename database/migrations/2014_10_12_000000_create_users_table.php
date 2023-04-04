@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('curp')->unique()->nullable();
-            $table->date('fecha_de_nacimiento')->unique()->nullable();
-            $table->date('fecha_de_ingreso')->unique()->nullable();
+            $table->date('fecha_de_nacimiento')->nullable();
+            $table->date('fecha_de_ingreso')->nullable();
             $table->string('whatsapp')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -29,7 +29,8 @@ class CreateUsersTable extends Migration
             $table->string('estatus')->nullable()->default('Activo');
             $table->string('puesto')->nullable();
             $table->string('tipo_de_puesto')->nullable();
-            $table->decimal('sueldo_semanal', 10, 2)->nullable();
+            $table->decimal('salario_legal', 10, 2)->nullable();
+            $table->decimal('salario_complemento', 10, 2)->nullable();
 
             $table->enum('tipo', ['Empleado', 'Prospecto', 'Reclutado', 'Por contratar'])->nullable();
 

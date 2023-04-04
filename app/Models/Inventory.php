@@ -23,7 +23,8 @@ class Inventory extends Model
         'inventariable_type',
         'garantia',
         'factura',
-        'company_id'
+        'company_id',
+        'arrendado'
     ];
 
     public function inventariable(){

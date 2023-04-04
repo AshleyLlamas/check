@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'device' => [
+            'driver' => 'session',
+            'provider' => 'devices',
+        ],
     ],
 
     /*
@@ -69,6 +73,11 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'devices' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Device::class,
+        ],
     ],
 
     /*
@@ -106,6 +115,6 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
+    'password_timeout' => 576000,
 
 ];
