@@ -446,6 +446,14 @@ return [
                     'can' => 'admin.roles.index',
                     'color' => 'red'
                 ],
+                [
+                    'text'    => 'DISPOSITIVOS',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.devices.index',
+                    'icon' => 'fas fa-solid fa-mobile-screen-button',
+                    'can' => 'admin.devices.index',
+                    'color' => 'red'
+                ],
             ],
         ]
         // [

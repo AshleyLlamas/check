@@ -19,7 +19,7 @@ class CreateJustifyAttendancesTable extends Migration
             $table->string('tipo');
 
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('assistances')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
 
             $table->unsignedBigInteger('assistance_id')->nullable();
             $table->foreign('assistance_id')->references('id')->on('assistances')->onDelete('cascade')->onUpdate('cascade');

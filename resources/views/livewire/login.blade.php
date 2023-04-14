@@ -2,7 +2,7 @@
     <form>
         <div class="row g-0">
             <div class="card-body p-4">
-                <h6 class="text-center">INGRESAR</h6>
+                <h6 class="text-center">INGRESAR COMO USUARIO</h6>
                 <hr class="mt-0 mb-4">
                 @if (session()->has('error'))
                     <div class="alert alert-danger d-flex align-items-center" role="alert">
@@ -38,7 +38,7 @@
                             <div class="col-12">
                                 <div class="form-floating mb-3">
                                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" wire:model.defer="password">
-                                    <label for="password" class="col-md-4 col-form-label">{{ __('Password') }}</label>
+                                    <label for="password" class="col-md-4 col-form-label">{{ __('Contraseña') }}</label>
                                     @error('password')
                                     <p class="text-danger">{{$message}}</p>
                                     @enderror

@@ -98,6 +98,11 @@ class User extends Authenticatable
     }
 
     //Uno a Muchos
+    public function devices(){
+        return $this->hasMany('App\Models\Device');
+    }
+
+    //Uno a Muchos
     // public function schedules(){
     //     return $this->hasMany('App\Models\Schedule');
     // }
@@ -176,6 +181,11 @@ class User extends Authenticatable
     //Muchos a Muchos
     public function areas(){
         return $this->belongsToMany('App\Models\Area')->withPivot('encargado_id');
+    }
+
+    //Muchos a Muchos
+    public function inDevices(){
+        return $this->belongsToMany('App\Models\Device');
     }
 
     //Uno a Muchos

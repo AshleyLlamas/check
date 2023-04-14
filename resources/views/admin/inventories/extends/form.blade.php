@@ -25,7 +25,7 @@
             {{ __('Propietario') }}
             <span class="text-danger">*</span>
         </label>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons" wire:model="ordenante">
+        {{-- <div class="btn-group btn-group-toggle" data-toggle="buttons" wire:model="ordenante">
             <label class="btn btn-light btn-sm @if($ordenante == null) active  @endif">
                 <input type="radio" name="options" id="na" value="" autocomplete="off"> Sin propietario
             </label>
@@ -35,8 +35,8 @@
             <label class="btn btn-sm btn-light @if($ordenante == 'Área') active  @endif">
                 <input type="radio" name="options" id="area" value="Área" autocomplete="off"> Área (comunitario)
             </label>
-        </div>
-        @switch($ordenante)
+        </div> --}}
+        {{-- @switch($ordenante)
             @case('Usuario')
                 <select class="form-control" id="users" wire:model=propietario>
                     <option value="">Selecciona una opción</option>
@@ -53,7 +53,21 @@
                     @endforeach
                 </select>
             @break
-        @endswitch
+        @endswitch --}}
+        <select class="form-control" id="users" wire:model=propietario>
+            <option value="">Sin propietario</option>
+
+            <optgroup label="Usuarios">
+                @foreach($users as $user)
+                    <option value="A{{ $user->id}}">{{ $user->name }}</option>
+                @endforeach
+            </optgroup>
+            <optgroup label="Áreas o proyectos">
+                @foreach($areas as $area)
+                    <option value="B{{ $area->id}}">{{ $area->área }}</option>
+                @endforeach
+            </optgroup>
+        </select>
     </div>
     @error('ordenante') <span class="text-danger error">{{ $message }}</span>@enderror
 </div>

@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\FilesController;
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\Device\DeviceAuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +29,16 @@ Auth::routes(["register" => false]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/', [App\Http\Controllers\HomeController::class, 'create'])->name('info.create');
+
+
+Route::group(['prefix' => 'device', 'namespace' => 'Device'], function () {
+    Route::get('/login', [DeviceAuthController::class, 'getLogin'])->name('deviceLogin');
+    Route::post('/login', [DeviceAuthController::class, 'postLogin'])->name('deviceLoginPost');
+
+    Route::group(['middleware' => 'deviceauth'], function () {
+        Route::get('/', function () {
+            return view('device.check');
+        })->name('deviceCheck');
+
+    });
+});

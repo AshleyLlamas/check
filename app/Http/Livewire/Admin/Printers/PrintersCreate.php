@@ -114,20 +114,38 @@ class PrintersCreate extends Component
             'electronicable_type' => 'App\Models\Printer'
         ]);
 
-        switch($this->ordenante){
-            case 'Usuario':
-                $propientariableId = $this->propietario;
-                $propientariableType = User::class ;
-            break;
-            case 'Área':
-                $propientariableId = $this->propietario;
-                $propientariableType = Area::class ;
-            break;
-            default:
-                $propientariableId = null;
-                $propientariableType = null;
-            break;
+        if(!isset($this->propietario) || $this->propietario ==  ""){
+            $propientariableId = null;
+            $propientariableType = null;
+        }else{
+            $propientariableId = substr($this->propietario, 1);
+
+            switch($this->propietario[0]){
+                case 'A':
+                    $propientariableType = User::class ;
+                break;
+                case 'B':
+                    $propientariableType = Area::class ;
+                break;
+                default:
+                break;
+            }
         }
+
+        // switch($this->ordenante){
+        //     case 'Usuario':
+        //         $propientariableId = $this->propietario;
+        //         $propientariableType = User::class ;
+        //     break;
+        //     case 'Área':
+        //         $propientariableId = $this->propietario;
+        //         $propientariableType = Area::class ;
+        //     break;
+        //     default:
+        //         $propientariableId = null;
+        //         $propientariableType = null;
+        //     break;
+        // }
 
         //CREAR INVENTORY
         $inventory = Inventory::create([

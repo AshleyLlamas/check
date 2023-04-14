@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\VacationController;
 use App\Http\Controllers\Admin\AdmonitionTypeController;
 use App\Http\Controllers\Admin\ComputerController;
 use App\Http\Controllers\Admin\DefaultScheduleController;
+use App\Http\Controllers\Admin\DeviceController;
 use App\Http\Controllers\Admin\ElectronicController;
 use App\Http\Controllers\Admin\ExtraHourController;
 use App\Http\Controllers\Admin\InventoryController;
@@ -90,6 +91,9 @@ Route::resource('administrative-records', AdministrativeRecordController::class)
 
 //Cost centers
 Route::resource('cost-centers', CostCenterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.cost_centers');
+
+//Computers
+Route::resource('devices', DeviceController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.devices');
 
 //Roles
 Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.roles');

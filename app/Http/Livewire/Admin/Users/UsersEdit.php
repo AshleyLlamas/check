@@ -284,6 +284,10 @@ class UsersEdit extends Component
             $whatsapp = null;
         }
 
+        if($this->cost_center == ""){
+            $this->cost_center = null;
+        }
+
         $this->user->qr = $this->qr;
         $this->user->email = $this->email;
         $this->user->curp = $this->curp;

@@ -4,6 +4,24 @@
             {{ session('message') }}
         </div>
     @endif
+    @if ($all_users != 0 && $usuariosConFoto != 0)
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5>Empleados con fotografía <i class="fa-solid fa-image"></i></h5>
+                        <hr>
+                        <p><b>{{$usuariosConFoto}}/{{$all_users}}</b></p>
+                        <div class="mx-5 progress" style="height: 3px;">
+                            <div class="progress-bar" style="width: {{($usuariosConFoto/$all_users)*100}}%"></div>
+                        </div>
+                        <p class="text-danger"><small>{{$usuariosSinFoto}} empleados no tienen fotografía</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-header bg-primary">
             <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todos los empleados <span class="badge badge-light"> {{$all_users}}</span></h5>
@@ -111,7 +129,7 @@
                                         @isset($user->número_de_empleado)
                                             {{$user->número_de_empleado}}
                                         @else
-                                            <span class="text-success">N/A</span>
+                                            <span class="text-danger">N/A</span>
                                         @endisset
                                     </td>
                                     <td>
@@ -122,28 +140,31 @@
                                                 {{$user->name}}
                                             @endcan
                                         @else
-                                            <span class="text-success">N/A</span>
+                                            <span class="text-danger">N/A</span>
                                         @endisset
+                                        @if(!isset($user->image))
+                                            -  <span class="text-danger"><i class="fa-solid fa-image"></i><small>* Sin fotografía</small></span>
+                                        @endif
                                     </td>
                                     <td>
                                         @isset($user->puesto)
                                             {{$user->puesto}}
                                         @else
-                                            <span class="text-success">N/A</span>
+                                            <span class="text-danger">N/A</span>
                                         @endisset
                                     </td>
                                     <td>
                                         @if($user->areas->count())
                                             {{$user->areas->first()->área}}
                                         @else
-                                            <span class="text-success">N/A</span>
+                                            <span class="text-danger">N/A</span>
                                         @endif
                                     </td>
                                     <td>
                                         @isset($user->company)
                                             {{$user->company->nombre_de_la_compañia}}
                                         @else
-                                            <span class="text-success">N/A</span>
+                                            <span class="text-danger">N/A</span>
                                         @endisset
                                     </td>
                                     @can('admin.users.show')

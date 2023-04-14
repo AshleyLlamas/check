@@ -45,22 +45,39 @@ class ComputersEdit extends Component
         $this->modelo = $computer->electronic->modelo;
         $this->serie = $computer->electronic->serie;
 
-        switch($computer->electronic->inventory->propietariable_type){
-            case 'App\Models\User':
-                $this->ordenante = 'Usuario';
-            break;
-            case 'App\Models\Area':
-                $this->ordenante = 'Área';
-            break;
-            case null:
-                $this->ordenante = null;
-            break;
-            default:
-                dd('ERROR - CONSULTE CON EL ADMINISTRADOR');
-            break;
+        // switch($computer->electronic->inventory->propietariable_type){
+        //     case 'App\Models\User':
+        //         $this->ordenante = 'Usuario';
+        //     break;
+        //     case 'App\Models\Area':
+        //         $this->ordenante = 'Área';
+        //     break;
+        //     case null:
+        //         $this->ordenante = null;
+        //     break;
+        //     default:
+        //         dd('ERROR - CONSULTE CON EL ADMINISTRADOR');
+        //     break;
+        // }
+
+        if(isset($computer->electronic->inventory->propietariable_type) && isset($computer->electronic->inventory->propietariable_id)){
+            switch($computer->electronic->inventory->propietariable_type){
+                case 'App\Models\User':
+                    $this->propietario = 'A'.$computer->electronic->inventory->propietariable_id;
+                break;
+                case 'App\Models\Area':
+                    $this->propietario = 'B'.$computer->electronic->inventory->propietariable_id;
+                break;
+                case null:
+                    $this->propietario = null; //esta de más
+                break;
+                default:
+                    dd('ERROR - CONSULTE CON EL ADMINISTRADOR');
+                break;
+            }
         }
 
-        $this->propietario = $computer->electronic->inventory->propietariable_id;
+        //$this->propietario = $computer->electronic->inventory->propietariable_id;
         $this->descripción = $computer->electronic->inventory->descripción;
 
         if(isset($computer->electronic->inventory->fecha_de_adquisición)){
@@ -120,26 +137,28 @@ class ComputersEdit extends Component
             ]);
         }
 
-        switch($this->ordenante){
-            case 'Usuario':
-                $propietariable_type = 'App\Models\User';
-            break;
-            case 'Área':
-                $propietariable_type = 'App\Models\User';
-            break;
-            case null:
-                $this->propietario = null;
-                $propietariable_type = null;
-            break;
-            default:
-                dd('ERROR - CONSULTE CON EL ADMINISTRADOR');
-            break;
+        if(!isset($this->propietario) || $this->propietario ==  ""){
+            $propientariableId = null;
+            $propientariableType = null;
+        }else{
+            $propientariableId = substr($this->propietario, 1);
+
+            switch($this->propietario[0]){
+                case 'A':
+                    $propientariableType = User::class ;
+                break;
+                case 'B':
+                    $propientariableType = Area::class ;
+                break;
+                default:
+                break;
+            }
         }
 
         //Guardar cambios de inventario
         $this->inventory->update([ //Actualizo
-            'propietariable_id' => $this->propietario,
-            'propietariable_type' => $propietariable_type,
+            'propietariable_id' => $propientariableId,
+            'propietariable_type' => $propientariableType,
             'descripción' => $this->descripción,
             'fecha_de_adquisición' => $this->fecha_de_adquisición,
             'qr' => $this->qr,

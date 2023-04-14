@@ -90,7 +90,7 @@ class RoleSeeder extends Seeder
         'description' => 'Ver solicitudes de vacaciones.'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'admin.vacations.show',
-        'description' => 'Ver solicutud de vacaciones.'])->syncRoles([$role1]);
+        'description' => 'Ver solicitud de vacaciones.'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'admin.vacations.create',
         'description' => 'Ver crear solicitud de vacaciones.'])->syncRoles([$role1]);
@@ -269,9 +269,25 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.computers.destroy',
         'description' => 'Eliminar computadora.'])->syncRoles([$role1]);
 
+        //DEVICES
+        $permission = Permission::create(['name' => 'admin.devices.index',
+        'description' => 'Ver todos los dispositivos.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.devices.show',
+        'description' => 'Ver dispositivo.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.devices.edit',
+        'description' => 'Editar dispositivo.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.devices.create',
+        'description' => 'Crear dispositivo.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.devices.destroy',
+        'description' => 'Eliminar dispositivo.'])->syncRoles([$role1]);
+
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',
-        'description' => 'Ver todas los roles.'])->syncRoles([$role1]);
+        'description' => 'Ver todos los roles.'])->syncRoles([$role1]);
 
         $permission = Permission::create(['name' => 'admin.roles.show',
         'description' => 'Ver todos los roles de la lista roles.'])->syncRoles([$role1]);

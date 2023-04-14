@@ -87,11 +87,16 @@ class UsersIndex extends Component
 
         $companies = Company::orderBy('nombre_de_la_compañia')->get();
 
+        $usuariosSinFoto = User::where('tipo', 'Empleado')->doesntHave('image')->count();
+        $usuariosConFoto = User::where('tipo', 'Empleado')->wherehas('image')->count();
+
         return view('livewire.admin.users.users-index', [
             'users' => $users,
             'all_users' => $all_users,
             'areas' => $areas,
-            'companies' => $companies
+            'companies' => $companies,
+            'usuariosSinFoto' => $usuariosSinFoto,
+            'usuariosConFoto' => $usuariosConFoto
         ]);
     }
 }

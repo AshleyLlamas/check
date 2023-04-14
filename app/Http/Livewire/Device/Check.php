@@ -1,27 +1,55 @@
 <?php
 
-namespace App\Http\Livewire\Check;
+namespace App\Http\Livewire\Device;
 
 use App\Models\Assistance;
-use App\Models\Check;
 use App\Models\ExtraHour;
-use App\Models\NonWorkingDay;
 use App\Models\Schedule;
 use App\Models\TimeCheck;
+use App\Models\Check as Checador;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-use Rats\Zkteco\Lib\ZKTeco;
-
-class CheckCreate extends Component
+class Check extends Component
 {
-    public $user;
+    public $device;
 
-    public $existe_un_check;
+    public $número_de_empleado, $clave;
 
-    public function mount(User $user){
-        $this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+    public $user, $existe_un_check;
+
+    //protected $queryString = ['número_de_empleado', 'clave'];
+
+    public function rules(){
+
+        $array = [];
+
+
+
+        return $array;
+    }
+
+    public function search(){
+
+        //$this->validate();
+
+        $user = User::select('id', 'número_de_empleado', 'name' , 'curp')->where('número_de_empleado', $this->número_de_empleado)->where('curp', 'LIKE', $this->clave.'%')->first();
+
+        if(isset($user)){
+
+            if($this->device->inUsers->contains($user->id)){
+                $this->user = $user;
+                $this->existe_un_check = Checador::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+            }else{
+                session()->flash('error', 'El usuario no pertenece a este dispositivo.');
+            }
+
+        }else{
+            session()->flash('error', 'Estas credenciales no coinciden con nuestros registros.');
+        }
+
     }
 
     public function save(){
@@ -172,7 +200,7 @@ class CheckCreate extends Component
                     'observación' => $in_observación
                 ]);
 
-                Check::create([
+                Checador::create([
                     'fecha' => Carbon::now(),
                     'in_id' => $in->id,
                     'out_id' => null,
@@ -190,7 +218,7 @@ class CheckCreate extends Component
                     'observación' => 'Revisar si es tiempo extra'
                 ]);
 
-                Check::create([
+                Checador::create([
                     'fecha' => Carbon::now(),
                     'in_id' => $in->id,
                     'out_id' => null,
@@ -203,11 +231,11 @@ class CheckCreate extends Component
 
         session()->flash('message', 'Checado satisfactoriamente.');
 
-        return redirect(route('home'));
+        return redirect(route('deviceCheck'));
     }
 
     public function render()
     {
-        return view('livewire.check.check-create');
+        return view('livewire.device.check');
     }
 }
