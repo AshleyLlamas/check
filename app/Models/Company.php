@@ -16,9 +16,9 @@ class Company extends Model
         'nombre_de_la_compañia'
     ];
 
-    //Uno a Uno
-    public function user(){
-        return $this->hasOne('App\Models\User');
+    //Uno a Muchos
+    public function users(){
+        return $this->hasMany('App\Models\User');
     }
 
     //Uno a Muchos

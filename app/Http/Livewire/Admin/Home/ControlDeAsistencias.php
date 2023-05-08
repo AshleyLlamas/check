@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Admin\Home;
 use App\Models\Assistance;
 use App\Models\Check;
 use App\Models\Company;
+use App\Models\JustifyAttendance;
 use App\Models\User;
+use App\Models\Vacation;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -18,29 +20,53 @@ class ControlDeAsistencias extends Component
         $this->company = 1;
     }
 
+    public function userAssistances($company){
+
+        return Assistance::where('asistencia', 'Asistió')->whereHas('user', function($query) use ($company) {
+            $query->where('company_id', $company);
+        })->whereDate('created_at', $this->fecha)->count();
+    }
+
+    public function userNoAssistances($company){
+
+        return Assistance::where('asistencia', 'No asistió')->whereHas('user', function($query) use ($company) {
+            $query->where('company_id', $company);
+        })->whereDate('created_at', $this->fecha)->count();
+    }
+
+    public function userJustifyAttendances($company){
+
+        return Assistance::where('asistencia', 'No asistió')->whereHas('justify_attendance', function($query) {
+            $query->where('estatus', 'Aprobado');
+        })->whereHas('user', function($query) use ($company) {
+            $query->where('company_id', $company);
+        })->whereDate('created_at', $this->fecha)->count();
+    }
+
+    public function userVacations($company){
+
+        return Vacation::where('estatus', 'Aprobado')->whereHas('user', function($query) use ($company) {
+            $query->where('company_id', $company);
+        })->whereDate('fecha_inicial', '<=', $this->fecha)->whereDate('fecha_final', '>=', $this->fecha)->count();
+    }
+
     public function render()
     {
         $companies = Company::orderBy('nombre_de_la_compañia')->get();
 
         $compañia = Company::where('id', $this->company)->first()->nombre_de_la_compañia;
 
-        $empleados = User::where('company_id', $this->company)->count();
+        $empleados = User::where('tipo', 'Empleado')->count();
 
-        $asistencias = Check::whereDate('fecha',  $this->fecha)
-        // ->where('company_id', $this->company)
-        ->count();
+        $asistencias = Assistance::where('asistencia', 'Asistió')->whereDate('created_at', $this->fecha)->count();
 
         $faltaron = Assistance::where('asistencia', 'No asistió')->whereDate('created_at', $this->fecha)->count();
 
+        $justificaciones = Assistance::where('asistencia', 'No asistió')->whereHas('justify_attendance', function($query) {
+            $query->where('estatus', 'Aprobado');
+        })->whereDate('created_at', $this->fecha)->count();
 
-        // $faltaron = User::where('company_id', $this->company)->whereHas('assistances', function($query) {
-        //     $query->where('asistencia', '=', 'No asistió')->whereHas('check', function($query) {
-        //         $query->whereDate('fecha', $this->fecha);
-        //     });
-        // })
-        // ->count();
-
-        $justificaciones = 0;
+        $vacaciones = Vacation::where('estatus', 'Aprobado')->whereDate('fecha_inicial', '<=', $this->fecha)->whereDate('fecha_final', '>=', $this->fecha)->count();
 
         return view('livewire.admin.home.control-de-asistencias', [
             'companies' => $companies,
@@ -48,7 +74,8 @@ class ControlDeAsistencias extends Component
             'empleados' => $empleados,
             'asistencias' => $asistencias,
             'faltaron' => $faltaron,
-            'justificaciones' => $justificaciones
+            'justificaciones' => $justificaciones,
+            'vacaciones' => $vacaciones
         ]);
     }
 }

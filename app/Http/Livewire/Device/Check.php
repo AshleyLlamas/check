@@ -16,17 +16,17 @@ class Check extends Component
 {
     public $device;
 
-    public $número_de_empleado, $clave;
+    public $número_de_empleado;
 
     public $user, $existe_un_check;
 
-    //protected $queryString = ['número_de_empleado', 'clave'];
+    //protected $queryString = ['número_de_empleado'];
 
     public function rules(){
 
         $array = [];
 
-
+        $array['número_de_empleado'] = 'required|max:255';
 
         return $array;
     }
@@ -35,13 +35,17 @@ class Check extends Component
 
         //$this->validate();
 
-        $user = User::select('id', 'número_de_empleado', 'name' , 'curp')->where('número_de_empleado', $this->número_de_empleado)->where('curp', 'LIKE', $this->clave.'%')->first();
+        $user = User::select('id', 'número_de_empleado', 'name')->where('número_de_empleado', $this->número_de_empleado)->first();
 
         if(isset($user)){
 
             if($this->device->inUsers->contains($user->id)){
-                $this->user = $user;
-                $this->existe_un_check = Checador::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+                if(isset($user->image)){
+                    $this->user = $user;
+                    $this->existe_un_check = Checador::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+                }else{
+                    session()->flash('error', 'El usuario no cuenta con fotografía, contáctese con el administrador.');
+                }
             }else{
                 session()->flash('error', 'El usuario no pertenece a este dispositivo.');
             }

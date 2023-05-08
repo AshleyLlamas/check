@@ -285,6 +285,22 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.devices.destroy',
         'description' => 'Eliminar dispositivo.'])->syncRoles([$role1]);
 
+        //SAFETIES
+        $permission = Permission::create(['name' => 'admin.safeties.index',
+        'description' => 'Ver todos los atecedentes de seguridad e higienes.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.safeties.show',
+        'description' => 'Ver atecedente de seguridad e higiene.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.safeties.edit',
+        'description' => 'Editar atecedente de seguridad e higiene.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.safeties.create',
+        'description' => 'Crear atecedente de seguridad e higiene.'])->syncRoles([$role1]);
+
+        $permission = Permission::create(['name' => 'admin.safeties.destroy',
+        'description' => 'Eliminar atecedente de seguridad e higiene.'])->syncRoles([$role1]);
+
         //ROLES
         $permission = Permission::create(['name' => 'admin.roles.index',
         'description' => 'Ver todos los roles.'])->syncRoles([$role1]);

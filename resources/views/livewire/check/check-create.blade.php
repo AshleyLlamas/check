@@ -9,6 +9,15 @@
                     <p class="mb-1"><i class="fa-solid fa-clock"></i> <b>Salida:</b> {{$existe_un_check->out->hora->format('h:i:s A')}}</p>
                 @endisset
             </div>
+
+            @foreach($zk as $value)
+                UID: {{$value['uid']}}<br>
+                Numero de empleado: {{$value['id']}}<br>
+                State: {{$value['state']}}<br>
+                Fecha y hora: {{$value['timestamp']}}<br>
+                <br><br><br>
+            @endforeach
+
             <div class="text-center">
                 <img draggable="false" width="300px" class="rounded-circle shadow"
                     src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"

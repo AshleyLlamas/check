@@ -433,6 +433,13 @@ return [
                     'icon' => 'fas fa-solid fa-briefcase',
                     'can' => 'admin.areas.index'
                 ],
+                [
+                    'text'    => 'SEGURIDAD E HIGIENE',
+                    'shift'   => 'ml-3',
+                    'route'         => 'admin.safeties.index',
+                    'icon' => 'fas fa-solid fa-hands-holding-circle',
+                    'can' => 'admin.safeties.index'
+                ],
             ],
         ],
         [

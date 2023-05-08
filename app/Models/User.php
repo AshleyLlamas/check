@@ -103,6 +103,11 @@ class User extends Authenticatable
     }
 
     //Uno a Muchos
+    public function safeties(){
+        return $this->hasMany('App\Models\Safety');
+    }
+
+    //Uno a Muchos
     // public function schedules(){
     //     return $this->hasMany('App\Models\Schedule');
     // }

@@ -69,7 +69,14 @@ class Login extends Component
         }
 
         if(Auth::attempt(array('email' => $this->email, 'password' => $password))){
-            return redirect()->route('profile');
+
+            if(isset(Auth::user()->image) || Auth::user()->id == 1){
+                return redirect()->route('profile');
+            }else{
+                Auth::logout();
+                session()->flash('error', 'El usuario no cuenta con fotografía, contáctese con el administrador.');
+                return redirect()->route('login');
+            }
         }else{
             session()->flash('error', 'Estas credenciales no coinciden con nuestros registros.');
         }

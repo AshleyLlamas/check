@@ -20,4 +20,8 @@ class Image extends Model
     public function imageable(){
         return $this->MorphTo();
     }
+
+    public function imageables(){
+        return $this->MorphTo();
+    }
 }

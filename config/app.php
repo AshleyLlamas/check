@@ -161,12 +161,13 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Laradevsbd\Zkteco\ZktecoServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+
 
         /*
          * Package Service Providers...
          */
+        Laradevsbd\Zkteco\ZktecoServiceProvider::class,
 
         /*
          * Application Service Providers...

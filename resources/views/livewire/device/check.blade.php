@@ -50,19 +50,10 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <div class="form-floating mb-3">
+                                <div class="form-floating">
                                     <input type="text" name="emai" class="form-control @error('número_de_empleado') is-invalid @enderror" wire:model.defer="número_de_empleado">
                                     <label for="número_de_empleado" class="col-md-4 col-form-label">{{ __('Número de empleado') }}</label>
                                     @error('número_de_empleado')
-                                    <p class="text-danger">{{$message}}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating mb-3">
-                                    <input type="clave" name="clave" class="form-control @error('clave') is-invalid @enderror" wire:model.defer="clave">
-                                    <label for="clave" class="col-md-4 col-form-label">{{ __('Clave') }}</label>
-                                    @error('clave')
                                     <p class="text-danger">{{$message}}</p>
                                     @enderror
                                 </div>

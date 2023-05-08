@@ -45,12 +45,37 @@
                             <div class="col text-center">
                                 <div class="info-box bg-warning">
                                     <div class="info-box-content">
-                                      <span class="info-box-number h1">{{$justificaciones}}</span>
+                                      <span class="info-box-number h1">{{$justificaciones}} / {{$vacaciones}}</span>
                                       <span class="info-box-text">Empleados que justificaron o en vacaciones</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="text-center table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                              <tr>
+                                <th scope="col">Empresa / Compañia</th>
+                                <th scope="col">Total de empleados</th>
+                                <th scope="col">Empleados que asistieron</th>
+                                <th scope="col">Empleados que faltaron</th>
+                                <th scope="col">Empleados que justificaron o en vacaciones</th>
+                              </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                @foreach ($companies as $company)
+                                    <tr>
+                                        <th scope="col">{{$company->nombre_de_la_compañia}}</th>
+                                        <td>{{$company->users->count()}}</td>
+                                        <td>{{$this->userAssistances($company->id)}}</td>
+                                        <td>{{$this->userNoAssistances($company->id)}}</td>
+                                        <td>{{$this->userJustifyAttendances($company->id)}}/{{ $this->userVacations($company->id)}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                          </table>
                     </div>
                 </div>
             </div>

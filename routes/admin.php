@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\ExtraHourController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\NonWorkingDayController;
 use App\Http\Controllers\Admin\PrinterController;
+use App\Http\Controllers\Admin\SafetyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('', [HomeController::class, 'index'])->name('admin.index');
@@ -94,6 +95,9 @@ Route::resource('cost-centers', CostCenterController::class)->only(['index', 'cr
 
 //Computers
 Route::resource('devices', DeviceController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.devices');
+
+//Safeties
+Route::resource('safeties', SafetyController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.safeties');
 
 //Roles
 Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.roles');

@@ -192,25 +192,20 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
-                                        <a class="dropdown-item" href="https://forms.office.com/Pages/ResponsePage.aspx?id=MfLHHrZcwEu6f6adwbQM-VbnQ2htPX9KrEI_TaEW5z5UODU4NEdSWjZMTTNUMTg3RzMzNEM3MUtaRiQlQCN0PWcu" target="_blank">
-                                            {{ __('Solicitud de viajes') }}
-                                        </a>
-
                                         <a class="dropdown-item" href="#" target="_blank">
                                             {{ __('Solicitud de vacaciones') }}
                                         </a>
 
-                                        <a class="dropdown-item" href="https://forms.office.com/Pages/ResponsePage.aspx?id=MfLHHrZcwEu6f6adwbQM-aYGlO7B01xHlbzIzWJCqfFUQkI5TExNWVQ4MDlHWTZPN09IRkJZMFlQMy4u" target="_blank">
-                                            {{ __('Solicitud de cargas manuales') }}
+                                        <a class="dropdown-item" href="#" target="_blank">
+                                            {{ __('Solicitud a recursos humanos') }}
                                         </a>
 
-                                        <a class="dropdown-item" href="#">
-                                            {{ __('Generar hoja de ruta') }}
+                                        <a class="dropdown-item" href="#" target="_blank">
+                                            {{ __('Solicitudes de control de obra C.O') }}
                                         </a>
 
-                                        <a class="dropdown-item" href="https://forms.office.com/Pages/ResponsePage.aspx?id=MfLHHrZcwEu6f6adwbQM-WNIAXVgQghIuozU7TBQE1ZUOFZPQVlWSURDMDNDNDFaSkdFTlVKMk1MVS4u" target="_blank">
-                                            {{ __('Carga de estimación autorizada') }}
+                                        <a class="dropdown-item" href="#" target="_blank">
+                                            {{ __('Manuales y tutoriales') }}
                                         </a>
                                     </div>
                                 </li>
@@ -244,13 +239,40 @@
                                     </ul>
                                 </li>
 
+                                {{-- MANUALES --}}
+                                <li class="nav-item dropdown navbar-button">
+                                    <a class="nav-link dropdown-toggle text-white mx-2" href="#" data-bs-toggle="dropdown">
+                                        <i class="fa-solid fa-book"></i> MANUALES
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#"> Tutoriales &raquo; </a>
+                                            <ul class="submenu dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        {{ __('Videos') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        {{ __('Manuales') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+
                                 {{-- PERFIL / PANEL ADM / CERRAR SESIÓN --}}
                                 <li class="nav-item dropdown navbar-button">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle text-uppercase text-white mx-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
+                                        <i class="fa-solid fa-user"></i>
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                        <div class="text-center border-bottom pb-2 text-primary">
+                                            <b>{{ Auth::user()->name }}</b>
+                                        </div>
 
                                         <a class="dropdown-item" href="{{ route('profile') }}">
                                             {{ __('Mi perfil') }}

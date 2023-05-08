@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Assistances;
 
 use App\Models\Assistance;
+use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -48,13 +49,22 @@ class AssistancesIndex extends Component
                         ->orderBy($this->sort, $this->direction)
                         ->latest('id')
                         ->paginate();
-        
+
         $all_assistances = Assistance::whereDate('created_at', '=' , Carbon::now()->formatLocalized($this->date))->count();
 
+        $usuariosSinFoto = Assistance::whereDate('created_at', '=', Carbon::now()->formatLocalized($this->date))->whereHas('user', function($query){
+            $query->where('tipo', 'Empleado')->doesntHave('image');
+        })->count();
+
+        $usuariosConFoto = Assistance::whereDate('created_at', '=', Carbon::now()->formatLocalized($this->date))->whereHas('user', function($query){
+            $query->where('tipo', 'Empleado')->wherehas('image');
+        })->count();
 
         return view('livewire.admin.assistances.assistances-index', [
             'assistances' => $assistances,
-            'all_assistances' => $all_assistances
+            'all_assistances' => $all_assistances,
+            'usuariosSinFoto' => $usuariosSinFoto,
+            'usuariosConFoto' => $usuariosConFoto
         ]);
     }
 }

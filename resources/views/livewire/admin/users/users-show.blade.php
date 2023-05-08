@@ -95,7 +95,7 @@
 
                                 <p class="text-muted">
                                     @isset($user->fecha_de_nacimiento)
-                                        {{$user->fecha_de_nacimiento}}
+                                        {{$user->fecha_de_nacimiento->format('d/m/Y')}}
                                     @else
                                         N/A
                                     @endisset
@@ -105,7 +105,7 @@
 
                                 <p class="text-muted">
                                     @isset($user->whatsapp)
-                                        <a href="https://api.whatsapp.com/send?phone={{$user->whatsapp}}">+{{$user->whatsapp}}</a>
+                                        <a href="https://api.whatsapp.com/send?phone={{$user->whatsapp}}" target="_blank">+{{$user->whatsapp}}</a>
                                     @else
                                         N/A
                                     @endisset
@@ -135,7 +135,7 @@
 
                                 <p class="text-muted">
                                     @isset($user->fecha_de_ingreso)
-                                        {{$user->fecha_de_ingreso}}
+                                        {{$user->fecha_de_ingreso->format('d/m/Y')}}
                                     @else
                                         N/A
                                     @endisset
@@ -190,29 +190,9 @@
                                         N/A
                                     @endisset
                                 </p>
-                            @if($user->areas->count())
-                            <hr>
-                                <strong>
-                                    Área
-                                </strong>
-
-                                @foreach ($user->areas as $area)
-                                    <p class="text-muted">
-                                        @isset($area->área)
-                                            {{$area->área}}
-                                        @else
-                                            N/A
-                                        @endisset
-                                    </p>
-                                <br>
-                                @endforeach
-                            @endif
                         </div>
                         <!-- /.card-body -->
                     </div>
-                    @if ($user->areas->count())
-
-                    @endif
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title"><i class="fa-solid fa-briefcase"></i> Áreas / Proyectos - Encargados</h3>
@@ -858,6 +838,27 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
+                    <!-- CARD -->
+                    @isset($user->company)
+                        @if($user->company_id == 2 || $user->company_id == 8)
+                            <div class="card card-primary mt-3 d-none d-xl-block">
+                                <div class="card-header">
+                                    <h3 class="card-title">Credencial</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="border container-photo">
+                                        <div id="photo">
+                                            @include('admin.users.cards.card'.$user->company_id)
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-secondary btn-lg m-4" wire:click="card({{$card}})"><i class="fa fa-undo" aria-hidden="true"></i></button>
+                                        <a type="button" class="btn btn-success btn-lg m-4" id="download"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endisset
                 </div>
                 <!-- /.col -->
             </div>
@@ -941,6 +942,30 @@
                     this.submit();
                 }
             })
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="
+    https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js
+    "></script>
+
+    <script>
+
+        $(function() {
+            $("#download").click(function() {
+                    html2canvas($("#photo")[0]).then((canvas) => {
+                        console.log("done ... ");
+                        //$("#out_image").append(canvas); MOSTRAR IMAGEN DEL DIV
+
+                        canvas.toBlob(function(blob) {
+                            saveAs(blob, "Dashboard.png");
+                        });
+
+                    });
+            });
         });
     </script>
 @endpush

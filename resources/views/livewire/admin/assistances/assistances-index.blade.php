@@ -4,6 +4,23 @@
             {{ session('message') }}
         </div>
     @endif
+    @if ($all_assistances != 0)
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5>Asistencias de empleados con fotografía <i class="fa-solid fa-image"></i></h5>
+                        <hr>
+                        <p><b>{{$usuariosConFoto}}/{{$all_assistances}}</b></p>
+                        <div class="mx-5 progress" style="height: 3px;">
+                            <div class="progress-bar" style="width: {{($usuariosConFoto/$all_assistances)*100}}%"></div>
+                        </div>
+                        <p class="text-danger"><small>{{$usuariosSinFoto}} empleados no tienen fotografía</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="card">
         <div class="card-header bg-primary">
             <h5 class="text-center my-2"><i class="fa-solid fa-list"></i> Todas las asistencias <span class="badge badge-light"> {{$all_assistances}}</span></h5>

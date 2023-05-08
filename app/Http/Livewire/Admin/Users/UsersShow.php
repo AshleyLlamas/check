@@ -15,9 +15,7 @@ class UsersShow extends Component
 
     public $día, $hora_de_entrada, $hora_de_salida;
 
-    // public function addArea(){
-
-    // }
+    public $card = 1;
 
     public function createSchedule()
     {
@@ -108,6 +106,17 @@ class UsersShow extends Component
 
         //For hide modal after add student success
         $this->dispatchBrowserEvent('close-modal');
+    }
+
+    public function card($card){
+        switch($card){
+            case 1:
+                $this->card = 2;
+            break;
+            case 2:
+                $this->card = 1;
+            break;
+        }
     }
 
     public function render()

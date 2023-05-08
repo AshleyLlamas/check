@@ -24,6 +24,11 @@ class Area extends Model
         return $this->morphOne('App\Models\Inventory', 'propietariable');
     }
 
+    //Uno a Muchos
+    public function safeties(){
+        return $this->hasMany('App\Models\Safety');
+    }
+
     //Uno a Uno Inversa
     public function user(){
         return $this->belongsTo('App\Models\User');
