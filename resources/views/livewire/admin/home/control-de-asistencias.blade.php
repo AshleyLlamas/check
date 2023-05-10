@@ -78,6 +78,55 @@
                           </table>
                     </div>
                 </div>
+                <div class="col-12 rounded bg-light">
+                    <div class="pt-3 px-3 border-bottom border-white">
+                        <h3 class="text-left text-secondary mb-1">SEGURIDAD E HIGIENE</h3>
+                    </div>
+                    <div class="pt-3">
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="info-box bg-danger">
+                                    <div class="info-box-content">
+                                      <span class="info-box-number h1">{{$fatalidad}}</span>
+                                      <span class="info-box-text">Fatalidad</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="info-box bg-warning">
+                                    <div class="info-box-content">
+                                      <span class="info-box-number h1">{{$primeros_auxilios}}</span>
+                                      <span class="info-box-text">Primeros Auxilios</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="info-box bg-warning">
+                                    <div class="info-box-content">
+                                      <span class="info-box-number h1">{{$accidentes_de_trabajo}}</span>
+                                      <span class="info-box-text">Accidentes de trabajo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="info-box bg-warning">
+                                    <div class="info-box-content">
+                                      <span class="info-box-number h1">{{$incidentes_propiedad}}</span>
+                                      <span class="info-box-text">Incidentes a la propiedad</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="info-box bg-success">
+                                    <div class="info-box-content">
+                                      <span class="info-box-number h1">{{$incidentes_ambientales}}</span>
+                                      <span class="info-box-text">Incidentes ambientales</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

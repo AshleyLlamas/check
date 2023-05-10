@@ -59,8 +59,12 @@
                                         </td>
                                     @endcan
                                 @else
-                                    <td></td>
-                                    <td></td>
+                                    @can('admin.roles.edit')
+                                        <td></td>
+                                    @endcan
+                                    @can('admin.roles.destroy')
+                                        <td></td>
+                                    @endcan
                                 @endif
                             </tr>
                         @endforeach

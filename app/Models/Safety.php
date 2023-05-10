@@ -12,14 +12,17 @@ class Safety extends Model
 
     protected $guarded = ['id', 'created_at', 'updated'];
 
+    protected $dates = ['fecha'];
+
     protected $fillable = [
         'area_id',
         'user_id',
-        'tipo'
+        'tipo',
+        'fecha'
     ];
 
-    public function imagenes(){
-        return $this->morphMany('App\Imagen', 'imageables');
+    public function images(){
+        return $this->morphMany('App\Models\Image', 'imageable');
     }
 
     //Uno a Muchos Inversa

@@ -43,10 +43,10 @@ class UsersEdit extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->curp = $user->curp;
-        $this->fecha_de_nacimiento = $user->fecha_de_nacimiento;
+        $this->fecha_de_nacimiento = $user->fecha_de_nacimiento->format('Y-m-d');
         $this->código_del_país = substr($user->whatsapp, 0, -10);
         $this->número_de_teléfono = substr($user->whatsapp, -10);
-        $this->fecha_de_ingreso = $user->fecha_de_ingreso;
+        $this->fecha_de_ingreso = $user->fecha_de_ingreso->format('Y-m-d');
         $this->tipo_de_puesto = $this->user->tipo_de_puesto;
 
         if(isset($user->company_id)){

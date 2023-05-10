@@ -6,6 +6,7 @@ use App\Models\Assistance;
 use App\Models\Check;
 use App\Models\Company;
 use App\Models\JustifyAttendance;
+use App\Models\Safety;
 use App\Models\User;
 use App\Models\Vacation;
 use Carbon\Carbon;
@@ -68,6 +69,12 @@ class ControlDeAsistencias extends Component
 
         $vacaciones = Vacation::where('estatus', 'Aprobado')->whereDate('fecha_inicial', '<=', $this->fecha)->whereDate('fecha_final', '>=', $this->fecha)->count();
 
+        $fatalidad = Safety::where('tipo', 'Fatalidad')->whereDate('fecha', $this->fecha)->count();
+        $primeros_auxilios = Safety::where('tipo', 'Primeros auxilios')->whereDate('fecha', $this->fecha)->count();
+        $accidentes_de_trabajo = Safety::where('tipo', 'Accidentes de trabajo')->whereDate('fecha', $this->fecha)->count();
+        $incidentes_propiedad = Safety::where('tipo', 'Incidentes a la propiedad')->whereDate('fecha', $this->fecha)->count();
+        $incidentes_ambientales = Safety::where('tipo', 'Incidentes ambientales')->whereDate('fecha', $this->fecha)->count();
+
         return view('livewire.admin.home.control-de-asistencias', [
             'companies' => $companies,
             'compañia' => $compañia,
@@ -75,7 +82,12 @@ class ControlDeAsistencias extends Component
             'asistencias' => $asistencias,
             'faltaron' => $faltaron,
             'justificaciones' => $justificaciones,
-            'vacaciones' => $vacaciones
+            'vacaciones' => $vacaciones,
+            'fatalidad' => $fatalidad,
+            'primeros_auxilios' => $primeros_auxilios,
+            'accidentes_de_trabajo' => $accidentes_de_trabajo,
+            'incidentes_propiedad' => $incidentes_propiedad,
+            'incidentes_ambientales' => $incidentes_ambientales
         ]);
     }
 }
