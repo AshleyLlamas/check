@@ -207,6 +207,10 @@
                                         <a class="dropdown-item" href="#" target="_blank">
                                             {{ __('Manuales y tutoriales') }}
                                         </a>
+
+                                        <a class="dropdown-item" href="https://forms.office.com/r/G6kFGRLtjQ" target="_blank">
+                                            {{ __('Solicitud de servicios técnicos') }}
+                                        </a>
                                     </div>
                                 </li>
 

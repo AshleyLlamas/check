@@ -1,4 +1,14 @@
 <div>
+    <div class="card">
+        @foreach ($zk as $i => $item)
+            {{$item['uid']}}<br>
+            {{$item['id']}}<br>
+            {{$item['state']}}<br>
+            {{$item['timestamp']}}<br>
+            {{$item['type']}}<br>
+            <br><br>
+        @endforeach
+    </div>
     <div class="card border-0 rounded-0 shadow">
         <div class="card-body">
             <div class="text-start text-secondary">

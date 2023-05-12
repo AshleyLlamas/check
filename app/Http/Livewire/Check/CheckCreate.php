@@ -13,7 +13,6 @@ use Carbon\Carbon;
 use Livewire\Component;
 
 use Rats\Zkteco\Lib\ZKTeco;
-use Laradevsbd\Zkteco\Http\Library\ZktecoLib;
 
 class CheckCreate extends Component
 {
@@ -22,13 +21,32 @@ class CheckCreate extends Component
     public $existe_un_check, $zk;
 
     public function mount(User $user){
-        // $zk = new ZKTeco('192.168.1.252');
+        $zk = new ZKTeco('192.168.1.210');
+
+        $zk->connect();   
+        $zk->enableDevice();  
+        $this->zk = $zk->getAttendance();
+
+        //FILTRAR LA INFO POR FECHA DE HOY
+        // $this->zk = array_filter($zk->getAttendance(), function ($item) { 
+        //     return substr($item['timestamp'], 0, 10) == Carbon::now()->format('Y-m-d');
+        // });
+
+        $getAttendanceFromDay = array_filter($zk->getAttendance(), function ($item) { 
+            return substr($item['timestamp'], 0, 10) == Carbon::now()->format('Y-m-d');
+        });
+
+        $a = array_filter($zk->getAttendance(), function ($item) { 
+            return array_unique($item['id']);
+        });
+
+        dd($a);
+
+
         $this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
     }
 
     public function save(){
-
-
 
         switch(substr(Carbon::now()->formatLocalized('%A'), 0, 2)){
             case "lu":
