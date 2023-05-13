@@ -43,10 +43,10 @@ class UsersEdit extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->curp = $user->curp;
-        $this->fecha_de_nacimiento = $user->fecha_de_nacimiento->format('Y-m-d');
+        $this->fecha_de_nacimiento = $user->fecha_de_nacimiento;
         $this->código_del_país = substr($user->whatsapp, 0, -10);
         $this->número_de_teléfono = substr($user->whatsapp, -10);
-        $this->fecha_de_ingreso = $user->fecha_de_ingreso->format('Y-m-d');
+        $this->fecha_de_ingreso = $user->fecha_de_ingreso;
         $this->tipo_de_puesto = $this->user->tipo_de_puesto;
 
         if(isset($user->company_id)){
@@ -137,7 +137,7 @@ class UsersEdit extends Component
         $array['user.número_del_infonavit'] = 'nullable|string|max:255';
 
         //Work
-        $array['user.número_de_empleado'] = 'required|numeric|max:99999999';
+        $array['user.número_de_empleado'] = 'required|numeric|max:99999999|unique:users,número_de_empleado,'.$this->user->id;
         $array['user.puesto'] = 'nullable|string|max:255';
         $array['tipo_de_puesto'] = 'nullable|string|max:255';
         $array['company'] = ['required'];

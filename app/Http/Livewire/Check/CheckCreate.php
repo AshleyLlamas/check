@@ -32,18 +32,46 @@ class CheckCreate extends Component
         //     return substr($item['timestamp'], 0, 10) == Carbon::now()->format('Y-m-d');
         // });
 
-        $getAttendanceFromDay = array_filter($zk->getAttendance(), function ($item) { 
+        // $getAttendance = array_filter($zk->getAttendance(), function ($attendance){ 
+        //     return $attendance->id;
+        // });
+
+        $getAttendance = array_filter($zk->getAttendance(), function ($item) { 
             return substr($item['timestamp'], 0, 10) == Carbon::now()->format('Y-m-d');
         });
 
-        $a = array_filter($zk->getAttendance(), function ($item) { 
-            return array_unique($item['id']);
-        });
+        $derecho = collect($zk->getAttendance())->unique('id'); //ENTRADA
+        $reverso = collect(array_reverse($zk->getAttendance()))->unique('id'); //SALIDA
 
-        dd($a);
+        //$todo = array_merge($array1, $array2);
 
+        dd($reverso);
 
-        $this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+        //FUNCIONA NO MOVER
+        foreach(collect($getAttendance)->unique('id') as $check){
+
+            //Buscar usuario
+            $user = User::where('número_de_empleado', $check['id'])->first();
+            
+            // if(isset($user)){
+            //     $in = TimeCheck::create([
+            //         'hora' => substr($check['timestamp'], -8),
+            //         'estatus' => 'jjsj',
+            //         'observación' => 'asdas'
+            //     ]);
+
+            //     Check::create([
+            //         'fecha' => substr($check['timestamp'], 0, 10),
+            //         'in_id' => $in->id,
+            //         // 'out_id',
+            //         'user_id' => $user->id,
+            //         'company_id' => $user->company_id,
+            //         // 'schedule_id'
+            //     ]);
+            // }
+        }
+
+        //$this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
     }
 
     public function save(){

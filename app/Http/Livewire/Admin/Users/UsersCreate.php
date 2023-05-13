@@ -51,7 +51,6 @@ class UsersCreate extends Component
         $array['foto'] = 'nullable|image|mimes:jpeg,jpg,png|max:5048';
         $array['name'] = 'required|string|max:255';
         $array['email'] = ['required', 'string', 'email', 'max:255', Rule::unique(User::class)];
-        $array['número_de_empleado'] = 'required|numeric|max:99999999';
 
         if($this->código_del_país || $this->número_de_teléfono){
             $array['código_del_país'] = 'required|digits_between:1,3';
@@ -65,7 +64,7 @@ class UsersCreate extends Component
         $array['número_del_infonavit'] = 'nullable|string|max:255';
 
         //Work
-        $array['número_de_empleado'] = 'required|numeric|max:99999999';
+        $array['número_de_empleado'] = 'required|numeric|max:99999999|unique:users,número_de_empleado';
         $array['fecha_de_ingreso'] = 'nullable|date|date_format:Y-m-d';
         $array['puesto'] = 'nullable|string|max:255';
         $array['tipo_de_puesto'] = 'nullable|string|max:255';

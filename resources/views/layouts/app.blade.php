@@ -164,7 +164,7 @@
                                 </li>
 
                                 {{-- EMPRESAS --}}
-                                <li class="nav-item dropdown navbar-button">
+                                {{-- <li class="nav-item dropdown navbar-button">
                                     <a id="navbarDropdownEmpresas" class="nav-link dropdown-toggle text-white mx-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         <i class="fas fa-building"></i> EMPRESAS
                                     </a>
@@ -184,6 +184,57 @@
                                             {{ __('Sistema MagnaMaq') }}
                                         </a>
                                     </div>
+                                </li> --}}
+
+                                {{-- EMPRESAS --}}
+                                <li class="nav-item dropdown navbar-button">
+                                    <a class="nav-link dropdown-toggle text-white mx-2" href="#" data-bs-toggle="dropdown">
+                                        <i class="fas fa-building"></i> EMPRESAS
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> Sitio Oficial Grupo Makro  &raquo; </a>
+                                            <ul class="submenu dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" target="_blank" href="www.constructoramakro.com">
+                                                        {{ __('Constructora Makro') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" target="_blank" href="www.magnamaq.com">
+                                                        {{ __('Magnamaq ') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" target="_blank" href="www.trituasfaltos.com">
+                                                        {{ __('Trituasfaltos ') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" target="_blank" href="www.gusa.us">
+                                                        {{ __('GUSA ') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" target="_blank" href="www.civsa.com">
+                                                        {{ __('CIVSA') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <a class="dropdown-item" target="_blank" href="https://constructoramakro111-my.sharepoint.com/:f:/g/personal/unidad_constructoramakro_com/Ep2VxGkAeYlOtMhlPOPrAtABTnyA0Ql9eq0-1j2S-TwpQA?e=hZa7lg">
+                                            {{ __('Contexto de Makro') }}
+                                        </a>
+                                        <a class="dropdown-item" target="_blank" href="https://constructoramakro111-my.sharepoint.com/:f:/g/personal/unidad_constructoramakro_com/El-wFFx2HIxDlp8ejw4nEzAB0Vce44ZNoZzeX_UvjoGagA?e=IFVTH6">
+                                            {{ __('Misión y Visión') }}
+                                        </a>
+                                        <a class="dropdown-item" target="_blank" href="https://www.trituasfaltos.com">
+                                            {{ __('Valores, principios y filosofia') }}
+                                        </a>
+                                        <a class="dropdown-item" target="_blank" href="https://constructoramakro111-my.sharepoint.com/:f:/g/personal/unidad_constructoramakro_com/EqV8GxTlc1NMn64x4a1LGH8B_tlf2XQURNbk0GwyKf_kGA?e=cqj2yf">
+                                            {{ __('Sistema MagnaMaq') }}
+                                        </a>
+                                    </ul>
                                 </li>
 
                                 <li class="nav-item dropdown navbar-button">
@@ -192,24 +243,32 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#" target="_blank">
-                                            {{ __('Solicitud de vacaciones') }}
+                                        <a class="dropdown-item" href="https://www.magnamaq.mx/" target="_blank">
+                                            {{ __('Sistema Magnamaq') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="https://forms.office.com/pages/responsepage.aspx?id=MfLHHrZcwEu6f6adwbQM-cVOG8dGiAhLhAEYTDag-rtUMDVFTlk4V01MMVU1UzdZUUlHOFBZQzMwUCQlQCN0PWcu" target="_blank">
+                                            {{ __('Solicitud de Servicio Técnico') }}
                                         </a>
 
                                         <a class="dropdown-item" href="#" target="_blank">
-                                            {{ __('Solicitud a recursos humanos') }}
+                                            {{ __('Solicitud de Vacaciones / Ausencia') }}
                                         </a>
 
                                         <a class="dropdown-item" href="#" target="_blank">
-                                            {{ __('Solicitudes de control de obra C.O') }}
+                                            {{ __('Solicitudes de RH') }}
                                         </a>
 
                                         <a class="dropdown-item" href="#" target="_blank">
-                                            {{ __('Manuales y tutoriales') }}
+                                            {{ __('Solicitudes de CO') }}
                                         </a>
 
-                                        <a class="dropdown-item" href="https://forms.office.com/r/G6kFGRLtjQ" target="_blank">
-                                            {{ __('Solicitud de servicios técnicos') }}
+                                        <a class="dropdown-item" href="https://constructoramakro111-my.sharepoint.com/:f:/g/personal/unidad_constructoramakro_com/EgT7jeYGkYpFvnLtd0F_XRAB1A2CnBz8Z3dsBQCJQkouEg?e=fZHrgx" target="_blank">
+                                            {{ __('Procedimientos y formatos') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="#" target="_blank">
+                                            {{ __('Makro en la Nube') }}
                                         </a>
                                     </div>
                                 </li>
@@ -224,19 +283,19 @@
                                         <li><a class="dropdown-item" href="#"> Correos &raquo; </a>
                                             <ul class="submenu dropdown-menu">
                                                 <li>
-                                                    <a class="dropdown-item" href="https://outlook.office365.com/mail/">
+                                                    <a class="dropdown-item" target="_blank" href="https://outlook.office365.com/mail/">
                                                         {{ __('Microsoft 365') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="https://host2068.hostmonster.com:2083/">
+                                                    <a class="dropdown-item" target="_blank" href="https://host2068.hostmonster.com:2083/">
                                                         {{ __('Host Moster (.com.mx)') }}
                                                     </a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="https://onedrive.live.com/about/en-us/signin/" target="_blank">
+                                            <a class="dropdown-item" target="_blank" href="https://onedrive.live.com/about/en-us/signin/" target="_blank">
                                                 {{ __('Mi unidad - OneDrive') }}
                                             </a>
                                         </li>
@@ -246,24 +305,39 @@
                                 {{-- MANUALES --}}
                                 <li class="nav-item dropdown navbar-button">
                                     <a class="nav-link dropdown-toggle text-white mx-2" href="#" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-book"></i> MANUALES
+                                        <i class="fa-solid fa-users"></i> GRUPO MAKRO
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"> Tutoriales &raquo; </a>
-                                            <ul class="submenu dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item" href="#">
-                                                        {{ __('Videos') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#">
-                                                        {{ __('Manuales') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="https://constructoramakro111-my.sharepoint.com/personal/unidad_constructoramakro_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Funidad%5Fconstructoramakro%5Fcom%2FDocuments%2FSistema%20de%20Gesti%C3%B3n%2F4%2E%20Pol%C3%ADticas%2FP%C3%BAblico&ga=1" target="_blank">
+                                            {{ __('Politicas') }}
+                                        </a>
+                                        
+                                        <a class="dropdown-item" href="https://constructoramakro111-my.sharepoint.com/:f:/g/personal/unidad_constructoramakro_com/EuzIqw-PgoxDiYBsN9ECdakBGp5p9qhZIYXPqUhEDpfOGg?e=Uc1Erw" target="_blank">
+                                            {{ __('Objetivos') }}
+                                        </a>
+                                        
+                                        <a class="dropdown-item" href="#" target="_blank">
+                                            {{ __('Organigramas') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="https://constructoramakro111-my.sharepoint.com/:f:/g/personal/unidad_constructoramakro_com/Eu1WQ2sl4YVDutipZ76IaLkBeJB5bxTktZlnUSfNzcTWQA?e=tDlE0n" target="_blank">
+                                            {{ __('Perfiles de Puesto') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="#" target="_blank">
+                                            {{ __('Noticias') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="https://constructoramakro111-my.sharepoint.com/personal/ustecnicos_constructoramakro_com/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fustecnicos%5Fconstructoramakro%5Fcom%2FDocuments%2FNueva%20Unidad%20Servicios%20T%C3%A9cnicos&ga=1" target="_blank">
+                                            {{ __('Obras y Proyectos Técnicos') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="#" target="_blank">
+                                            {{ __('Seguridad e Higiene') }}
+                                        </a>
+                                    </div>
+                                    
                                 </li>
 
                                 {{-- PERFIL / PANEL ADM / CERRAR SESIÓN --}}
