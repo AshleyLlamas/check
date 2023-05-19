@@ -101,3 +101,7 @@ Route::resource('safeties', SafetyController::class)->only(['index', 'create', '
 
 //Roles
 Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.roles');
+
+//EXCEL
+Route::get('/excel-de-usuarios-sin-imagen', [UserController::class, 'usersWithoutImageExportExcel'])->name('admin.usersWithoutImage.export');
+Route::get('/excel-de-usuarios-sin-puesto', [UserController::class, 'usersWithoutPuestoExportExcel'])->name('admin.usersWithoutPuesto.export');

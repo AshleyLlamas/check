@@ -29,10 +29,11 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-xl-11 col-lg-10 col-md-12 col-sm-12">
-
+                    <a type="button" class="btn btn-secondary my-2" href="{{route('admin.usersWithoutImage.export')}}"><i class="fa-solid fa-file-excel"></i> Usuarios sin fotografía</a>
+                    <a type="button" class="btn btn-secondary my-2" href="{{route('admin.usersWithoutPuesto.export')}}"><i class="fa-solid fa-file-excel"></i> Usuarios sin puesto</a>
                 </div>
                 <div class="col-xl-1 col-lg-2 col-md-12 col-sm-12">
-                    <a class="btn btn-success btn-block  my-2 @cannot('admin.users.create') disabled @endcannot" href="{{ route('admin.users.create') }}"><i class="fa-solid fa-plus"></i></a>
+                    <a class="btn btn-success btn-block my-2 @cannot('admin.users.create') disabled @endcannot" href="{{ route('admin.users.create') }}"><i class="fa-solid fa-plus"></i></a>
                 </div>
             </div>
         </div>

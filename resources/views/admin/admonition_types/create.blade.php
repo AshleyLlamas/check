@@ -3,7 +3,9 @@
 @section('title', 'Intranet')
 
 @section('content')
-    @livewire('admin.admonition-types.admonition-types-create')
+    <div class="py-4">
+        @livewire('admin.admonition-types.admonition-types-create')
+    </div>
 @stop
 
 @section('css')

@@ -10,13 +10,18 @@
         </div>
         <div class="card-header">
             <div class="row">
-                <div class="col-xl-11 col-lg-10 col-md-10 col-sm-10">
+                <div class="col-xl-9 col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group my-2" wire:model="order">
                         <select class="form-control" id="orderFormControlSelect">
                         <option value="1">Ordernar por más reciente</option>
                         <option value="2">Ordernar por más antiguo</option>
                         </select>
                     </div>
+                </div>
+                <div class="col-xl-2 col-lg-4 col-md-4 col-sm-4">
+                    <a class="btn btn-secondary  btn-block my-2" href="/recursos/archivos/actaAdministrativa.xlsx" download="formato_de_acta_administrativa">
+                        <i class="fa-solid fa-file-arrow-down"></i> <small>Acta administrativa</small>
+                    </a>
                 </div>
                 <div class="col-xl-1 col-lg-2 col-md-2 col-sm-2">
                     <a class="btn btn-success btn-block  my-2 @cannot('admin.administrative_records.create') disabled @endcannot" href="{{ route('admin.administrative_records.create') }}"><i class="fa-solid fa-plus"></i></a>

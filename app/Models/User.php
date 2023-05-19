@@ -103,11 +103,6 @@ class User extends Authenticatable
     }
 
     //Uno a Muchos
-    public function safeties(){
-        return $this->hasMany('App\Models\Safety');
-    }
-
-    //Uno a Muchos
     // public function schedules(){
     //     return $this->hasMany('App\Models\Schedule');
     // }
@@ -191,6 +186,11 @@ class User extends Authenticatable
     //Muchos a Muchos
     public function inDevices(){
         return $this->belongsToMany('App\Models\Device');
+    }
+ 
+    //Muchos a Muchos
+    public function safeties(){
+        return $this->belongsToMany('App\Models\Safety');
     }
 
     //Uno a Muchos

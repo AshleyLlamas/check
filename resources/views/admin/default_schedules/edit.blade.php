@@ -3,7 +3,9 @@
 @section('title', 'Intranet')
 
 @section('content')
-    @livewire('admin.default-shedules.default-schedule-edit', ['default_schedule' => $default_schedule], key($default_schedule->id))
+    <div class="py-4">
+        @livewire('admin.default-shedules.default-schedule-edit', ['default_schedule' => $default_schedule], key($default_schedule->id))
+    </div>
 @stop
 
 @section('css')

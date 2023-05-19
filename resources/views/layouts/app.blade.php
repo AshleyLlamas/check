@@ -263,6 +263,10 @@
                                             {{ __('Solicitudes de CO') }}
                                         </a>
 
+                                        <a class="dropdown-item" href="https://forms.office.com/r/ubAZbRbu2D" target="_blank">
+                                            {{ __('Solicitud de viajes') }}
+                                        </a>
+
                                         <a class="dropdown-item" href="https://constructoramakro111-my.sharepoint.com/:f:/g/personal/unidad_constructoramakro_com/EgT7jeYGkYpFvnLtd0F_XRAB1A2CnBz8Z3dsBQCJQkouEg?e=fZHrgx" target="_blank">
                                             {{ __('Procedimientos y formatos') }}
                                         </a>

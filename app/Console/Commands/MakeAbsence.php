@@ -38,27 +38,30 @@ class MakeAbsence extends Command
     {
         parent::__construct();
 
-        switch(substr(Carbon::now()->formatLocalized('%A'), 0, 2)){
-            case "lu":
-                $this->clave = "Lunes";
+        switch(substr(Carbon::now()->formatLocalized('%A'), -4)){
+            case "unes":
+                $clave = "Lunes";
             break;
-            case "ma":
-                $this->clave = "Martes";
+            case "rtes":
+                $clave = "Martes";
             break;
-            case "mi":
-                $this->clave = "Miércoles";
+            case "oles":
+                $clave = "Miércoles";
             break;
-            case "ju":
-                $this->clave = "Jueves";
+            case "eves":
+                $clave = "Jueves";
             break;
-            case "vi":
-                $this->clave = "Viernes";
+            case "rnes":
+                $clave = "Viernes";
             break;
-            case "sá":
-                $this->clave = "Sábado";
+            case "bado":
+                $clave = "Sábado";
             break;
-            case "do":
-                $this->clave = "Domingo";
+            case "ingo":
+                $clave = "Domingo";
+            break;
+            default:
+                dd('ERROR - NO SE IDENTIFICA EL DÍA, HABLE CON EL ADMINISTRADOR');
             break;
         }
     }

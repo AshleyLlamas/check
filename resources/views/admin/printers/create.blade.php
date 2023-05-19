@@ -3,7 +3,10 @@
 @section('title', 'Intranet')
 
 @section('content')
-    @livewire('admin.printers.printers-create')
+    
+    <div class="py-4">
+        @livewire('admin.printers.printers-create')
+    </div>
 @stop
 
 @section('css')

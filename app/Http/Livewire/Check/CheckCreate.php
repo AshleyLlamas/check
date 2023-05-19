@@ -10,92 +10,43 @@ use App\Models\Schedule;
 use App\Models\TimeCheck;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-
+use App\Models\Zkteco as ModelsZkteco;
 use Rats\Zkteco\Lib\ZKTeco;
 
 class CheckCreate extends Component
 {
     public $user;
 
-    public $existe_un_check, $zk;
+    public $existe_un_check, $clave;
 
     public function mount(User $user){
-        $zk = new ZKTeco('192.168.1.210');
-
-        $zk->connect();   
-        $zk->enableDevice();  
-        $this->zk = $zk->getAttendance();
-
-        //FILTRAR LA INFO POR FECHA DE HOY
-        // $this->zk = array_filter($zk->getAttendance(), function ($item) { 
-        //     return substr($item['timestamp'], 0, 10) == Carbon::now()->format('Y-m-d');
-        // });
-
-        // $getAttendance = array_filter($zk->getAttendance(), function ($attendance){ 
-        //     return $attendance->id;
-        // });
-
-        $getAttendance = array_filter($zk->getAttendance(), function ($item) { 
-            return substr($item['timestamp'], 0, 10) == Carbon::now()->format('Y-m-d');
-        });
-
-        $derecho = collect($zk->getAttendance())->unique('id'); //ENTRADA
-        $reverso = collect(array_reverse($zk->getAttendance()))->unique('id'); //SALIDA
-
-        //$todo = array_merge($array1, $array2);
-
-        dd($reverso);
-
-        //FUNCIONA NO MOVER
-        foreach(collect($getAttendance)->unique('id') as $check){
-
-            //Buscar usuario
-            $user = User::where('número_de_empleado', $check['id'])->first();
-            
-            // if(isset($user)){
-            //     $in = TimeCheck::create([
-            //         'hora' => substr($check['timestamp'], -8),
-            //         'estatus' => 'jjsj',
-            //         'observación' => 'asdas'
-            //     ]);
-
-            //     Check::create([
-            //         'fecha' => substr($check['timestamp'], 0, 10),
-            //         'in_id' => $in->id,
-            //         // 'out_id',
-            //         'user_id' => $user->id,
-            //         'company_id' => $user->company_id,
-            //         // 'schedule_id'
-            //     ]);
-            // }
-        }
-
-        //$this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+        $this->existe_un_check = Check::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
     }
 
     public function save(){
 
-        switch(substr(Carbon::now()->formatLocalized('%A'), 0, 2)){
-            case "lu":
+        switch(substr(Carbon::createFromDate(2019, 6, 7)->formatLocalized('%A'), -4)){
+            case "unes":
                 $clave = "Lunes";
             break;
-            case "ma":
+            case "rtes":
                 $clave = "Martes";
             break;
-            case "mi":
+            case "oles":
                 $clave = "Miércoles";
             break;
-            case "ju":
+            case "eves":
                 $clave = "Jueves";
             break;
-            case "vi":
+            case "rnes":
                 $clave = "Viernes";
             break;
-            case "sá":
+            case "bado":
                 $clave = "Sábado";
             break;
-            case "do":
+            case "ingo":
                 $clave = "Domingo";
             break;
             default:
@@ -130,33 +81,33 @@ class CheckCreate extends Component
                     'observación' => 'Asistencia completa'
                 ]);
 
-                if($fecha_a_comparar->hora_de_salida->getTimestamp() >= Carbon::now()->getTimestamp()){
+                    if($fecha_a_comparar->hora_de_salida->getTimestamp() >= Carbon::now()->getTimestamp()){
 
-                    $out_estatus = 'Salió antes de tiempo';
-                    $out_observación = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
-                }else{
-                    $out_estatus = 'Salió despues';
-                    $out_observación = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
+                        $out_estatus = 'Salió antes de tiempo';
+                        $out_observación = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
+                    }else{
+                        $out_estatus = 'Salió despues';
+                        $out_observación = $fecha_a_comparar->hora_de_salida->diff(Carbon::now())->format('por %h horas %i minutos con %s segundos');
 
-                    if(isset($this->user->userSetting)){
-                        //SI EXISTE HORAS EXTRAS
-                    if($this->user->userSetting->derecho_a_hora_extra == 'Si'){
-                        //SI PUEDE GENERAR HORA EXTRA
+                        if(isset($this->user->userSetting)){
+                            //SI EXISTE HORAS EXTRAS
+                        if($this->user->userSetting->derecho_a_hora_extra == 'Si'){
+                            //SI PUEDE GENERAR HORA EXTRA
 
-                        //VER SI TRABAJO MAS DE LA HORA DE SALIDA
-                        if($fecha_a_comparar->hora_de_salida->diffInHours(Carbon::now()) >= 1){
-                            //GENERANDO HORA EXTRA
-                            ExtraHour::create([
-                                'fecha' => Carbon::now(),
-                                'horas' => $fecha_a_comparar->hora_de_salida->diffInHours(Carbon::now()),
-                                'user_id' => $this->user->id,
-                                'assistance_id' => $assistance->id,
-                                'creador_id' => null,
-                                'estatus' => 'No aprobado'
-                            ]);
+                            //VER SI TRABAJO MAS DE LA HORA DE SALIDA
+                            if($fecha_a_comparar->hora_de_salida->diffInHours(Carbon::now()) >= 1){
+                                //GENERANDO HORA EXTRA
+                                ExtraHour::create([
+                                    'fecha' => Carbon::now(),
+                                    'horas' => $fecha_a_comparar->hora_de_salida->diffInHours(Carbon::now()),
+                                    'user_id' => $this->user->id,
+                                    'assistance_id' => $assistance->id,
+                                    'creador_id' => null,
+                                    'estatus' => 'No aprobado'
+                                ]);
+                            }
                         }
                     }
-                }
                 }
 
                 $out = TimeCheck::create([

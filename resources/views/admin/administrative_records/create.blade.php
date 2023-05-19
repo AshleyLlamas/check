@@ -3,7 +3,10 @@
 @section('title', 'Intranet')
 
 @section('content')
-    @livewire('admin.administrative-records.administrative-records-create')
+    
+    <div class="py-4">
+        @livewire('admin.administrative-records.administrative-records-create')
+    </div>
 @stop
 
 @section('css')

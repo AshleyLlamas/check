@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersWithoutImageExport;
+use App\Exports\UsersWithoutPuestoExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class UserController extends Controller
@@ -129,5 +132,13 @@ class UserController extends Controller
         $pdf->set_option('isRemoteEnabled', true);
 
         return $pdf->stream("contratoTI.pdf");
+    }
+
+    public function usersWithoutImageExportExcel(){
+        return Excel::download(new UsersWithoutImageExport, 'usuarios_sin_image.xlsx');
+    }
+
+    public function usersWithoutPuestoExportExcel(){
+        return Excel::download(new UsersWithoutPuestoExport, 'usuarios_sin_puesto.xlsx');
     }
 }

@@ -3,7 +3,10 @@
 @section('title', 'Intranet')
 
 @section('content')
-    @livewire('admin.areas.areas-edit', ['area' => $area], key($area->id))
+    
+    <div class="py-4">
+        @livewire('admin.areas.areas-edit', ['area' => $area], key($area->id))
+    </div>
 @stop
 
 @section('css')

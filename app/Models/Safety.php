@@ -25,9 +25,9 @@ class Safety extends Model
         return $this->morphMany('App\Models\Image', 'imageable');
     }
 
-    //Uno a Muchos Inversa
-    public function user(){
-        return $this->belongsTo('App\Models\User');
+     //Muchos a Muchos
+     public function users(){
+        return $this->belongsToMany('App\Models\User');
     }
 
     //Uno a Muchos Inversa
