@@ -20,7 +20,7 @@
                                 <div class="col-4">
                                     <div class="text-center">
                                         <img class="profile-user-img img-fluid img-circle"
-                                        src="@if($assistance->user->image) {{Storage::url($assistance->user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
+                                        src="@if($assistance->user->image) {{route('images', $assistance->user->image)}} @else {{asset('recursos/foto-default.png')}} @endif"
                                         alt="Fotografía">
                                     </div>
                                 </div>
@@ -259,6 +259,7 @@
                                                                 <option>Permiso con goce de sueldo por imposibilidad de checador</option>
                                                                 <option>Permiso con goce por Falta de energía eléctrica</option>
                                                                 <option>Permiso por envío a otra obra o dependencia o ciudad</option>
+                                                                <option>Justificación por vacaciones</option>
                                                             </select>
                                                         </div>
                                                         @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror

@@ -38,24 +38,9 @@
                                         <option value="Accidentes de trabajo">Accidentes de trabajo</option>
                                         <option value="Incidentes a la propiedad">Incidentes a la propiedad</option>
                                         <option value="Incidentes ambientables">Incidentes ambientables</option>
+                                        <option value="No hubo incidencias">No hubo incidencias</option>
                                     </select>
                                     @error('tipo') <span class="text-danger error">{{ $message }}</span>@enderror
-                                </div>
-                                <div class="form-group col-12">
-                                    <div wire:ignore>
-                                        <label class="col-form-label">
-                                            {{ __('Usuario') }}
-                                            <small>(¿A quién le ocurrió?)</small>
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <select class="form-control" id="users" wire:model="user">
-                                            <option value="">Selecciona una opción</option>
-                                            @foreach($users as $user)
-                                                <option value="{{ $user->id}}">{{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('user') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <label class="col-form-label">
@@ -68,7 +53,7 @@
                                 <div class="form-group col-12">
                                     <div wire:ignore>
                                         <label class="col-form-label">
-                                            {{ __('Empresa / Compañia') }}
+                                            {{ __('Área / Proyecto') }}
                                             <small>(¿Dónde ocurrió?)</small>
                                         </label>
                                         <select class="form-control" id="areas" wire:model="area">
@@ -79,6 +64,30 @@
                                         </select>
                                     </div>
                                     @error('area') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="col-12 form-group" wire:ignore>
+                                    <div>
+                                        <label class="col-form-label">
+                                            {{ __('Usuarios') }}
+                                            <small>(Afectados)</small>
+                                        </label>
+                                        <select id="users-dropdown" multiple style="width: 100%;" wire:model="afectados">
+                                            @foreach ($users as $user)
+                                                <option value="{{$user->id}}">{{$user->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('afectados') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-12">
+                                    <div wire:ignore>
+                                        <label class="col-form-label">
+                                            {{ __('Descripción') }}
+                                        </label>
+                                        {{-- <input type="text" id="descripción" class="form-control" wire:model="descripción" placeholder="Ingrese la descripción"> --}}
+                                        <textarea class="form-control" wire:model="descripción" id="descripción" rows="3">{!! $descripción !!}</textarea>
+                                    </div>
+                                    @error('descripción') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                         </div>
@@ -96,7 +105,8 @@
 
 
 @push('css')
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
 
     <style>
@@ -108,7 +118,26 @@
 
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
     <script>
+         $('#descripción').summernote({
+            tabsize: 2,
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+            ],
+            callbacks: {
+                onChange: function(contents, $editable) {
+                    @this.set('descripción', contents);
+                }
+            }
+        });
+
         $(document).ready(function () {
 
             $('#asreas').select2({
@@ -127,6 +156,18 @@
             $('#users').on('change', function (e) {
                 var data = $('#users').select2("val");
             @this.set('user', data);
+            });
+
+            $(document).ready(function () {
+            $('#users-dropdown').select2({
+                theme: "classic"
+            });
+
+            $("#checkbox").click();
+                $('#users-dropdown').on('change', function (e) {
+                    let data = $(this).val();
+                    @this.set('afectados', data);
+                });
             });
         });
     </script>

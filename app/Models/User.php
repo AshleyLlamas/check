@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Attendance;
 
 class User extends Authenticatable
 {
@@ -133,11 +134,6 @@ class User extends Authenticatable
     }
 
     //Uno a Muchos
-    public function justify_attendances(){
-        return $this->hasMany('App\Models\JustifyAttendance');
-    }
-
-    //Uno a Muchos
     public function admonitions(){  //Todas las amonestaciones que tiene un usuario
         return $this->hasMany('App\Models\Admonition');
     }
@@ -155,6 +151,11 @@ class User extends Authenticatable
     //Uno a Muchos
     public function administrativeRecordsDischarged(){ //Todas las actas administrativas que subio un usuario
         return $this->hasMany('App\Models\AdministrativeRecord');
+    }
+
+    //Uno a Muchos
+    public function Attendances(){
+        return $this->hasMany('App\Models\Attendance');
     }
 
     //Uno a Muchos
@@ -177,10 +178,13 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Area');
     }
 
-
     //Muchos a Muchos
+    // public function areas(){
+    //     return $this->belongsToMany('App\Models\Area')->withPivot('encargado_id');
+    // }
+
     public function areas(){
-        return $this->belongsToMany('App\Models\Area')->withPivot('encargado_id');
+        return $this->belongsToMany('App\Models\Area')->withPivot('encargado_id')->using('App\Models\AreaUser');
     }
 
     //Muchos a Muchos

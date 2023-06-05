@@ -26,6 +26,8 @@ class CreateSafetiesTable extends Migration
 
             $table->date('fecha')->nullable();
 
+            $table->longText('descripción')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

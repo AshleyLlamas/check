@@ -26,7 +26,7 @@
                             <th>
                                 <span>Ordenar por:</span>
                             </th>
-                            <th class="m-2" colspan="4">
+                            <th class="m-2" colspan="3">
                                 <select class="form-control form-control-sm text-center" wire:model="order">
                                     <option value="1">Ordenar por más reciente (# ID)</option>
                                     <option value="2">Ordenar por más antiguo (# ID)</option>
@@ -57,9 +57,6 @@
                                 </select>
                             </th>
                             <th class="m-2">
-                                <input wire:model="searchUser" class="form-control form-control-sm text-center" placeholder="Nombre del usuario">
-                            </th>
-                            <th class="m-2">
                                 <input type='date' wire:model="searchFecha" class="form-control form-control-sm text-center" placeholder="Fecha">
                             </th>
                             <th class="m-2">
@@ -83,7 +80,6 @@
                         <tr>
                             <th>#</th>
                             <th>Tipo</th>
-                            <th>Usuario</th>
                             <th>Fecha</th>
                             <th>Área / Proyecto</th>
                             @can('admin.safeties.show')
@@ -105,17 +101,6 @@
                                 <td>
                                     @isset($safety->tipo)
                                         {{$safety->tipo}}
-                                    @else
-                                        N/A
-                                    @endisset
-                                </td>
-                                <td>
-                                    @isset($safety->user)
-                                        @can('admin.users.show')
-                                            <a href="{{ route('admin.users.show', $safety->user) }}">{{$safety->user->name}}</a>
-                                        @else
-                                            {{$safety->user->name}}
-                                        @endcan
                                     @else
                                         N/A
                                     @endisset

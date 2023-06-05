@@ -14,10 +14,19 @@
             <tr>
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->número_de_empleado }}</td>
-                <td>{{ $user->puesto }}</td>
+                <td>{{ $user->name }}</td>
+                <td>
+                    @isset($user->puesto)
+                        {{$user->puesto}}
+                    @else
+                        N/A
+                    @endisset
+                </td>
                 <td>
                     @isset($user->company_id)
-                        {{ $user->company->nombre }}
+                        {{ $user->company->nombre_de_la_compañia }}
+                    @else
+                        N/A
                     @endisset
                 </td>
                 <td>{{ route('admin.users.show', $user) }}</td>

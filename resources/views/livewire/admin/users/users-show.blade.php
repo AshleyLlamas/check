@@ -19,7 +19,7 @@
 
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle @if($user->estatus == 'Baja definitiva') img-gray @endif"
-                                src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
+                                src="@if($user->image) {{route('images', $user->image)}} @else {{asset('recursos/foto-default.png')}} @endif"
                                 alt="Fotografía">
                             </div>
 
@@ -212,11 +212,12 @@
                                                 <th>{{$area->área}}</th>
                                                 <td>
                                                     @if($area->encargado($area->pivot->encargado_id) != null)
-                                                        @can('admin.users.show')
+                                                        {{$area->user->name}}
+                                                        {{-- @can('admin.users.show')
                                                             <a href="{{route('admin.users.show', $area->encargado($area->pivot->encargado_id))}}">{{$area->encargado($area->pivot->encargado_id)->name}}</a>
                                                         @else
                                                             {{$area->encargado($area->pivot->encargado_id)->name}}
-                                                        @endcan
+                                                        @endcan --}}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -800,7 +801,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($user->checks as $check)
+                                                @foreach ($checks as $check)
                                                     <tr>
                                                         <th>
                                                             {{$check->fecha->format('d-m-Y')}}
@@ -830,6 +831,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        <div class="px-3">{{$checks->links()}}</div>
                                     @else
                                         <p class="text-danger text-center py-4 mb-1"><b>Sin checks.</b></p>
                                     @endif
@@ -840,7 +842,7 @@
                     </div>
                     <!-- CARD -->
                     @isset($user->company)
-                        @if($user->company_id == 2 || $user->company_id == 8)
+                        @if($user->company_id == 2 || $user->company_id == 8 || $user->company_id == 5)
                             <div class="card card-primary mt-3 d-none d-xl-block">
                                 <div class="card-header">
                                     <h3 class="card-title">Credencial</h3>

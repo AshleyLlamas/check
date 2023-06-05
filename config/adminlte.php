@@ -316,12 +316,6 @@ return [
             'route'         => 'admin.index',
             'icon'        => 'fas fa-home',
         ],
-        // [
-        //     'text'        => 'Reclutados',
-        //     'route'         => 'admin.reclutas.index',
-        //     'icon' => 'fas fa-regular fa-user',
-        //     'can' => 'admin.reclutas.index'
-        // ],
         [
             'text'    => 'USUARIOS',
             'submenu' => [
@@ -331,6 +325,13 @@ return [
                     'route'         => 'admin.users.index',
                     'icon' => 'fas fa-fw fa-user',
                     'can' => 'admin.users.index',
+                ],
+                [
+                    'text'        => 'RECLUTADOS',
+                    'shift' => 'ml-3',
+                    'route'         => 'admin.reclutas.index',
+                    'icon' => 'fas fa-regular fa-user',
+                    'can' => 'admin.reclutas.index'
                 ],
                 [
                     'text'    => 'ACTAS ADMINISTRATIVAS',

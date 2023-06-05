@@ -10,13 +10,14 @@ class Assistance extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = ['id', 'created_at', 'updated'];
+    protected $guarded = ['id', 'updated'];
 
     protected $fillable = [
         'check_id',
         'user_id',
         'asistencia',
-        'observación'
+        'observación',
+        'created_at'
     ];
 
     //Uno a Muchos Inversa

@@ -2,7 +2,7 @@
     <div class="card border-0 rounded-0 shadow mb-3">
         <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white p-5">
-                <img draggable="false" class="img-fluid rounded-circle shadow" src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"/>
+                <img draggable="false" class="img-fluid rounded-circle shadow" src="@if($user->image) {{route('images', $user->image)}} @else {{asset('recursos/foto-default.png')}} @endif"/>
                 <h5 class="pt-5">{{$user->name}}</h5>
                 <p>#{{$user->número_de_empleado}}</p>
             </div>
@@ -113,7 +113,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($user->checks as $check)
+                                        @foreach ($checks as $check)
                                             <tr>
                                                 <th>
                                                     {{$check->fecha->format('d-m-Y')}}
@@ -143,6 +143,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="px-3">{{$checks->links()}}</div>
                             @else
                                 <p class="text-danger text-center mb-1"><b>Sin horario.</b></p>
                             @endif

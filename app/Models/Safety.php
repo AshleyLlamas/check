@@ -18,7 +18,8 @@ class Safety extends Model
         'area_id',
         'user_id',
         'tipo',
-        'fecha'
+        'fecha',
+        'descripción'
     ];
 
     public function images(){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersCompletedExport;
 use App\Exports\UsersWithoutImageExport;
 use App\Exports\UsersWithoutPuestoExport;
 use App\Http\Controllers\Controller;
@@ -140,5 +141,9 @@ class UserController extends Controller
 
     public function usersWithoutPuestoExportExcel(){
         return Excel::download(new UsersWithoutPuestoExport, 'usuarios_sin_puesto.xlsx');
+    }
+
+    public function usersCompletedExportExcel(){
+        return Excel::download(new UsersCompletedExport, 'usuarios_completos.xlsx');
     }
 }

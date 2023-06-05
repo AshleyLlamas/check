@@ -5,19 +5,21 @@ namespace App\Http\Livewire\Admin\Safeties;
 use App\Models\Area;
 use App\Models\Safety;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SafetiesEdit extends Component
 {
-    public $safety, $tipo, $user, $area, $fecha;
+    public $safety, $tipo, $afectados, $area, $fecha, $descripción;
 
     public function mount(Safety $safety){
         $this->safety = $safety;
 
         $this->tipo = $safety->tipo;
-        $this->user = $safety->user_id;
         $this->area = $safety->area_id;
         $this->fecha = $safety->fecha->format('Y-m-d');
+        $this->afectados = $this->safety->users->pluck('id')->toArray();//->toarray();
+        $this->descripción = $this->safety->descripción;
     }
 
     public function rules(){
@@ -25,9 +27,10 @@ class SafetiesEdit extends Component
         $array = [];
 
         $array['area'] = "nullable";
-        $array['user'] = "required";
-        $array['tipo'] = "required|in:Fatalidad,Primeros auxilios,Accidentes de trabajo,Incidentes a la propiedad,Incidentes ambientables";
+        $array['tipo'] = "required|in:Fatalidad,Primeros auxilios,Accidentes de trabajo,Incidentes a la propiedad,Incidentes ambientables,No hubo incidencias";
         $array['fecha'] = 'required|date|before:tomorrow';
+
+        $array['descripción'] = ['nullable', 'string', 'max:429496729'];
 
         return $array;
     }
@@ -42,12 +45,15 @@ class SafetiesEdit extends Component
 
         $this->safety->update([
             'tipo' => $this->tipo,
-            'user_id' => $this->user,
+            'user_id' => Auth::id(),
             'area_id' => $this->area,
-            'fecha' => $this->fecha
+            'fecha' => $this->fecha,
+            'descripción' => $this->descripción
         ]);
 
         $this->safety->save();
+
+        $this->safety->users()->sync($this->afectados);
 
         session()->flash('message', 'Incidencia editada satisfactoriamente.');
         return redirect(route('admin.safeties.index'));

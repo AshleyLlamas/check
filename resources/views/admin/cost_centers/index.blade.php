@@ -5,7 +5,7 @@
 @section('content')
     
     <div class="py-4">
-        @livewire('admin.cost-centers.cost-centers-edit', ['cost_center' => $cost_center], key($cost_center->id))
+        @livewire('admin.cost-centers.cost-centers-index')
     </div>
 @stop
 

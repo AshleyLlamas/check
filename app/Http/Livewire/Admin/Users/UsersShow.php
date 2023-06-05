@@ -3,19 +3,24 @@
 namespace App\Http\Livewire\Admin\Users;
 
 use App\Models\Assistance;
+use App\Models\Attendance;
 use App\Models\Check;
 use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class UsersShow extends Component
 {
+    use WithPagination;
     public $user;
 
     public $día, $hora_de_entrada, $hora_de_salida;
 
     public $card = 1;
+
+    protected $paginationTheme = "bootstrap";
 
     public function createSchedule()
     {
@@ -121,7 +126,7 @@ class UsersShow extends Component
 
     public function render()
     {
-        //ASISTENCIAS
+
         $faltas = Assistance::where('user_id', $this->user->id)->where('asistencia', 'No asistió')->count();
 
         $retardos = Check::where('user_id', $this->user->id)->whereHas('in', function($query) {
@@ -141,8 +146,14 @@ class UsersShow extends Component
 
             if($assistance->asistencia == 'No asistió'){
                 if($assistance->justify_attendance){
-                    $asistencia = 'Justificado';
-                    $color = 'orange';
+                    if($assistance->justify_attendance->estatus == "Aprobado"){
+                        $asistencia = 'Justificado';
+                        $color = 'green';
+                    }else{
+                        $asistencia = 'En proceso de justifición';
+                        $color = 'orange';
+                    }
+                    
                 }else{
                     $color = 'red'; $assistance->asistencia;
                 }
@@ -153,7 +164,7 @@ class UsersShow extends Component
             $json_dias[] = array(
               'title' => $asistencia,
               'start' => date('Y-m-d\TH:i:s', strtotime($assistance->created_at->format('Y-m-d'))),
-              'end' => date('Y-m-d\TH:i:s', strtotime($assistance->created_at->format('Y-m-d'))),
+              'end' => date('Y-m-d\TH:i:s', strtotime($assistance->created_at->modify('+1 day')->format('Y-m-d'))),
               'allDay' => true,
               'color' => $color,
               'url' => route('admin.assistances.show', $assistance)
@@ -167,7 +178,8 @@ class UsersShow extends Component
             'retardos' => $retardos,
             'hoy' => $hoy,
             'json_dias' => $json_dias,
-            'schedules' => $schedules
+            'schedules' => $schedules,
+            "checks" => Check::Where("user_id", $this->user->id)->orderBy('fecha', 'desc')->paginate(10)
         ]);
     }
 }

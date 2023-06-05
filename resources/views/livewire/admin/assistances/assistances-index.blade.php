@@ -44,6 +44,12 @@
                     </div>
                 </div>
             </div>
+            <div>
+                Justificación:
+                <span class="badge badge-success">Aprobada</span>
+                <span class="badge badge-danger">No aprobada</span>
+                <span class="badge badge-warning">En espera</span>
+            </div>
         </div>
         <div class="card-body p-0 table-responsive">
             @if ($assistances->count())
@@ -61,7 +67,20 @@
                     </thead>
                     <tbody>
                         @foreach ($assistances as $assistance)
-                            <tr>
+                            <tr @isset($assistance->justify_attendance)
+                                class="
+                                @switch($assistance->justify_attendance)
+                                    @case("No aprobado")
+                                        bg-danger
+                                        @break
+                                    @case("Aprobado")
+                                        bg-success
+                                        @break
+                                    @default
+                                        bg-warning
+                                @endswitch
+                                "
+                            @endisset>
                                 <td>{{$assistance->id}}</td>
                                 <td>
                                     @isset($assistance->user_id)

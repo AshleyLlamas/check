@@ -43,10 +43,18 @@ class UsersEdit extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->curp = $user->curp;
-        $this->fecha_de_nacimiento = $user->fecha_de_nacimiento;
+        
+        if(isset($user->fecha_de_nacimiento)){
+            $this->fecha_de_nacimiento = $user->fecha_de_nacimiento->format('Y-m-d');
+        }
+
         $this->código_del_país = substr($user->whatsapp, 0, -10);
         $this->número_de_teléfono = substr($user->whatsapp, -10);
-        $this->fecha_de_ingreso = $user->fecha_de_ingreso;
+
+        if(isset($user->fecha_de_ingreso)){
+            $this->fecha_de_ingreso = $user->fecha_de_ingreso->format('Y-m-d');
+        }
+
         $this->tipo_de_puesto = $this->user->tipo_de_puesto;
 
         if(isset($user->company_id)){
@@ -198,12 +206,12 @@ class UsersEdit extends Component
                 Storage::delete($this->user->image->url); //Elimino
 
                 $this->user->image->update([ //Actualizo
-                    'url' => $this->foto->store('fotos'), //Guardo
+                    'url' => $this->foto->storeAs("fotos", $this->foto->store('fotos'), "private"), //Guardo
                 ]);
             }else{
                 //Si el usuario no tiene imagen, cree una
                 Image::create([
-                    'url' => $this->foto->store('fotos'),
+                    'url' => $this->foto->storeAs("fotos", $this->foto->store('fotos'), "private"),
                     'imageable_id' => $this->user->id,
                     'imageable_type' => 'App\Models\User'
                 ]);
@@ -236,7 +244,8 @@ class UsersEdit extends Component
         //Docs
         if($this->documento_de_identificación_oficial){
             Storage::delete([$this->document->documento_de_identificación_oficial]);
-            $this->document->documento_de_identificación_oficial = $this->documento_de_identificación_oficial->store('identificaciones_oficiales');
+            //$this->document->documento_de_identificación_oficial = $this->documento_de_identificación_oficial->store('identificaciones_oficiales');
+            $this->document->documento_de_identificación_oficial = $this->documento_de_identificación_oficial->storeAs("identificaciones_oficiales", $this->documento_de_identificación_oficial->store(null), "private");
         }
 
         if($this->documento_del_comprobante_de_domicilio){

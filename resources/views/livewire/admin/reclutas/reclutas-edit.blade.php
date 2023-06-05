@@ -39,10 +39,9 @@
                                 </div> --}}
                                 <div class="pt-3">
                                     @if($foto)
-                                        <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{$foto->temporaryurl()}}">
                                     @else
                                         @isset($user->image)
-                                            <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{Storage::url($user->image->url)}}">
+                                            <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{route('images', $user->image)}}">
                                         @endisset
                                     @endif
                                 </div>

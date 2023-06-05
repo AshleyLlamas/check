@@ -30,19 +30,6 @@
                                 <label class="custom-file-label" for="customFileLang">Selecciona una foto</label>
                                 @error('foto') <span class="text-danger error">{{ $message }}</span>@enderror
                             </div>
-                            <div>
-                                {{-- <div wire:loading wire:target="foto">
-                                    <button class="btn btn-white mt-3" type="button" disabled>
-                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                        Cargando...
-                                    </button>
-                                </div> --}}
-                                <div class="pt-3">
-                                    @if($foto)
-                                        <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{$foto->temporaryurl()}}">
-                                    @endif
-                                </div>
-                            </div>
                         </div>
                     </div>
                     {{--Pincel--}}

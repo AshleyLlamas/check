@@ -46,9 +46,9 @@
                             @can('admin.reclutas.edit')
                                 <th></th>
                             @endcan
-                            @can('admin.reclutas.destroy')
+                            {{-- @can('admin.reclutas.destroy')
                                 <th></th>
-                            @endcan
+                            @endcan --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -86,7 +86,7 @@
                                 @can('admin.reclutas.edit')
                                     <td width="10px"><a class="btn btn-default btn-sm" href="{{route('admin.reclutas.edit', $user)}}"><i class="fas fa-edit"></i></a></td>
                                 @endcan
-                                @can('admin.reclutas.destroy')
+                                {{-- @can('admin.reclutas.destroy')
                                     <td width="10px">
                                         <form action="{{ route('admin.reclutas.destroy', $user) }}" method="POST" class="alert-delete">
                                             @csrf
@@ -94,7 +94,7 @@
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="delete()"><i class="fas fa-trash-alt"></i></button>
                                         </form>
                                     </td>
-                                @endcan
+                                @endcan --}}
                             </tr>
                         @endforeach
                     </tbody>

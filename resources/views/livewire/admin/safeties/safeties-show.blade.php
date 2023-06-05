@@ -13,36 +13,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-12 col-md-6 col-xl-6">
-                    @can('admin.users.show')
-                        <a href="{{ route('admin.users.show', $safety->user) }}">
-                    @endcan
-                        <div class="card bg-light shadow-none border h-100">
-                            <div class="row  m-3 pt-2">
-                                <div class="col-4">
-                                    <div class="text-center">
-                                        <img class="profile-user-img img-fluid img-circle"
-                                        src="@if($safety->user->image) {{Storage::url($safety->user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
-                                        alt="Fotografía">
-                                    </div>
-                                </div>
-                                <div class="col-8">
-                                    <h3 class="profile-username text-center">{{$safety->user->name}}</h3>
-
-                                    @isset($safety->user->puesto)
-                                        <p class="text-muted text-center mb-0 pb-0">{{$safety->user->puesto}}</p>
-                                    @endisset
-                                    @isset($safety->user->tipo_de_puesto)
-                                        <p class="text-muted text-center mb-1"><small>({{$safety->user->tipo_de_puesto}})</small></p>
-                                    @endisset
-                                </div>
-                            </div>
-                        </div>
-                    @can('admin.users.show')
-                        </a>
-                    @endcan
-                </div>
-                <div class="col-12 col-md-6 col-xl-6">
+                <div class="col-12">
                     <div class="card shadow-none border h-100">
                         <div class="text-center pt-4">
                             <h5 class="mb"><b><i class="fa-regular fa-calendar"></i> Fecha</b> <br> <p class="text-secondary">{{$safety->fecha->formatlocalized('%d/%m/%Y')}}</p></h5>
@@ -61,46 +32,67 @@
                     </div>
                 </div>
             </div>
-            <hr>
-            <h5 class="text-center">Evidencias</h5>
-            <div class="row">
-                @foreach($safety->images as $i => $image)
-                    <div class="col-12 col-lg-6 pt-2">
-                        <button type="button" class="h-100 btn btn-secondary btn-block" data-toggle="modal" data-target="#foto{{$i}}">Evidencia {{($i+1)}}</button>
+            @if ($safety->users->count())
+                <hr>
+                <div>
+                    <h5 class="text-center">Usuarios afectados</h5>
+                    <div class="list-group list-group-flush border rounded">
+                        @foreach ($safety->users as $user)
+                            <a href="{{route('admin.users.show', $user)}}" class="list-group-item list-group-item-action @cannot('admin.users.show') disabled @endcannot">
+                                - {{$user->name}}
+                            </a>
+                        @endforeach
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="foto{{$i}}" tabindex="-1" aria-labelledby="foto{{$i}}Label" aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header bg-secondary">
-                                    <h5 class="modal-title" id="foto{{$i}}Label">Evidencia {{($i+1)}}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div>
-                                        @if($image->url)
-                                            @php
-                                                $extension = pathinfo($image->url)['extension'];
-                                            @endphp
-                                            @if($extension =="jpg" || $extension == "jpeg" || $extension == "png")
-                                                <div class="pt-3">
-                                                    <img style="display: block; margin-left: auto; margin-right: auto;"  class="img-fluid" src="{{Storage::url($image->url)}}">
-                                                </div>
+                </div>
+            @endif
+            @isset($safety->descripción)
+                <hr>
+                <h5 class="text-center">Descripción</h5>
+                <div class="border rounded p-3">
+                    {!! $safety->descripción !!}
+                </div>
+            @endisset
+            @if ($safety->images->count())
+                <h5 class="text-center">Evidencias</h5>
+                <div class="row">
+                    @foreach($safety->images as $i => $image)
+                        <div class="col-12 col-lg-6 pt-2">
+                            <button type="button" class="h-100 btn btn-secondary btn-block" data-toggle="modal" data-target="#foto{{$i}}">Evidencia {{($i+1)}}</button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="foto{{$i}}" tabindex="-1" aria-labelledby="foto{{$i}}Label" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-secondary">
+                                        <h5 class="modal-title" id="foto{{$i}}Label">Evidencia {{($i+1)}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            @if($image->url)
+                                                @php
+                                                    $extension = pathinfo($image->url)['extension'];
+                                                @endphp
+                                                @if($extension =="jpg" || $extension == "jpeg" || $extension == "png")
+                                                    <div class="pt-3">
+                                                        <img style="display: block; margin-left: auto; margin-right: auto;"  class="img-fluid" src="{{route('images', $image)}}">
+                                                    </div>
+                                                @else
+                                                    <iframe width="100%" height="500px" src="{{route('images', $image)}}" frameborder="0"></iframe>
+                                                @endif
                                             @else
-                                                <iframe width="100%" height="500px" src="{{Storage::url($image->url)}}" frameborder="0"></iframe>
+                                                <p class="text-danger text-center mb-1"><strong>No se encontró ningún archivo</strong></p>
                                             @endif
-                                        @else
-                                            <p class="text-danger text-center mb-1"><strong>No se encontró ningún archivo</strong></p>
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 </div>

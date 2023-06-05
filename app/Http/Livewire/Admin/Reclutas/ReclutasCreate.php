@@ -175,7 +175,7 @@ class ReclutasCreate extends Component
         if($this->foto){
             //FOTO
             Image::create([
-                'url' => $this->foto->store('fotos'),
+                'url' => $this->foto->storeAs("fotos", $this->foto->store('fotos'), "private"),
                 'imageable_id' => $user->id,
                 'imageable_type' => 'App\Models\User'
             ]);
@@ -190,7 +190,10 @@ class ReclutasCreate extends Component
                     'hora_de_entrada' => $this->hora_de_entrada[$n],
                     'hora_de_salida' => $this->hora_de_salida[$n],
                     'turno' => null,
-                    'user_id' => $user->id,
+                    //'user_id' => $user->id,
+                    'scheduleble_id' => $user->id,
+                    'scheduleble_type' => User::class,
+                    'posición' => $n+1,
                     'actual' => true
                 ]);
             }

@@ -278,7 +278,7 @@ class UsersCreate extends Component
         if($this->foto){
             //FOTO
             Image::create([
-                'url' => $this->foto->store('fotos'),
+                'url' => $this->foto->storeAs("fotos", $this->foto->store('fotos'), "private"),
                 'imageable_id' => $user->id,
                 'imageable_type' => 'App\Models\User'
             ]);

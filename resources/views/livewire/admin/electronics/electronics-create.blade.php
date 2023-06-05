@@ -31,6 +31,13 @@
                                 <span class="badge bg-white">{{$computers_all}}</span>
                             </a>
                         </div>
+                        <div class="col pt-2">
+                            <a href="{{ route('admin.phones.create') }}" class="btn shadow-sm btn-light btn-lg p-5 w-100 border">
+                                <i class="fa-solid fa-phone fa-4x"></i>
+                                <h2>Telefonos</h2>
+                                <span class="badge bg-white">{{$phones_all}}</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

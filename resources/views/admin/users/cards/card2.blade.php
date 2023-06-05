@@ -4,7 +4,7 @@
                                                     {{-- {!! QrCode::size(290)->generate(':)') !!} --}}
                                                 </div>
                                                 @isset($user->image)
-                                                    <img class="eye-photo" src="@isset($user->image->url) {{Storage::url($user->image->url)}} @else https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_960_720.png @endisset"/>
+                                                    <img class="eye-photo" src="@isset($user->image) {{route('images', $user->image)}} @else https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_960_720.png @endisset"/>
                                                 @endisset
 
                                                 <p class="text-name">{{$user->name}}</p>

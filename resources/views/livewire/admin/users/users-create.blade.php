@@ -37,11 +37,11 @@
                                         Cargando...
                                     </button>
                                 </div> --}}
-                                <div class="pt-3">
+                                {{-- <div class="pt-3">
                                     @if($foto)
                                         <img class="img-fluid rounded" style="display: block; margin-left: auto; margin-right: auto;" src="{{$foto->temporaryurl()}}">
                                     @endif
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

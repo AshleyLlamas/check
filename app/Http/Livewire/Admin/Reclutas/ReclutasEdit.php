@@ -42,7 +42,7 @@ class ReclutasEdit extends Component
         //User
         $array['foto'] = 'nullable|image|mimes:jpeg,jpg,png|max:5048';
         $array['user.name'] = 'required|string|max:255';
-        $array['curp'] = ['required', 'string', 'min:18', 'max:18', 'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/', 'unique:users,curp,'.$this->user->id];
+        $array['curp'] = ['required', 'string', 'min:18', 'max:18'/*, 'regex:/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/'*/, 'unique:users,curp,'.$this->user->id];
         $array['email'] = ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id];
         $array['user.número_de_inscripción_al_imss'] = 'nullable|string|max:255';
         $array['user.rfc'] = ['required',/* 'regex:/^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/',*/'string','max:255'];
@@ -88,12 +88,12 @@ class ReclutasEdit extends Component
                 Storage::delete($this->user->image->url); //Elimino
 
                 $this->user->image->update([ //Actualizo
-                    'url' => $this->foto->store('fotos'), //Guardo
+                    'url' => $this->foto->storeAs("fotos", $this->foto->store('fotos'), "private"), //Guardo
                 ]);
             }else{
                 //Si el usuario no tiene imagen, cree una
                 Image::create([
-                    'url' => $this->foto->store('fotos'),
+                    'url' => $this->foto->storeAs("fotos", $this->foto->store('fotos'), "private"),
                     'imageable_id' => $this->user->id,
                     'imageable_type' => 'App\Models\User'
                 ]);

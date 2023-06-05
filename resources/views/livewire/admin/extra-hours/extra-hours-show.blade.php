@@ -20,7 +20,7 @@
                                 <div class="col-4">
                                     <div class="text-center">
                                         <img class="profile-user-img img-fluid img-circle"
-                                        src="@if($extraHour->user->image) {{Storage::url($extraHour->user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
+                                        src="@if($extraHour->user->image) {{route('images', $extraHour->user->image)}} @else {{asset('recursos/foto-default.png')}} @endif"
                                         alt="Fotografía">
                                     </div>
                                 </div>
@@ -119,39 +119,15 @@
                                                     {!!$extraHour->approval_jefe->observaciones!!}
                                                 </div>
                                             @else
-                                                <div  class="row justify-content-center">
-                                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#createApprovalJefeModal"><i class="fa-solid fa-plus"></i> Crear aprobación</button>
-                                                </div>
+                                                @if ($justificarComoJefe != 0 || Auth::user()->hasRole(1))
+                                                    <div  class="row justify-content-center">
+                                                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#createApprovalJefeModal"><i class="fa-solid fa-plus"></i> Crear aprobación</button>
+                                                    </div>
+                                                @endif
                                             @endisset
                                         </th>
                                     </tr>
                                     <tr class="border-bottom">
-                                        <th scope="col" class="border-right text-center align-middle">
-                                            Recursos humanos
-                                            @isset($extraHour->approval_rh)
-                                                @can('admin.users.show')
-                                                    <p><a href="{{route('admin.users.show', $extraHour->approval_rh->user)}}">{{$extraHour->approval_rh->user->name}}</a></p>
-                                                @else
-                                                    <p class="text-secondary">
-                                                        {{$extraHour->approval_rh->user->name}}
-                                                    </p>
-                                                @endcan
-                                            @endisset
-                                        </th>
-                                        <th scope="row">
-                                            @isset($extraHour->approval_rh)
-                                                <div class="text-center pb-3">
-                                                    <span class="badge badge-pill @if($extraHour->approval_rh->aprobación == 'Aprobado') badge-success @else badge-danger @endif">{{$extraHour->approval_rh->aprobación}}</span>
-                                                </div>
-                                                <div class="rounded bg-light p-2">
-                                                    {!!$extraHour->approval_rh->observaciones!!}
-                                                </div>
-                                            @else
-                                                <div  class="row justify-content-center">
-                                                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#createApprovalRhModal"><i class="fa-solid fa-plus"></i> Crear aprobación</button>
-                                                </div>
-                                            @endisset
-                                        </th>
                                         <tr>
                                             <th scope="col" class="border-right text-center align-middle">
                                                Director general
@@ -174,9 +150,11 @@
                                                         {!!$extraHour->approval_dg->observaciones!!}
                                                     </div>
                                                 @else
-                                                    <div  class="row justify-content-center">
-                                                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#createApprovalDgModal"><i class="fa-solid fa-plus"></i> Crear aprobación</button>
-                                                    </div>
+                                                    @if (Auth::user()->hasRole(2) || Auth::user()->hasRole(1))
+                                                        <div  class="row justify-content-center">
+                                                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#createApprovalDgModal"><i class="fa-solid fa-plus"></i> Crear aprobación</button>
+                                                        </div>
+                                                    @endif
                                                 @endisset
                                             </th>
                                         </tr>
@@ -206,28 +184,6 @@
                             </div>
                         </div>
                         <!--Cerrar modal-->
-
-                        <!-- Modal create -->
-                        <div wire:ignore.self class="modal fade" id="createApprovalRhModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-primary">
-                                            <h5 class="modal-title">Crear aprobación</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            <form wire:submit.prevent="createApprovalRh">
-                                                @include('admin.vacations.partials.form-approval')
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Modal create -->
                         <div wire:ignore.self class="modal fade" id="createApprovalDgModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">

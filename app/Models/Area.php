@@ -36,7 +36,7 @@ class Area extends Model
 
     //Muchos a Muchos
     public function users(){
-        return $this->belongsToMany('App\Models\Users')->withPivot('encargado_id');
+        return $this->belongsToMany('App\Models\Users')->withPivot('encargado_id')->using('App\Models\AreaUser');
     }
 
     //Uno a Muchos inversa

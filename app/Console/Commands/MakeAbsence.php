@@ -37,7 +37,15 @@ class MakeAbsence extends Command
     public function __construct()
     {
         parent::__construct();
+    }
 
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
         switch(substr(Carbon::now()->formatLocalized('%A'), -4)){
             case "unes":
                 $clave = "Lunes";
@@ -64,15 +72,7 @@ class MakeAbsence extends Command
                 dd('ERROR - NO SE IDENTIFICA EL DÍA, HABLE CON EL ADMINISTRADOR');
             break;
         }
-    }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
-    {
         //GENERAR ESTATUS INACTIVO PARA USUARIOS EN VACACIONES
         if(Vacation::where('estatus', 'Aprobado')->whereDate('fecha_inicial', '>=' , Carbon::now()->formatLocalized('%Y-%m-%d'))->count()){
 
@@ -104,8 +104,8 @@ class MakeAbsence extends Command
             //SE TRABAJA
 
             //GENERAR INASISTENCIAS
-            $users = User::where('estatus', 'Activo')->whereHas('schedules', function($query) {
-                $query->where('día', '=', $this->clave)->where('actual', true);
+            $users = User::where('estatus', 'Activo')->whereHas('schedules', function($query) use ($clave) {
+                $query->where('día', '=', $clave)->where('actual', true);
             })->get();
 
             foreach($users as $user){
@@ -121,7 +121,7 @@ class MakeAbsence extends Command
             }
         }
 
-        //$texto = "[".date("Y-m-d H:i:s")."] - Hola, estoy funcionado";
-        //Storage::append("archivo.text", $texto);
+        $texto = "[".date("Y-m-d H:i:s")."] - Hola, estoy funcionado 2";
+        Storage::append("archivo.text", $texto);
     }
 }

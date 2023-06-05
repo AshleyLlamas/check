@@ -40,12 +40,16 @@ class Check extends Component
         if(isset($user)){
 
             if($this->device->inUsers->contains($user->id)){
-                if(isset($user->image)){
-                    $this->user = $user;
-                    $this->existe_un_check = Checador::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
-                }else{
-                    session()->flash('error', 'El usuario no cuenta con fotografía, contáctese con el administrador.');
-                }
+                // if(isset($user->image)){
+                //     $this->user = $user;
+                //     $this->existe_un_check = Checador::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+                // }else{
+                //     session()->flash('error', 'El usuario no cuenta con fotografía, contáctese con el administrador.');
+                // }
+
+                $this->user = $user;
+                $this->existe_un_check = Checador::where('user_id', $user->id)->where('fecha', Carbon::now()->formatLocalized('%Y-%m-%d'))->get()->last();
+
             }else{
                 session()->flash('error', 'El usuario no pertenece a este dispositivo.');
             }

@@ -21,7 +21,7 @@
             </div>
             <div class="text-center">
                 <img draggable="false" width="300px" class="rounded-circle shadow"
-                    src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"
+                    src="@if($user->image) {{route('images', $user->image)}} @else {{asset('recursos/foto-default.png')}} @endif"
                     alt="Fotografía">
                     <div class="pt-4">
                         @isset($user->número_de_empleado)

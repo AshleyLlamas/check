@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Image;
 use App\Models\Safety;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,25 +14,26 @@ class SafetiesCreate extends Component
 {
     use WithFileUploads;
 
-    public $tipo, $user, $area, $fecha, $evidencia;
+    public $tipo, $user, $area, $fecha, $evidencia, $afectados, $descripción;
 
     //Images
-    public $n = 1;
+    public $n = 0;
 
     public function rules(){
 
         $array = [];
 
         $array['area'] = "nullable";
-        $array['user'] = "required";
-        $array['tipo'] = "required|in:Fatalidad,Primeros auxilios,Accidentes de trabajo,Incidentes a la propiedad,Incidentes ambientables";
+        $array['tipo'] = "required|in:Fatalidad,Primeros auxilios,Accidentes de trabajo,Incidentes a la propiedad,Incidentes ambientables,No hubo incidencias";
         $array['fecha'] = 'required|date|before:tomorrow';
 
-        $array['n'] = 'required|numeric|min:1|max:5';
+        //$array['n'] = 'required|numeric|min:1|max:5';
 
         for($i = 1; $i <= $this->n; $i++){
             $array['evidencia.'.$i] = 'required|image|mimes:jpeg,jpg,png|max:7048';
         }
+
+        $array['descripción'] = ['nullable', 'string', 'max:429496729'];
 
         return $array;
     }
@@ -62,18 +64,22 @@ class SafetiesCreate extends Component
 
         $safety = Safety::create([
             'tipo' => $this->tipo,
-            'user_id' => $this->user,
+            'user_id' => Auth::id(),
             'area_id' => $this->area,
-            'fecha' => $this->fecha
+            'fecha' => $this->fecha,
+            'descripción' => $this->descripción
         ]);
 
         for($i = 1; $i <= $this->n; $i++){
+
             Image::create([
-                'url' => $this->evidencia[$i]->store('evidencias'),
+                'url' => $this->evidencia[$i]->storeAs("evidencias", $this->evidencia[$i]->store(null), "private"),
                 'imageable_id' => $safety->id,
                 'imageable_type' => Safety::class
             ]);
         }
+
+        $safety->users()->attach($this->afectados);
 
         session()->flash('message', 'Incidencia creada satisfactoriamente.');
         return redirect(route('admin.safeties.index'));

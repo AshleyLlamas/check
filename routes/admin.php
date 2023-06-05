@@ -22,8 +22,10 @@ use App\Http\Controllers\Admin\ElectronicController;
 use App\Http\Controllers\Admin\ExtraHourController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\NonWorkingDayController;
+use App\Http\Controllers\Admin\PhoneController;
 use App\Http\Controllers\Admin\PrinterController;
 use App\Http\Controllers\Admin\SafetyController;
+use App\Http\Controllers\FilesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('', [HomeController::class, 'index'])->name('admin.index');
@@ -60,6 +62,9 @@ Route::resource('electronics', ElectronicController::class)->only(['index', 'cre
 
 //Printers
 Route::resource('printers', PrinterController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.printers');
+
+//Phones
+Route::resource('phones', PhoneController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.phones');
 
 //Computers
 Route::resource('computers', ComputerController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.computers');
@@ -103,5 +108,11 @@ Route::resource('safeties', SafetyController::class)->only(['index', 'create', '
 Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show', 'destroy'])->names('admin.roles');
 
 //EXCEL
+
 Route::get('/excel-de-usuarios-sin-imagen', [UserController::class, 'usersWithoutImageExportExcel'])->name('admin.usersWithoutImage.export');
 Route::get('/excel-de-usuarios-sin-puesto', [UserController::class, 'usersWithoutPuestoExportExcel'])->name('admin.usersWithoutPuesto.export');
+Route::get('/excel-de-usuarios-completos', [UserController::class, 'usersCompletedExportExcel'])->name('admin.usersCompleted.export');
+
+//CALCULAR ASISTENCIAS E INASISTENCIAS
+Route::get('/calcular-asistencias-de-hoy-favor-de-respaldar-antes-y-solo-ejecutar-una-vez', [AssistanceController::class, 'calcularAsistenciasDeHoy']);
+Route::get('/calcular-inasistencias-de-hoy-favor-de-respaldar-antes-y-solo-ejecutar-una-vez', [AssistanceController::class, 'calcularInasistenciasDeHoy']);

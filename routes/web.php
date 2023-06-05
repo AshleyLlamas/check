@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Device\DeviceAuthController;
+use App\Http\Controllers\FilesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,3 +43,9 @@ Route::group(['prefix' => 'device', 'namespace' => 'Device'], function () {
 
     });
 });
+
+//ARCHIVOS
+Route::get('storage/private/{image}', [FilesController::class, 'fotos'])->name('images');
+
+//USER DOCUMENTS (REFACTORIZAR COMO EL DE ARRIBA *****)
+Route::get('storage/private/{userDocuments}', [FileController::class, 'documents'])->name('documents');

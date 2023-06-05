@@ -11,7 +11,7 @@
                             <div class="card border-0 mb-3 text-center bg-white">
                                 <div class="row g-0">
                                     <div class="col-md-4 p-2">
-                                        <img draggable="false" class="img-fluid rounded" src="@if($user->image) {{Storage::url($user->image->url)}} @else {{asset('recursos/foto-default.png')}} @endif"/>
+                                        <img draggable="false" class="img-fluid rounded" src="@if($user->image) {{route('images', $user->image)}} @else {{asset('recursos/foto-default.png')}} @endif"/>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body text-center p-1">

@@ -29,6 +29,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-xl-11 col-lg-10 col-md-12 col-sm-12">
+                    <a type="button" class="btn btn-secondary my-2" href="{{route('admin.usersCompleted.export')}}"><i class="fa-solid fa-file-excel"></i> Usuarios completos</a>
                     <a type="button" class="btn btn-secondary my-2" href="{{route('admin.usersWithoutImage.export')}}"><i class="fa-solid fa-file-excel"></i> Usuarios sin fotografía</a>
                     <a type="button" class="btn btn-secondary my-2" href="{{route('admin.usersWithoutPuesto.export')}}"><i class="fa-solid fa-file-excel"></i> Usuarios sin puesto</a>
                 </div>
