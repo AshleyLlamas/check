@@ -10,6 +10,7 @@ return array(
     'App\\Console\\Commands\\MakeAbsence' => $baseDir . '/app/Console/Commands/MakeAbsence.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Exports\\AssistanceExport' => $baseDir . '/app/Exports/AssistanceExport.php',
     'App\\Exports\\UsersCompletedExport' => $baseDir . '/app/Exports/UsersCompletedExport.php',
     'App\\Exports\\UsersWithoutImageExport' => $baseDir . '/app/Exports/UsersWithoutImageExport.php',
     'App\\Exports\\UsersWithoutPuestoExport' => $baseDir . '/app/Exports/UsersWithoutPuestoExport.php',

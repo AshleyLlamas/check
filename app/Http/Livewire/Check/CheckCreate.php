@@ -27,7 +27,7 @@ class CheckCreate extends Component
 
     public function save(){
 
-        switch(substr(Carbon::createFromDate(2019, 6, 7)->formatLocalized('%A'), -4)){
+        switch(substr(Carbon::now()->formatLocalized('%A'), -4)){
             case "unes":
                 $clave = "Lunes";
             break;

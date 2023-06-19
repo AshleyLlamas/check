@@ -62,26 +62,26 @@ class Check extends Component
 
     public function save(){
 
-        switch(substr(Carbon::now()->formatLocalized('%A'), 0, 2)){
-            case "lu":
+        switch(substr(Carbon::now()->formatLocalized('%A'), -4)){
+            case "unes":
                 $clave = "Lunes";
             break;
-            case "ma":
+            case "rtes":
                 $clave = "Martes";
             break;
-            case "mi":
+            case "oles":
                 $clave = "Miércoles";
             break;
-            case "ju":
+            case "eves":
                 $clave = "Jueves";
             break;
-            case "vi":
+            case "rnes":
                 $clave = "Viernes";
             break;
-            case "sá":
+            case "bado":
                 $clave = "Sábado";
             break;
-            case "do":
+            case "ingo":
                 $clave = "Domingo";
             break;
             default:

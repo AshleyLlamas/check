@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AssistanceExport;
 use App\Http\Controllers\Controller;
 use App\Models\Check;
 use App\Models\Assistance;
@@ -12,6 +13,7 @@ use App\Models\TimeCheck;
 use App\Models\User;
 use App\Models\Vacation;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class AssistanceController extends Controller
@@ -322,5 +324,10 @@ class AssistanceController extends Controller
         }
 
         return view('admin.assistances.index');
+    }
+
+    public function excel($date) 
+    {
+        return Excel::download(new AssistanceExport($date), 'asistencias.xlsx');
     }
 }

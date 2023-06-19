@@ -654,6 +654,7 @@ class ComposerStaticInit6f564ea68a2455158a73fdacaa61c5b7
         'App\\Console\\Commands\\MakeAbsence' => __DIR__ . '/../..' . '/app/Console/Commands/MakeAbsence.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\AssistanceExport' => __DIR__ . '/../..' . '/app/Exports/AssistanceExport.php',
         'App\\Exports\\UsersCompletedExport' => __DIR__ . '/../..' . '/app/Exports/UsersCompletedExport.php',
         'App\\Exports\\UsersWithoutImageExport' => __DIR__ . '/../..' . '/app/Exports/UsersWithoutImageExport.php',
         'App\\Exports\\UsersWithoutPuestoExport' => __DIR__ . '/../..' . '/app/Exports/UsersWithoutPuestoExport.php',

@@ -842,7 +842,7 @@
                     </div>
                     <!-- CARD -->
                     @isset($user->company)
-                        @if($user->company_id == 2 || $user->company_id == 8 || $user->company_id == 5)
+                        @if($user->company_id == 2 || $user->company_id == 8 || $user->company_id == 5 || $user->company_id == 7 || $user->company_id == 6)
                             <div class="card card-primary mt-3 d-none d-xl-block">
                                 <div class="card-header">
                                     <h3 class="card-title">Credencial</h3>

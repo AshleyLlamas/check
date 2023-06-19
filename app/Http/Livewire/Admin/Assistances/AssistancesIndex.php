@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Admin\Assistances;
 
+use App\Models\Area;
 use App\Models\Assistance;
+use App\Models\Company;
 use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -16,6 +18,8 @@ class AssistancesIndex extends Component
     public $sort = 'id';
     public $direction = 'desc';
     protected $paginationTheme = "bootstrap";
+
+    public $searchName, $área, $compañia, $estatus;
 
     public function updatingSearch(){
         $this->resetPage();
@@ -46,9 +50,31 @@ class AssistancesIndex extends Component
     public function render()
     {
         $assistances = Assistance::whereDate('created_at', '=' , Carbon::now()->formatLocalized($this->date))
-                        ->orderBy($this->sort, $this->direction)
-                        ->latest('id')
-                        ->paginate();
+        ->where('user_id', '!=', null)
+        ->when($this->searchName, function($query){
+            $query->whereHas('user', function($query){
+                $query->where('name', 'LIKE', '%' . $this->searchName . '%');
+            });
+        })
+        ->when($this->área, function($query){
+            $query->whereHas('user', function($query){
+                $query->whereHas('areas', function($query){
+                    $query->where('area_id', $this->área);
+                });
+            });
+        })
+        ->when($this->compañia, function($query){
+            $query->whereHas('user', function($query){
+                $query->where('company_id', $this->compañia);
+            });
+        })
+        ->when($this->estatus, function($query){
+            $query->where('asistencia', $this->estatus);
+        })
+
+        ->orderBy($this->sort, $this->direction)
+        ->latest('id')
+        ->paginate();
 
         $all_assistances = Assistance::whereDate('created_at', '=' , Carbon::now()->formatLocalized($this->date))->count();
 
@@ -60,11 +86,18 @@ class AssistancesIndex extends Component
             $query->where('tipo', 'Empleado')->wherehas('image');
         })->count();
 
+        $areas = Area::orderBy('área')->get();
+
+        $companies = Company::orderBy('nombre_de_la_compañia')->get();
+
+
         return view('livewire.admin.assistances.assistances-index', [
             'assistances' => $assistances,
             'all_assistances' => $all_assistances,
             'usuariosSinFoto' => $usuariosSinFoto,
-            'usuariosConFoto' => $usuariosConFoto
+            'usuariosConFoto' => $usuariosConFoto,
+            'areas' => $areas,
+            'companies' => $companies,
         ]);
     }
 }

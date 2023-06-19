@@ -112,6 +112,7 @@ Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit'
 Route::get('/excel-de-usuarios-sin-imagen', [UserController::class, 'usersWithoutImageExportExcel'])->name('admin.usersWithoutImage.export');
 Route::get('/excel-de-usuarios-sin-puesto', [UserController::class, 'usersWithoutPuestoExportExcel'])->name('admin.usersWithoutPuesto.export');
 Route::get('/excel-de-usuarios-completos', [UserController::class, 'usersCompletedExportExcel'])->name('admin.usersCompleted.export');
+Route::get('/excel-assistances/{date}', [AssistanceController::class, 'excel'])->name('admin.assistances.export');
 
 //CALCULAR ASISTENCIAS E INASISTENCIAS
 Route::get('/calcular-asistencias-de-hoy-favor-de-respaldar-antes-y-solo-ejecutar-una-vez', [AssistanceController::class, 'calcularAsistenciasDeHoy']);
